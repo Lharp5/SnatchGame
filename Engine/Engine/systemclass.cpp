@@ -398,6 +398,7 @@ bool SystemClass::Frame()
 	const int ascii_E = 69;
 	const int ascii_P = 80;
 	const int ascii_R = 82;
+	const int ascii_S = 83;
 	const int ascii_W = 87;
 	const int ascii_X = 88;
 	const int ascii_Y = 89;
@@ -417,125 +418,65 @@ bool SystemClass::Frame()
 	/*
 	We will combinations for a key + arrow keys to control the camera
 	*/
-	if ( m_Input->IsKeyDown(VK_SHIFT) ){
 
-	   if ( m_Input->IsKeyDown(VK_LEFT) ) //Move Camera Left
+	if ( m_Input->IsKeyDown(VK_SHIFT)){
+	   
+		if ( m_Input->IsKeyDown(VK_LEFT))
+		   m_AirPlane->TurnLeft();
+	   if ( m_Input->IsKeyDown(VK_RIGHT))
+		   m_AirPlane->TurnRight();
+	   if ( m_Input->IsKeyDown(VK_UP))
+		   m_AirPlane->MoveForward();
+	   if ( m_Input->IsKeyDown(VK_DOWN))
+		   m_Player->MoveDown();	
+		}
+	else if ( m_Input->IsKeyDown(ascii_C)){
+
+	   if ( m_Input->IsKeyDown(VK_UP) ) //Crane Up
+		  m_Camera->CraneUp();
+	   if ( m_Input->IsKeyDown(VK_DOWN) ) //Crane Down
+		  m_Camera->CraneDown();	
+	}
+	else if ( m_Input->IsKeyDown(ascii_R)){
+
+	   if ( m_Input->IsKeyDown(VK_LEFT) ) //Roll Left
+		  m_Camera->RollLeft();
+	   if ( m_Input->IsKeyDown(VK_RIGHT) ) //Roll Right
+		  m_Camera->RollRight();	
+	}
+	else if ( m_Input->IsKeyDown(ascii_Z)){
+
+	   if ( m_Input->IsKeyDown(VK_UP) ) //Zoom In
+		  m_Camera->ZoomIn();
+	   if ( m_Input->IsKeyDown(VK_DOWN) ) //Zoom Out
+		  m_Camera->ZoomOut();	
+	}
+	else{
+	   if ( m_Input->IsKeyDown(ascii_A) ) //Move Camera Left
 	      m_Camera->StrafeLeft();
 
-	   if ( m_Input->IsKeyDown(VK_RIGHT) ) //Move Camera Right
+	   if ( m_Input->IsKeyDown(ascii_D) ) //Move Camera Right
 	      m_Camera->StrafeRight();
 
-	   if ( m_Input->IsKeyDown(VK_UP) ) //Camera Move Forward
+	   if ( m_Input->IsKeyDown(ascii_W) ) //Camera Move Forward
 		  m_Camera->MoveForward();
 
-	   if ( m_Input->IsKeyDown(VK_DOWN) ) //Camera Pull Back
+	   if ( m_Input->IsKeyDown(ascii_S) ) //Camera Pull Back
 		  m_Camera->MoveBackward();
-
-	
-	}
-	else if ( m_Input->IsKeyDown(VK_CONTROL) ){
 
 	   if ( m_Input->IsKeyDown(VK_LEFT) ) //Pan Camera Left
 	      m_Camera->PanLeft();
 
 	   if ( m_Input->IsKeyDown(VK_RIGHT) ) //Pan Camera Right
 	      m_Camera->PanRight();
-
+	   
 	   if ( m_Input->IsKeyDown(VK_UP) ) //Tilt Camera Downward
-		  m_Camera->TiltDown();
-
-	   if ( m_Input->IsKeyDown(VK_DOWN) ) //Tilt Camera Upward
 		  m_Camera->TiltUp();
 
-	
+	   if ( m_Input->IsKeyDown(VK_DOWN) ) //Tilt Camera Upward
+		  m_Camera->TiltDown();	
 	}
-	else if ( m_Input->IsKeyDown(ascii_C) ){
-
-
-	   if ( m_Input->IsKeyDown(VK_UP) ) //Crane Up
-		  m_Camera->CraneUp();
-
-	   if ( m_Input->IsKeyDown(VK_DOWN) ) //Crane Down
-		  m_Camera->CraneDown();
-
-	
-	}
-	else if ( m_Input->IsKeyDown(ascii_R) ){
-
-
-	   if ( m_Input->IsKeyDown(VK_LEFT) ) //Roll Left
-		  m_Camera->RollLeft();
-
-	   if ( m_Input->IsKeyDown(VK_RIGHT) ) //Roll Right
-		  m_Camera->RollRight();	
-	}
-
-		else if ( m_Input->IsKeyDown(ascii_Z) ){
-
-
-	   if ( m_Input->IsKeyDown(VK_UP) ) //Zoom In
-		  m_Camera->ZoomIn();
-
-	   if ( m_Input->IsKeyDown(VK_DOWN) ) //Zoom Out
-		  m_Camera->ZoomOut();
-
-	
-	}
-
-    //MOVE GAME OBJECTS
-
-	else if ( m_Input->IsKeyDown(ascii_B) ){
-	   
-		//Rotate m_backDrop background object about Y or X axis
-	   //Just Arrow Keys
-	   if ( m_Input->IsKeyDown(VK_LEFT))
-		   m_backDrop->orientRotateY(XM_PIDIV2/70);
-
-	   if ( m_Input->IsKeyDown(VK_RIGHT))
-		   m_backDrop->orientRotateY(-XM_PIDIV2/70);
-
-	   if ( m_Input->IsKeyDown(VK_UP))
-		   m_backDrop->orientRotateX(XM_PIDIV2/70);
-
-	   if ( m_Input->IsKeyDown(VK_DOWN))
-		   m_backDrop->orientRotateX(-XM_PIDIV2/70);
-	
-	}
-
-   else if ( m_Input->IsKeyDown(ascii_E) ){
-	   
-		//Move m_Enemy prism object
-	   if ( m_Input->IsKeyDown(VK_LEFT))
-		   m_Enemy->MoveLeft();
-
-	   if ( m_Input->IsKeyDown(VK_RIGHT))
-		   m_Enemy->MoveRight();
-
-	   if ( m_Input->IsKeyDown(VK_UP))
-		   m_Enemy->MoveUp();
-
-	   if ( m_Input->IsKeyDown(VK_DOWN))
-		   m_Enemy->MoveDown();
-	
-	}
-      else {
-	   
-		//Just the arrow keys alone
-
-	   if ( m_Input->IsKeyDown(VK_LEFT))
-		   m_AirPlane->TurnLeft();
-
-	   if ( m_Input->IsKeyDown(VK_RIGHT))
-		   m_AirPlane->TurnRight();
-
-	   if ( m_Input->IsKeyDown(VK_UP))
-		   m_AirPlane->MoveForward();
-
-	   if ( m_Input->IsKeyDown(VK_DOWN))
-		   m_Player->MoveDown();
-	
-	}
-
+     
 
 
 	// Do the frame processing for the graphics object.
