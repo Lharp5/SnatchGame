@@ -391,6 +391,25 @@ bool SystemClass::Frame()
 	//Handle user inputs
 	bool result;
 
+	//checking to see if the user is doing something
+	if(!checkControls())
+		return false;
+     
+
+
+	// Do the frame processing for the graphics object.
+	result = m_Graphics->Frame();
+	if(!result)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+
+bool SystemClass::checkControls()
+{
 	const int ascii_A = 65;
 	const int ascii_B = 66;
 	const int ascii_C = 67;
@@ -476,19 +495,9 @@ bool SystemClass::Frame()
 	   if ( m_Input->IsKeyDown(VK_DOWN) ) //Tilt Camera Upward
 		  m_Camera->TiltDown();	
 	}
-     
-
-
-	// Do the frame processing for the graphics object.
-	result = m_Graphics->Frame();
-	if(!result)
-	{
-		return false;
-	}
-
+	//user is still playing
 	return true;
 }
-
 
 LRESULT CALLBACK SystemClass::MessageHandler(HWND hwnd, UINT umsg, WPARAM wparam, LPARAM lparam)
 {

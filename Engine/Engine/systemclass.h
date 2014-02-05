@@ -57,6 +57,7 @@ private:
 	bool Frame();
 	void InitializeWindows(int&, int&);
 	void ShutdownWindows();
+	bool checkControls();
 
 private:
 
