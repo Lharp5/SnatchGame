@@ -121,6 +121,7 @@
     <ClInclude Include="textureclass.h" />
     <ClInclude Include="textureshaderclass.h" />
     <ClInclude Include="vertextype.h" />
+    <ClInclude Include="worldDefs.h" />
     <ClInclude Include="XYZaxis.h" />
   </ItemGroup>
   <ItemGroup>

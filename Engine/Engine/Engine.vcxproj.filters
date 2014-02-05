@@ -131,6 +131,9 @@
     <ClInclude Include="quadTexturedModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="worldDefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="color.ps">

@@ -54,14 +54,14 @@ void CineCameraClass::MoveForward()
 
 	/*
 	Modify the position of the camera by moving it along its
-	direction vector at a rate based on the constant CAMERA_DOLLY_SPEED
+	direction vector at a rate based on the constant ADVANCE_SPEED
 
-	You can adjust the constant CAMERA_DOLLY_SPEED to get a nice
+	You can adjust the constant ADVANCE_SPEED to get a nice
 	smooth motion
 	*/
-	position.x += direction.x * CAMERA_DOLLY_SPEED;
-	position.y += direction.y * CAMERA_DOLLY_SPEED;
-	position.z += direction.z * CAMERA_DOLLY_SPEED;
+	position.x += direction.x * ADVANCE_SPEED;
+	position.y += direction.y * ADVANCE_SPEED;
+	position.z += direction.z * ADVANCE_SPEED;
 	return;
 }
 void CineCameraClass::MoveBackward()
@@ -69,9 +69,9 @@ void CineCameraClass::MoveBackward()
 	wchar_t* outstring = L"CineCameraClass::Move Backward\n";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 
-	position.x -= direction.x * CAMERA_DOLLY_SPEED;
-	position.y -= direction.y * CAMERA_DOLLY_SPEED;
-	position.z -= direction.z * CAMERA_DOLLY_SPEED;
+	position.x -= direction.x * ADVANCE_SPEED;
+	position.y -= direction.y * ADVANCE_SPEED;
+	position.z -= direction.z * ADVANCE_SPEED;
 	return;
 }
 
@@ -122,7 +122,7 @@ void CineCameraClass::StrafeLeft()
 
 	/*TO DO
 	Modify the camera position by moving it along it's sideways vector based on
-	the constant CAMERA_STRAFE_SPEED. You can adjust this constant to get a
+	the constant STRAFE_SPEED. You can adjust this constant to get a
 	nice smooth crane speed. The sideways vector is the vector that is
 	perpendicular to the plane formed by the camera direction vector and
 	up vectors. See the implementation of the camera tilt operation to see how
@@ -132,9 +132,9 @@ void CineCameraClass::StrafeLeft()
 
 	XMVECTOR sideWaysVector = XMVector3Normalize(XMVector3Cross(XMLoadFloat3(&upDirection), XMLoadFloat3(&direction) ));
 
-	position.x -= XMVectorGetX(sideWaysVector) * CAMERA_STRAFE_SPEED;
-	position.y -= XMVectorGetY(sideWaysVector) * CAMERA_STRAFE_SPEED;
-	position.z -= XMVectorGetZ(sideWaysVector) * CAMERA_STRAFE_SPEED;
+	position.x -= XMVectorGetX(sideWaysVector) * STRAFE_SPEED;
+	position.y -= XMVectorGetY(sideWaysVector) * STRAFE_SPEED;
+	position.z -= XMVectorGetZ(sideWaysVector) * STRAFE_SPEED;
 	return;
 }
 void CineCameraClass::StrafeRight()
@@ -142,7 +142,7 @@ void CineCameraClass::StrafeRight()
 
 	/*TO DO
 	Modify the camera position by moving it along it's sideways vector based on
-	the constant CAMERA_STRAFE_SPEED. You can adjust this constant to get a
+	the constant STRAFE_SPEED. You can adjust this constant to get a
 	nice smooth crane speed. The sideways vector is the vector that is
 	perpendicular to the plane formed by the camera direction vector and
 	up vectors. See the implementation of the camera tilt operation to see how
@@ -154,9 +154,9 @@ void CineCameraClass::StrafeRight()
 
 	XMVECTOR sideWaysVector = XMVector3Normalize(XMVector3Cross(XMLoadFloat3(&upDirection), XMLoadFloat3(&direction) ));
 
-	position.x += XMVectorGetX(sideWaysVector) * CAMERA_STRAFE_SPEED;
-	position.y += XMVectorGetY(sideWaysVector) * CAMERA_STRAFE_SPEED;
-	position.z += XMVectorGetZ(sideWaysVector) * CAMERA_STRAFE_SPEED;
+	position.x += XMVectorGetX(sideWaysVector) * STRAFE_SPEED;
+	position.y += XMVectorGetY(sideWaysVector) * STRAFE_SPEED;
+	position.z += XMVectorGetZ(sideWaysVector) * STRAFE_SPEED;
 	return;
 } 
 
