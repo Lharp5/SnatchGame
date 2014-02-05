@@ -9,7 +9,7 @@ CineCameraClass::CineCameraClass(int screenWidth, int screenHeight)
 	position = XMFLOAT3(0.0f, 0.0f, -10.0f); //location of camera in 3D space
 	direction = XMFLOAT3(0.0f, 0.0f, 1.0f); //direction camera is facing
 	upDirection = XMFLOAT3(0.0f, 1.0f, 0.0f); //up direction of vector
-
+	trueUpDirection = XMFLOAT3(0.0f, 1.0f, 0.0f);
 	screenAspectRatio = ((float) screenWidth) / ((float) screenHeight);
 	fieldOfView = NOMINAL_FIELD_OF_VIEW;
 
@@ -222,7 +222,7 @@ void CineCameraClass::PanLeft()
 	See how this is done for the tilt operation
 	*/
 
-	XMVECTOR panRotationQuaternion = XMQuaternionRotationAxis(XMLoadFloat3(&upDirection), -XM_PIDIV4/100*CAMERA_PAN_SPEED);
+	XMVECTOR panRotationQuaternion = XMQuaternionRotationAxis(XMLoadFloat3(&trueUpDirection), -XM_PIDIV4/100*CAMERA_PAN_SPEED);
 	XMStoreFloat3(&direction, XMVector3Rotate( XMLoadFloat3(&direction), panRotationQuaternion));
 } 
 void CineCameraClass::PanRight()
@@ -242,7 +242,7 @@ void CineCameraClass::PanRight()
 	*/
 
 	//Pan the camera right rotating CW about the up vector direction vector
-	XMVECTOR panRotationQuaternion = XMQuaternionRotationAxis(XMLoadFloat3(&upDirection), XM_PIDIV4/100*CAMERA_PAN_SPEED);
+	XMVECTOR panRotationQuaternion = XMQuaternionRotationAxis(XMLoadFloat3(&trueUpDirection), XM_PIDIV4/100*CAMERA_PAN_SPEED);
 	XMStoreFloat3(&direction, XMVector3Rotate( XMLoadFloat3(&direction), panRotationQuaternion));
 }
 void CineCameraClass::RollLeft()

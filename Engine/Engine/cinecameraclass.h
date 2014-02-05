@@ -79,6 +79,8 @@ private:
 	XMFLOAT3 direction; //direction the camera is pointing
 	XMFLOAT3 upDirection; //up direction of the camera
 
+	XMFLOAT3 trueUpDirection; //keep track of true up
+
 	float screenAspectRatio; // screen width / screen height
 	float fieldOfView; //view angle of the lens in radians
 
