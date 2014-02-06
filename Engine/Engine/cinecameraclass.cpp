@@ -221,9 +221,21 @@ void CineCameraClass::PanLeft()
 	represents a rotation of that angle about the vector
 	See how this is done for the tilt operation
 	*/
+	float horizontalMagnitude = sqrt(direction.x * direction.x + direction.z * direction.z);
+	float angle = atan(direction.y / horizontalMagnitude);
 
-	XMVECTOR panRotationQuaternion = XMQuaternionRotationAxis(XMLoadFloat3(&trueUpDirection), -XM_PIDIV4/100*CAMERA_PAN_SPEED);
+	XMVECTOR sideWaysVector = XMVector3Normalize(XMVector3Cross(XMLoadFloat3(&upDirection), XMLoadFloat3(&direction) ));
+	XMVECTOR tiltRotationQuaternion = XMQuaternionRotationAxis(sideWaysVector, angle);
+	XMStoreFloat3(&direction, XMVector3Rotate( XMLoadFloat3(&direction), tiltRotationQuaternion));
+	XMStoreFloat3(&upDirection, XMVector3Rotate( XMLoadFloat3(&upDirection), tiltRotationQuaternion));
+
+	XMVECTOR panRotationQuaternion = XMQuaternionRotationAxis(XMLoadFloat3(&upDirection), -XM_PIDIV4/100*CAMERA_PAN_SPEED);
 	XMStoreFloat3(&direction, XMVector3Rotate( XMLoadFloat3(&direction), panRotationQuaternion));
+	
+	sideWaysVector = XMVector3Normalize(XMVector3Cross(XMLoadFloat3(&upDirection), XMLoadFloat3(&direction) ));
+	tiltRotationQuaternion = XMQuaternionRotationAxis(sideWaysVector, -angle);
+	XMStoreFloat3(&direction, XMVector3Rotate( XMLoadFloat3(&direction), tiltRotationQuaternion));
+	XMStoreFloat3(&upDirection, XMVector3Rotate( XMLoadFloat3(&upDirection), tiltRotationQuaternion));
 } 
 void CineCameraClass::PanRight()
 {
@@ -242,8 +254,21 @@ void CineCameraClass::PanRight()
 	*/
 
 	//Pan the camera right rotating CW about the up vector direction vector
-	XMVECTOR panRotationQuaternion = XMQuaternionRotationAxis(XMLoadFloat3(&trueUpDirection), XM_PIDIV4/100*CAMERA_PAN_SPEED);
+	float horizontalMagnitude = sqrt(direction.x * direction.x + direction.z * direction.z);
+	float angle = atan(direction.y / horizontalMagnitude);
+
+	XMVECTOR sideWaysVector = XMVector3Normalize(XMVector3Cross(XMLoadFloat3(&upDirection), XMLoadFloat3(&direction) ));
+	XMVECTOR tiltRotationQuaternion = XMQuaternionRotationAxis(sideWaysVector, angle);
+	XMStoreFloat3(&direction, XMVector3Rotate( XMLoadFloat3(&direction), tiltRotationQuaternion));
+	XMStoreFloat3(&upDirection, XMVector3Rotate( XMLoadFloat3(&upDirection), tiltRotationQuaternion));
+
+	XMVECTOR panRotationQuaternion = XMQuaternionRotationAxis(XMLoadFloat3(&upDirection), XM_PIDIV4/100*CAMERA_PAN_SPEED);
 	XMStoreFloat3(&direction, XMVector3Rotate( XMLoadFloat3(&direction), panRotationQuaternion));
+	
+	sideWaysVector = XMVector3Normalize(XMVector3Cross(XMLoadFloat3(&upDirection), XMLoadFloat3(&direction) ));
+	tiltRotationQuaternion = XMQuaternionRotationAxis(sideWaysVector, -angle);
+	XMStoreFloat3(&direction, XMVector3Rotate( XMLoadFloat3(&direction), tiltRotationQuaternion));
+	XMStoreFloat3(&upDirection, XMVector3Rotate( XMLoadFloat3(&upDirection), tiltRotationQuaternion));
 }
 void CineCameraClass::RollLeft()
 {
