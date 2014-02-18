@@ -15,13 +15,13 @@
 
 using namespace DirectX;
 
-const float AIRPLANE_FORWARD_SPEED_FACTOR = 0.2f; //adjust this to make forward motion look good
+const float CAR_FORWARD_SPEED_FACTOR = 0.1f; //adjust this to make forward motion look good
 
-class AirPlaneModel
+class CarModel
 {
 public:
-	AirPlaneModel();
-	virtual ~AirPlaneModel(void);
+	CarModel();
+	virtual ~CarModel(void);
 	virtual void Shutdown(); //release airplane component memory
 	ArrayList<GameModel> GetGameModels(); //provide a list of simple components of the airplane
 
@@ -31,14 +31,21 @@ public:
 	void TurnLeft();
 	void TurnRight();
 	void MoveForward();
-	void Advance();
+	void Advance(int);
+	void MoveBackward();
 
 protected:
 	virtual void InitializeModel(); //construct the airplane from component parts
 
 private:
+
+
+	PrismTexturedModel* m_tire1; //body of airplane
+	PrismTexturedModel* m_tire2; //bomb underneath plane
+	PrismTexturedModel* m_tire3; //bomb underneath plane
+	PrismTexturedModel* m_tire4; //bomb underneath plane
 	
-	PrismTexturedModel* m_Fuselage; //body of airplane
+	/*PrismTexturedModel* m_Fuselage; //body of airplane
 	PrismTexturedModel* m_PontoonLeft; //left pontoon of float plane
 	PrismTexturedModel* m_PontoonRight; //right pontoon of float plane
 
@@ -48,7 +55,10 @@ private:
 	PrismTexturedModel* m_StrutBackRight; 
 
 	CubeTexturedModel* m_Wing; //wings of airplane
-	CubeTexturedModel* m_Propeller; //propeller of airplane
+	CubeTexturedModel* m_Propeller; //propeller of airplane*/
+
+	CubeTexturedModel* m_Cab;
+	CubeTexturedModel* m_Body;
 
 	XMFLOAT3 m_directionVector; //direction plane is facing when constructed
 };

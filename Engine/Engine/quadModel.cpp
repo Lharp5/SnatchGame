@@ -18,13 +18,11 @@ void QuadModel::InitializeModel(float lengthX, float lengthY, XMFLOAT4 * pColor)
 	/*
 	Create a quad consisting of 4 vertices and 2 triangles
 	*/
-	m_vertexCount = 4;
-	m_indexCount = 6;
+	int vertexCount = 4;
+	int indexCount = 6;
 
-	m_colorVertices = new ColorVertexType[m_vertexCount];
-	m_textureVertices = 0;
-
-	m_indices = new unsigned long[m_indexCount];
+	m_colorVertices = new ColorVertexType[vertexCount];
+	m_indices = new unsigned long[indexCount];
 	
 
 	XMFLOAT4 vertexColor;
@@ -61,10 +59,33 @@ void QuadModel::InitializeModel(float lengthX, float lengthY, XMFLOAT4 * pColor)
 
 
 	//Create the ModelClass object that will be used to deliver these vertices to the graphics pipeline
-	m_VertexModel = new ModelClass(GetColorVertices(), GetVertexCount(), GetIndices(), GetIndexCount(), D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	m_VertexModel = new ModelClass(m_colorVertices, vertexCount, m_indices, indexCount, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 }
 
+bool QuadModel::InitializeVertexModels(ID3D11Device* d3dDevice){
+	//subclasses who have vertices are expected to overide this method
+	return m_VertexModel->Initialize(d3dDevice);
+
+}
+
+bool QuadModel::Render(ID3D11DeviceContext* deviceContext,  XMFLOAT4X4 viewMatrix, XMFLOAT4X4 projectionMatrix, ColorShaderClass* colorShader, TextureShaderClass* textureShader){
+	
+	if(!colorShader) return false; //we were not provided with a shader
+
+	// Put the game model vertex and index buffers on the graphics pipeline to prepare them for drawing.
+	 m_VertexModel->Render(deviceContext);
+
+	 //render the game model
+	 bool result = colorShader->Render(deviceContext, 
+		                                  m_VertexModel->GetIndexCount(), 
+								          GetWorldMatrix(), 
+								          viewMatrix, 
+								          projectionMatrix);
+	
+	return result; 
+
+}
 
 
 void QuadModel::Shutdown()
@@ -75,11 +96,7 @@ void QuadModel::Shutdown()
 		m_colorVertices = 0;
 	}
 
-	if(m_textureVertices)
-	{
-		delete[] m_textureVertices;
-		m_textureVertices = 0;
-	}
+
 
 	if(m_indices)
 	{

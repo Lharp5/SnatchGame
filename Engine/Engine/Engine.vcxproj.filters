@@ -69,6 +69,18 @@
     <ClCompile Include="quadTexturedModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="cubeTexturedModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="prismTexturedModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConeTexturedModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="carModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cameraclass.h">
@@ -129,6 +141,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="quadTexturedModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cubeTexturedModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="prismTexturedModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConeTexturedModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="carModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="worldDefs.h">

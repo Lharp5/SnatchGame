@@ -100,12 +100,14 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd, Cin
 	if(m_GameWorldModels && !m_GameWorldModels->isEmpty()){
 		for(int i=0; i< m_GameWorldModels->size(); i++){
 			GameModel* gameModel = m_GameWorldModels->elementAt(i);
-			result = gameModel->GetVertexModel()->Initialize(m_D3D->GetDevice());
+			//result = gameModel->GetVertexModel()->Initialize(m_D3D->GetDevice());			
+			result = gameModel->InitializeVertexModels(m_D3D->GetDevice()); //initialize the models for this graphics device
 	        if(!result)
 	        {
 		       MessageBox(hwnd, L"Could not initialize the game model object.", L"Error", MB_OK);
 		       return false;
 	        }
+			/*
 			if(gameModel->isTextureVertexModel()){
 				result = gameModel->initializeTextures(m_D3D->GetDevice());
 	            if(!result)
@@ -115,6 +117,7 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd, Cin
 	            }
 
 			}
+			*/
 
 
 		}
@@ -286,31 +289,18 @@ bool GraphicsClass::Render()
 		for(int i=0; i< m_GameWorldModels->size(); i++){
 			GameModel* gameModel = m_GameWorldModels->elementAt(i);
 
-		   // Put the game model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	       gameModel->GetVertexModel()->Render(m_D3D->GetDeviceContext());
+		   // Provide the game models with a graphics device context,
+		   // view and projection matrices, and
+		   // shaders and ask them to render themselves
 
-	      //Render The Game Model
-		  if(gameModel->isTextureVertexModel()){
-
-	            result = m_TextureShader->Render(m_D3D->GetDeviceContext(), 
-		                                  gameModel->GetVertexModel()->GetIndexCount(), 
-								          gameModel->GetWorldMatrix(), 
+		  result = gameModel->Render(m_D3D->GetDeviceContext(), 
 								          viewMatrix, 
 								          projectionMatrix,
-										  gameModel->GetTexture()); //get the texture to render
+										  m_ColorShader,
+										  m_TextureShader); 
 	
-	            if(!result) {return false;}
-          }
-		  if(gameModel->isColorVertexModel()){
-	            result = m_ColorShader->Render(m_D3D->GetDeviceContext(), 
-		                                  gameModel->GetVertexModel()->GetIndexCount(), 
-								          gameModel->GetWorldMatrix(), 
-								          viewMatrix, 
-								          projectionMatrix);
-	
-	            if(!result) {return false;}
-          }
-
+	       if(!result) {return false;}
+ 
 
 	}
  

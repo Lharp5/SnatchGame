@@ -25,12 +25,11 @@ void CubeModel::InitializeModel(float lengthX, float lengthY, float lengthZ, XMF
 	Exercise: can you build these vertices and indices with a for-loop instead of
 	hard coding there values?
 	*/
-	m_vertexCount = 24;
-	m_indexCount = 36;
+	int vertexCount = 24;
+	int indexCount = 36;
 
-	m_colorVertices = new ColorVertexType[m_vertexCount];
-	m_textureVertices = 0;
-	m_indices = new unsigned long[m_indexCount];
+	m_colorVertices = new ColorVertexType[vertexCount];
+	m_indices = new unsigned long[indexCount];
 	
 
 	XMFLOAT4 vertexColor;
@@ -186,7 +185,31 @@ void CubeModel::InitializeModel(float lengthX, float lengthY, float lengthZ, XMF
 
 
 	//Create the ModelClass object that will be used to deliver these vertices to the graphics pipeline
-	m_VertexModel = new ModelClass(GetColorVertices(), GetVertexCount(), GetIndices(), GetIndexCount(), D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	m_VertexModel = new ModelClass(m_colorVertices, vertexCount, m_indices, indexCount, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+}
+
+bool CubeModel::InitializeVertexModels(ID3D11Device* d3dDevice){
+	//subclasses who have vertices are expected to overide this method
+	return m_VertexModel->Initialize(d3dDevice);
+
+}
+
+bool CubeModel::Render(ID3D11DeviceContext* deviceContext,  XMFLOAT4X4 viewMatrix, XMFLOAT4X4 projectionMatrix, ColorShaderClass* colorShader, TextureShaderClass* textureShader){
+	
+	if(!colorShader) return false; //we were not provided with a shader
+
+	// Put the game model vertex and index buffers on the graphics pipeline to prepare them for drawing.
+	 m_VertexModel->Render(deviceContext);
+
+	 //render the game model
+	 bool result = colorShader->Render(deviceContext, 
+		                                  m_VertexModel->GetIndexCount(), 
+								          GetWorldMatrix(), 
+								          viewMatrix, 
+								          projectionMatrix);
+	
+	return result; 
 
 }
 
@@ -200,11 +223,6 @@ void CubeModel::Shutdown()
 		m_colorVertices = 0;
 	}
 
-	if(m_textureVertices)
-	{
-		delete[] m_textureVertices;
-		m_textureVertices = 0;
-	}
 
 
 	if(m_indices)

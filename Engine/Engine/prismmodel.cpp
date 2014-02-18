@@ -60,12 +60,11 @@ void PrismModel::InitializeModel(float height, float radius, int nFaces, XMFLOAT
 
     }
 
-    m_vertexCount = numberOfFaces * 12;
-	m_indexCount = m_vertexCount;
+    int vertexCount = numberOfFaces * 12;
+    int indexCount = vertexCount;
 
-	m_colorVertices = new ColorVertexType[m_vertexCount];
-	m_textureVertices = 0;
-	m_indices = new unsigned long[m_indexCount];
+	m_colorVertices = new ColorVertexType[vertexCount];
+	m_indices = new unsigned long[indexCount];
 
 	XMFLOAT4 vertexFaceColor;
 	vertexFaceColor = XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f); //red
@@ -129,17 +128,40 @@ void PrismModel::InitializeModel(float height, float radius, int nFaces, XMFLOAT
 	// Load the index array with data.
 	// Two triangles per face. The directions are consistent
 	// With back-face culling in a left-hand co-ordinate system.
-	for(int i=0; i<m_indexCount; i++)
+	for(int i=0; i<indexCount; i++)
 	     m_indices[i] = i;  // map vertices directly to indices
 
 
 
 
 	//Create the ModelClass object that will be used to deliver these vertices to the graphics pipeline
-	m_VertexModel = new ModelClass(GetColorVertices(), GetVertexCount(), GetIndices(), GetIndexCount(), D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	m_VertexModel = new ModelClass(m_colorVertices, vertexCount, m_indices, indexCount, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 }
 
+bool PrismModel::InitializeVertexModels(ID3D11Device* d3dDevice){
+	//subclasses who have vertices are expected to overide this method
+	return m_VertexModel->Initialize(d3dDevice);
+
+}
+
+bool PrismModel::Render(ID3D11DeviceContext* deviceContext,  XMFLOAT4X4 viewMatrix, XMFLOAT4X4 projectionMatrix, ColorShaderClass* colorShader, TextureShaderClass* textureShader){
+	
+	if(!colorShader) return false; //we were not provided with a shader
+
+	// Put the game model vertex and index buffers on the graphics pipeline to prepare them for drawing.
+	 m_VertexModel->Render(deviceContext);
+
+	 //render the game model
+	 bool result = colorShader->Render(deviceContext, 
+		                                  m_VertexModel->GetIndexCount(), 
+								          GetWorldMatrix(), 
+								          viewMatrix, 
+								          projectionMatrix);
+	
+	return result; 
+
+}
 
 
 void PrismModel::Shutdown()
@@ -150,11 +172,7 @@ void PrismModel::Shutdown()
 		m_colorVertices = 0;
 	}
 
-	if(m_textureVertices)
-	{
-		delete[] m_textureVertices;
-		m_textureVertices = 0;
-	}
+
 
 	if(m_indices)
 	{

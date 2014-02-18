@@ -1,13 +1,22 @@
 #pragma once
 
+#include <d3d11.h>
 #include <DirectXMath.h>
 #include "vertextype.h"
 #include "modelclass.h"
+#include "colorshaderclass.h"
+#include "textureshaderclass.h"
 
 #include <string>
 
 using namespace DirectX;
 
+/*
+GameModel class represents game objects, with geometry that can be oriented and 
+positioned in the world. It provides the protocols to orient and position but
+does not have any geometry. Game Model subclasses provide the actual geometry
+colours and textures for the game objects
+*/
 //Adjust these constants for smooth motion
 const float ROTATION_SPEED = 0.07f; //speed to control user rotation of objects
 const float TRANSLATION_INCREMENT = 0.1f; //speed to control user moved of objects
@@ -22,15 +31,9 @@ public:
 
 	// Access methods
 	
-	virtual ColorVertexType* GetColorVertices();
-	virtual TextureVertexType* GetTextureVertices();
-	virtual unsigned long*	GetIndices();
-	virtual int				GetVertexCount();
-	virtual int				GetIndexCount();
 
 	//Get world matrix
 	virtual XMFLOAT4X4 GetWorldMatrix();
-
 	virtual XMFLOAT4X4 GetWorldRotateMatrix();
     
 	//Transformation methods to position object
@@ -48,11 +51,15 @@ public:
 	virtual void worldTranslate(float deltaX, float deltaY, float deltaZ);
 
 
-	virtual ModelClass*   GetVertexModel();
-	virtual bool isColorVertexModel();
-	virtual bool isTextureVertexModel();
+	//virtual ModelClass*   GetVertexModel();
+	virtual bool InitializeVertexModels(ID3D11Device* d3dDevice);
 	virtual bool initializeTextures(ID3D11Device* device);
+
 	virtual ID3D11ShaderResourceView* GetTexture();
+	virtual ID3D11ShaderResourceView* GetTexture(int i);
+
+	//render method
+	virtual bool Render(ID3D11DeviceContext* deviceContext,  XMFLOAT4X4 viewMatrix, XMFLOAT4X4 projectionMatrix, ColorShaderClass* colorShader, TextureShaderClass* textureShader);
 
 	// Movement
 	//Transformation methods to position object
@@ -69,15 +76,7 @@ public:
 
 protected:
 
-	//Vertices that define the geomery of this object
 
-	ColorVertexType* m_colorVertices;
-	TextureVertexType* m_textureVertices;
-	unsigned long*	m_indices;
-	int				m_vertexCount;
-	int				m_indexCount;
-
-	ModelClass*     m_VertexModel; //vertices to put on graphics pipeline for rendering
 
 	//Construction translate and orient matrices
     XMFLOAT4X4 m_orientRotateMatrix; //matrix to orient object in model co-ord system

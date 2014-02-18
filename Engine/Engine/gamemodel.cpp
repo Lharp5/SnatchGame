@@ -25,41 +25,14 @@ GameModel::~GameModel(void)
 
 void GameModel::Shutdown()
 {
-	if(m_colorVertices)
-	{
-		delete[] m_colorVertices;
-		m_colorVertices = 0;
-	}
-
-	if(m_textureVertices)
-	{
-		delete[] m_textureVertices;
-		m_textureVertices = 0;
-	}
-
-
-	if(m_indices)
-	{
-		delete[] m_indices;
-		m_indices = 0;
-	}
-
-	if(m_VertexModel)
-	{
-		delete m_VertexModel;
-		m_VertexModel = 0;
-	}
-
 
 }
 
-bool GameModel::isColorVertexModel(){
-	if(m_colorVertices) return true;
-	else return false;
-}
-bool GameModel::isTextureVertexModel(){
-	if(m_textureVertices) return true;
-	else return false;
+
+
+bool GameModel::InitializeVertexModels(ID3D11Device* d3dDevice){
+	//subclasses who have vertices are expected to overide this method
+	return false;
 
 }
 
@@ -68,37 +41,20 @@ bool GameModel::initializeTextures(ID3D11Device* device){
 	return false;
 }
 ID3D11ShaderResourceView* GameModel::GetTexture(){
-	//subclasses who have textures are expected to overide this method
+	//subclasses that have textures are expected to overide this method
+	return 0;
+}
+
+ID3D11ShaderResourceView* GameModel::GetTexture(int i){
+	//subclasses that have textures are expected to overide this method
 	return 0;
 }
 
 
 
-ColorVertexType* GameModel::GetColorVertices()
-{
-	return m_colorVertices;
-}
-
-TextureVertexType* GameModel::GetTextureVertices()
-{
-	return m_textureVertices;
-}
-
-unsigned long* GameModel::GetIndices()
-{
-	return m_indices;
-}
-
-int GameModel::GetVertexCount() {
-	return m_vertexCount;
-}
-
-int GameModel::GetIndexCount() {
-	return m_indexCount;
-}
 
 
-ModelClass* GameModel::GetVertexModel() {return m_VertexModel; }
+//ModelClass* GameModel::GetVertexModel() {return m_VertexModel; }
 
 XMFLOAT4X4 GameModel::GetWorldMatrix(){
     
@@ -115,6 +71,15 @@ XMFLOAT4X4 GameModel::GetWorldMatrix(){
 	return worldMatrix;
 
 }
+
+bool GameModel::Render(ID3D11DeviceContext* deviceContext,  XMFLOAT4X4 viewMatrix, XMFLOAT4X4 projectionMatrix, ColorShaderClass* colorShader, TextureShaderClass* textureShader){
+	
+	//Render the model on the device context using the colorShader or textureShader as appropriate
+	
+	return false; //subclasses must implement this method
+
+}
+
 
 XMFLOAT4X4 GameModel::GetWorldRotateMatrix(){
 	return m_worldRotateMatrix;

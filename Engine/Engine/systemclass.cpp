@@ -80,14 +80,6 @@ bool SystemClass::Initialize()
 
 	XMFLOAT4 quadColor = XMFLOAT4(0.0f, 76.0f/255, 153.0f/255, 1.0f);  //for use with QuadModel
 	//make a background textured quad
-	float quadLengthX = 4.0f;
-	float quadLengthY = 4.0f;
-	m_blueQuad = new QuadModel(
-		                     quadLengthX,  //length in X direction
-							 quadLengthY,  //length in Y direction
-							 &quadColor  //pointer to color
-							 );
-	m_blueQuad->worldTranslate(-5.0f, -quadLengthY, -3.0f); //move to location in the world
 
 	WCHAR * backdropTextureFileName = L"../Engine/textures/cloudy_backdrop.dds";
 
@@ -104,21 +96,6 @@ bool SystemClass::Initialize()
     float distanceBackZ = 100;
 	m_backDrop->worldTranslate(0.0f, 0.0f, distanceBackZ); //move to location in the world
 
-	//for the Coke SIGN copying the background quad info
-	WCHAR * signTexture = L"../Engine/textures/coca_cola.dds";
-
-	float signWidthX = 6.0f;
-	float signHeightY = 3.5f;
-	m_cokeSignFront = new QuadTexturedModel(signWidthX, signHeightY, signTexture);
-	m_cokeSignFront->worldTranslate(5.0f, -5.0f, 0.0f);
-
-	WCHAR * signBackTexture = L"../Engine/textures/slogan.dds";
-	m_cokeSignBack = new QuadTexturedModel(signWidthX, signHeightY, signBackTexture);
-	m_cokeSignBack->worldTranslate(5.0f, -5.0f, 0.0f);
-	m_cokeSignBack->orientRotateY(XM_PI);
-
-
-
 	WCHAR * groundCoverTextureFileName = L"../Engine/textures/graph_paper.dds";
 
 	float groundCoverWidthX = 100.0f;
@@ -130,13 +107,38 @@ bool SystemClass::Initialize()
 							 groundCoverHeightY,  //length in Y direction
 							 groundCoverTextureFileName  //path name of texture .dds texture file
 							 );
-	
-
-	
 
 	m_groundCover->orientRotateX(XM_PIDIV2); //rotate 90 degrees around X so it is parallel to XZ ground plane
 	m_groundCover->worldTranslate(0.0f, -backdropHeightY/2, groundCoverHeightY/2); //move to location in the world
-		
+
+
+	WCHAR * cokeSignFrontFileName = L"../Engine/textures/coca_cola.dds";
+	WCHAR * cokeSignBackFileName = L"../Engine/textures/slogan.dds";
+
+	float cokeSignWidthX = 4.0f;
+	float cokeSignHeightY = 3.0f;
+
+	//make a background textured quad
+	m_cokeSignFront = new QuadTexturedModel(
+		                     cokeSignWidthX,  //length in X direction
+							 cokeSignHeightY,  //length in Y direction
+							 cokeSignFrontFileName  //path name of .dds texture file
+							 );
+
+    float signBackZ = -3;
+	m_cokeSignFront->worldTranslate(4.0f, -cokeSignHeightY, signBackZ); //move to location in the world
+
+	//make coke sign quads
+	m_cokeSignBack = new QuadTexturedModel(
+		                     cokeSignWidthX,  //length in X direction
+							 cokeSignHeightY,  //length in Y direction
+							 cokeSignBackFileName  //path name of .dds texture file
+							 );
+	
+	m_cokeSignBack->orientRotateY(XM_PI); //rotate 180 degrees around Y so it is facing opposite of front
+	m_cokeSignBack->worldTranslate(4.0f, -cokeSignHeightY, signBackZ); //move to location in the world
+
+	
 	XMFLOAT4 cubeColors[] = {
 	    XMFLOAT4(153.0f/255, 76.0f/255, 0.0f, 1.0f), //front face brown1
 	    XMFLOAT4(153.0f/255, 76.0f/255, 0.0f, 1.0f), //back face brown1
@@ -146,17 +148,33 @@ bool SystemClass::Initialize()
 	    XMFLOAT4(255.0f/255, 128.0f/255, 0.0f, 1.0f), //bottom face brown3
 	};
 
-	m_Player = new CubeModel(1.0f,  //length in X direction
-							 1.0f,  //length in Y direction
-							 1.0f, //length in Z direction
-							 cubeColors //XMFLOAT4[6] with face colours
+
+   	WCHAR * dieFileNames[] = {
+		 L"../Engine/textures/die1.dds",
+		 L"../Engine/textures/die2.dds",
+		 L"../Engine/textures/die3.dds",
+		 L"../Engine/textures/die4.dds",
+		 L"../Engine/textures/die5.dds",
+		 L"../Engine/textures/die6.dds",
+	};
+
+	m_Player = 0; //for safety
+	
+	m_Player = new CubeTexturedModel(3.0f,  //length in X direction
+							 3.0f,  //length in Y direction
+							 3.0f, //length in Z direction
+							 dieFileNames //file names of cube face textures
 							 );
 
+   
 	m_Player->orientRotateY(XM_PIDIV4); //orient relative to model origin
 	m_Player->worldTranslate(2.5f, -2.0f, 0.0f); //move to location in the world
 	
+	
 
 	m_AirPlane = new AirPlaneModel();
+
+	m_Car = new CarModel();
 
 
 	XMFLOAT4 prismColors[] = {
@@ -164,28 +182,52 @@ bool SystemClass::Initialize()
 	    XMFLOAT4(204.0f/255, 204.0f/255, 0.0f, 1.0f), //prism ends yellow2
 	};
 
-	m_Enemy = new PrismModel(2.0f,  //height (Y direction)
+	WCHAR * cokeCanTextureFiles[] = {
+		 L"../Engine/textures/dietCokeCanSide.dds",
+		 L"../Engine/textures/cokeCanTop.dds",
+		 L"../Engine/textures/cokeCanBottom.dds",
+	};
+
+	m_Enemy = 0; //for safety
+	m_Enemy = new PrismTexturedModel(3.5f,  //height (Y direction)
 							 1.0f,  //radius (X direction)
-							 12,      //number of faces
-							 prismColors //side and end colours 
+							 24,      //number of faces
+							 cokeCanTextureFiles //side and end textures 
 							 ); 
 
-    m_Enemy->orientRotateZ(XM_PIDIV4); //orient relative to model origin
-	m_Enemy->worldTranslate(-2.5f, -2.5f, 0.0f); //move to location in the world
+	m_Enemy->orientRotateZ(XM_PIDIV4); //orient relative to model origin
+	m_Enemy->worldTranslate(2.5f, 2.5f, 0.0f); //move to location in the world
+
+
+	WCHAR * ConeTextureFiles[] = {
+		 L"../Engine/textures/wood_texture.dds",
+		 L"../Engine/textures/wood_texture.dds",
+		 L"../Engine/textures/wood_texture.dds",
+	};
+
+	m_cone = new ConeTexturedModel(3.5f,  //height (Y direction)
+							 1.0f,  //radius (X direction)
+							 3,      //number of faces
+							 ConeTextureFiles //side and end textures 
+							 );
+
+    m_cone->orientRotateZ(XM_PIDIV4); //orient relative to model origin
+	m_cone->worldTranslate(-2.5f, -2.5f, 0.0f); //move to location in the world
 
 	
 	
 	//Add the  gameModel objects to the GameModels collection
 	//that will be rendered by the graphics system
 
-	m_GameModels->add(m_blueQuad);
-	m_GameModels->add(m_backDrop);
 	m_GameModels->add(m_cokeSignFront);
 	m_GameModels->add(m_cokeSignBack);
+	m_GameModels->add(m_backDrop);
 	m_GameModels->add(m_groundCover);
 	m_GameModels->add(m_Player);
 	m_GameModels->add(m_Enemy);
+	m_GameModels->add(m_cone);
 	m_GameModels->addAll(m_AirPlane->GetGameModels());
+	m_GameModels->addAll(m_Car->GetGameModels());
 
 
 
@@ -214,30 +256,27 @@ void SystemClass::Shutdown()
 {
 	//Shut down our game character objects and release their memory
 
-	if(m_blueQuad)
-	{
-		m_blueQuad->Shutdown();
-		delete m_blueQuad;
-		m_blueQuad = 0;
-	}
 
-	if(m_backDrop)
-	{
-		m_backDrop->Shutdown();
-		delete m_backDrop;
-		m_backDrop = 0;
-	}
 	if(m_cokeSignFront)
 	{
 		m_cokeSignFront->Shutdown();
 		delete m_cokeSignFront;
 		m_cokeSignFront = 0;
 	}
+
 	if(m_cokeSignBack)
 	{
 		m_cokeSignBack->Shutdown();
 		delete m_cokeSignBack;
 		m_cokeSignBack = 0;
+	}
+
+
+	if(m_backDrop)
+	{
+		m_backDrop->Shutdown();
+		delete m_backDrop;
+		m_backDrop = 0;
 	}
 
 	if(m_groundCover)
@@ -267,6 +306,12 @@ void SystemClass::Shutdown()
 		m_AirPlane->Shutdown();
 		delete m_AirPlane;
 		m_AirPlane = 0;
+	}
+	if(m_Car)
+	{
+		m_Car->Shutdown();
+		delete m_Car;
+		m_Car = 0;
 	}
 
 	//release the memory for the m_GameModels collection
@@ -383,18 +428,43 @@ bool SystemClass::Frame()
 	m_Enemy->orientRotateZ(XM_PIDIV4/100);
 	m_Enemy->orientRotateX(XM_PIDIV4/70);
 
-
-	m_cokeSignBack->orientRotateY(XM_PIDIV4/70);
-	m_cokeSignFront->orientRotateY(XM_PIDIV4/70);
+	m_Player->orientRotateZ(XM_PIDIV4/100);
+	m_Player->orientRotateX(XM_PIDIV4/70);
+	m_Player->orientRotateY(XM_PIDIV4/50);
+	
 	m_AirPlane->Advance();
+
+    m_cokeSignFront->orientRotateY(-XM_PIDIV2/70);
+	m_cokeSignBack->orientRotateY(-XM_PIDIV2/70);
+
 
 	//Handle user inputs
 	bool result;
 
-	//checking to see if the user is doing something
+	const int ascii_A = 65;
+	const int ascii_B = 66;
+	const int ascii_C = 67;
+	const int ascii_D = 68;
+	const int ascii_E = 69;
+	const int ascii_P = 80;
+	const int ascii_R = 82;
+	const int ascii_W = 87;
+	const int ascii_X = 88;
+	const int ascii_Y = 89;
+	const int ascii_Z = 90;
+
+
+	// Check if the user pressed escape and wants to exit the application.
 	if(!checkControls())
 		return false;
-     
+
+	
+	//Move camera or models based on input
+	
+
+	/*
+	We will combinations for a key + arrow keys to control the camera
+	*/
 
 
 	// Do the frame processing for the graphics object.

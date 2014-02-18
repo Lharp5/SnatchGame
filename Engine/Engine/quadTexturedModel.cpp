@@ -18,13 +18,12 @@ void QuadTexturedModel::InitializeModel(float lengthX, float lengthY, WCHAR* aTe
 	/*
 	Create a quad consisting of 4 vertices and 2 triangles
 	*/
-	m_vertexCount = 4;
-	m_indexCount = 6;
+	int vertexCount = 4;
+	int indexCount = 6;
 
-	m_colorVertices = 0; 
-	m_textureVertices = new TextureVertexType[m_vertexCount];
+	m_textureVertices = new TextureVertexType[vertexCount];
 
-	m_indices = new unsigned long[m_indexCount];
+	m_indices = new unsigned long[indexCount];
 
 	//potentially dangerous, we should probably make a copy of the string and
 	//release it ourselves later
@@ -64,11 +63,25 @@ void QuadTexturedModel::InitializeModel(float lengthX, float lengthY, WCHAR* aTe
 
 
 	//Create the ModelClass object that will be used to deliver these vertices to the graphics pipeline
-	m_VertexModel = new ModelClass(GetTextureVertices(), GetVertexCount(), GetIndices(), GetIndexCount(), D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	m_VertexModel = new ModelClass(m_textureVertices, vertexCount, m_indices, indexCount, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 }
 
-bool QuadTexturedModel::initializeTextures(ID3D11Device* device){
+bool QuadTexturedModel::InitializeVertexModels(ID3D11Device* d3dDevice){
+	
+	//initialize vertices and textures for rendering to d3dDevice
+
+	bool result = m_VertexModel->Initialize(d3dDevice);
+
+	if(!result) return false;
+
+	result = initializeTextures(d3dDevice);
+
+	return result;
+
+}
+
+bool QuadTexturedModel::initializeTextures(ID3D11Device* d3dDevice){
 	
 	bool result;
 
@@ -79,7 +92,7 @@ bool QuadTexturedModel::initializeTextures(ID3D11Device* device){
 		return false;
 	}
 	// Initialize the body texture object.
-	result = m_quadTexture->Initialize(device, m_textureFileName);
+	result = m_quadTexture->Initialize(d3dDevice, m_textureFileName);
 	if(!result)
 	{
 		return false;
@@ -94,13 +107,32 @@ ID3D11ShaderResourceView* QuadTexturedModel::GetTexture(){
 }
 
 
+
+bool QuadTexturedModel::Render(ID3D11DeviceContext* deviceContext,  XMFLOAT4X4 viewMatrix, XMFLOAT4X4 projectionMatrix, ColorShaderClass* colorShader, TextureShaderClass* textureShader){
+	
+	if(!textureShader) return false; //we were not provided with a shader
+
+	// Put the game model vertex and index buffers on the graphics pipeline to prepare them for drawing.
+	 m_VertexModel->Render(deviceContext);
+
+	 //render the game model
+	 bool result = textureShader->Render(deviceContext, 
+		                                  m_VertexModel->GetIndexCount(), 
+								          GetWorldMatrix(), 
+								          viewMatrix, 
+								          projectionMatrix,
+										  GetTexture()); //get the texture to render
+	
+
+
+	return result; 
+
+}
+
+
 void QuadTexturedModel::Shutdown()
 {
-	if(m_colorVertices)
-	{
-		delete[] m_colorVertices;
-		m_colorVertices = 0;
-	}
+
 
 	if(m_textureVertices)
 	{
