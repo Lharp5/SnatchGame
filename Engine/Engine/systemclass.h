@@ -91,7 +91,15 @@ private:
 	ArrayList<GameModel>* m_GameModels; //container to hold all our game world models
 
 
+	//move movement?
+
+
+
+
 };
+
+
+
 
 
 /////////////////////////

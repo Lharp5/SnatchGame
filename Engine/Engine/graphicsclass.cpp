@@ -212,11 +212,13 @@ void GraphicsClass::Shutdown()
 }
 
 
-bool GraphicsClass::Frame()
+bool GraphicsClass::Frame(int mouseX, int mouseY)
 {
 	bool result;
 
 
+	//set the location of the mouse
+	//result = m_Text->setMousePosition(mouseX, mouseY, m_D3D->GetDeviceContext());
 	// Render the graphics scene.
 	result = Render();
 	if(!result)

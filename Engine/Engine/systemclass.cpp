@@ -766,4 +766,5 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT umessage, WPARAM wparam, LPARAM lparam)
 			return ApplicationHandle->MessageHandler(hwnd, umessage, wparam, lparam);
 		}
 	}
+
 }
