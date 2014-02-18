@@ -45,10 +45,10 @@ public:
 
 	bool Initialize(int, int, HWND, CineCameraClass*, ArrayList<GameModel> * gameModels);
 	void Shutdown();
-	//bool Frame(); 
+	bool Frame(); 
 	
 	//changed the above Frame() class to set the mouseX and mouseY positions
-	bool Frame(int, int);
+	//bool Frame(int, int);
 
 
 private:

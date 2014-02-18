@@ -22,6 +22,7 @@
 // MY CLASS INCLUDES //
 ///////////////////////
 #include "inputclass.h"
+#include "directinputclass.h"
 #include "graphicsclass.h"
 #include "gamemodel.h"
 #include "cubemodel.h"
@@ -70,7 +71,7 @@ private:
 	HINSTANCE m_hinstance;
 	HWND m_hwnd;  //handle to the Windows window (client window for the application)
 
-	InputClass* m_Input; //out input class object from which to obtain user inputs
+	DirectInputClass* m_Input; //out input class object from which to obtain user inputs
 	GraphicsClass* m_Graphics; //our graphics class object that encapsulates the graphics pipeline
 	CineCameraClass * m_Camera; //our encapsulation of where the camera is looking at our world
 

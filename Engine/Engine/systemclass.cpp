@@ -2,7 +2,7 @@
 // Filename: systemclass.cpp
 ////////////////////////////////////////////////////////////////////////////////
 #include "systemclass.h"
-
+# include <iostream>
 SystemClass::SystemClass()
 {
 	//set pointers to our objects to null so if initialization of them
@@ -48,14 +48,18 @@ bool SystemClass::Initialize()
 	InitializeWindows(screenWidth, screenHeight);
 
 	// Create the input object.  This object will be used to handle reading the keyboard input from the user.
-	m_Input = new InputClass;
+	m_Input = new DirectInputClass;
 	if(!m_Input)
 	{
 		return false;
 	}
 		// Initialize the input object.
-	m_Input->Initialize();
-
+	result = m_Input->Initialize(m_hinstance, m_hwnd, screenWidth, screenHeight);
+	if(!result)
+	{
+		MessageBox(m_hwnd, L"Could not initalize the input object.", L"Error", MB_OK);
+		return false;
+	}
 
 	// Create the Camera object.
 	m_Camera = new CineCameraClass(screenWidth,screenHeight);
@@ -334,6 +338,7 @@ void SystemClass::Shutdown()
 	// Release the input object's memory.
 	if(m_Input)
 	{
+		m_Input->Shutdown();
 		delete m_Input;
 		m_Input = 0;
 	}
@@ -374,7 +379,7 @@ void SystemClass::Run()
 	MSG msg;
 	bool done, result;
 
-
+	//std::cout<< "Running through code " << std::endl;
 	// Initialize the message structure.
 	ZeroMemory(&msg, sizeof(MSG));
 	
@@ -388,7 +393,7 @@ void SystemClass::Run()
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-
+		
 		// If windows signals to end the application then exit out.
 		if(msg.message == WM_QUIT)
 		{
@@ -403,6 +408,11 @@ void SystemClass::Run()
 				done = true;
 			}
 		}
+
+		//check if the user pressed escape and wants to quit
+		
+		if(m_Input->IsEscapePressed() == true)
+			done = true;
 
 	}
 
@@ -441,17 +451,9 @@ bool SystemClass::Frame()
 	//Handle user inputs
 	bool result;
 
-	const int ascii_A = 65;
-	const int ascii_B = 66;
-	const int ascii_C = 67;
-	const int ascii_D = 68;
-	const int ascii_E = 69;
-	const int ascii_P = 80;
-	const int ascii_R = 82;
-	const int ascii_W = 87;
-	const int ascii_X = 88;
-	const int ascii_Y = 89;
-	const int ascii_Z = 90;
+	result = m_Input->Frame();
+	if(!result)
+		return false;
 
 
 	// Check if the user pressed escape and wants to exit the application.
@@ -465,7 +467,8 @@ bool SystemClass::Frame()
 	/*
 	We will combinations for a key + arrow keys to control the camera
 	*/
-
+	wchar_t* outstring = L"-----\n";
+	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 
 	// Do the frame processing for the graphics object.
 	result = m_Graphics->Frame();
@@ -479,90 +482,64 @@ bool SystemClass::Frame()
 
 
 bool SystemClass::checkControls()
-{
-	const int ascii_A = 65;
-	const int ascii_B = 66;
-	const int ascii_C = 67;
-	const int ascii_D = 68;
-	const int ascii_E = 69;
-	const int ascii_P = 80;
-	const int ascii_R = 82;
-	const int ascii_S = 83;
-	const int ascii_W = 87;
-	const int ascii_X = 88;
-	const int ascii_Y = 89;
-	const int ascii_Z = 90;
-
-
-	// Check if the user pressed escape and wants to exit the application.
-	if(m_Input->IsKeyDown(VK_ESCAPE))
-	{
-		return false;
-	}
-
-	
+{	
 	//Move camera or models based on input
-	
+	//We will combinations for a key + arrow keys to control the camera
 
-	/*
-	We will combinations for a key + arrow keys to control the camera
-	*/
-
-	if ( m_Input->IsKeyDown(VK_SHIFT)){
-	   
-		if ( m_Input->IsKeyDown(VK_LEFT))
+	if ( m_Input->keyPressed(DIK_LSHIFT)){   
+		if ( m_Input->keyPressed(DIK_LEFT))
 		   m_AirPlane->TurnLeft();
-	   if ( m_Input->IsKeyDown(VK_RIGHT))
+	   if ( m_Input->keyPressed(DIK_RIGHT))
 		   m_AirPlane->TurnRight();
-	   if ( m_Input->IsKeyDown(VK_UP))
+	   if ( m_Input->keyPressed(DIK_UP))
 		   m_AirPlane->MoveForward();
-	   if ( m_Input->IsKeyDown(VK_DOWN))
+	   if ( m_Input->keyPressed(DIK_DOWN))
 		   m_Player->MoveDown();	
-		}
-	else if ( m_Input->IsKeyDown(ascii_C)){
+	}
+	 else if ( m_Input->keyPressed(DIK_C)){
 
-	   if ( m_Input->IsKeyDown(VK_UP) ) //Crane Up
+	   if ( m_Input->keyPressed(DIK_UP) ) //Crane Up
 		  m_Camera->CraneUp();
-	   if ( m_Input->IsKeyDown(VK_DOWN) ) //Crane Down
+	   if ( m_Input->keyPressed(DIK_DOWN) ) //Crane Down
 		  m_Camera->CraneDown();	
 	}
-	else if ( m_Input->IsKeyDown(ascii_R)){
+	else if ( m_Input->keyPressed(DIK_R)){
 
-	   if ( m_Input->IsKeyDown(VK_LEFT) ) //Roll Left
+	   if ( m_Input->keyPressed(DIK_LEFT) ) //Roll Left
 		  m_Camera->RollLeft();
-	   if ( m_Input->IsKeyDown(VK_RIGHT) ) //Roll Right
+	   if ( m_Input->keyPressed(DIK_RIGHT) ) //Roll Right
 		  m_Camera->RollRight();	
 	}
-	else if ( m_Input->IsKeyDown(ascii_Z)){
+	else if ( m_Input->keyPressed(DIK_Z)){
 
-	   if ( m_Input->IsKeyDown(VK_UP) ) //Zoom In
+	   if ( m_Input->keyPressed(DIK_UP) ) //Zoom In
 		  m_Camera->ZoomIn();
-	   if ( m_Input->IsKeyDown(VK_DOWN) ) //Zoom Out
+	   if ( m_Input->keyPressed(DIK_DOWN) ) //Zoom Out
 		  m_Camera->ZoomOut();	
 	}
 	else{
-	   if ( m_Input->IsKeyDown(ascii_A) ) //Move Camera Left
+	   if ( m_Input->keyPressed(DIK_A) ) //Move Camera Left
 	      m_Camera->StrafeLeft();
 
-	   if ( m_Input->IsKeyDown(ascii_D) ) //Move Camera Right
+	   if ( m_Input->keyPressed(DIK_D) ) //Move Camera Right
 	      m_Camera->StrafeRight();
 
-	   if ( m_Input->IsKeyDown(ascii_W) ) //Camera Move Forward
+	   if ( m_Input->keyPressed(DIK_W) ) //Camera Move Forward
 		  m_Camera->MoveForward();
 
-	   if ( m_Input->IsKeyDown(ascii_S) ) //Camera Pull Back
+	   if ( m_Input->keyPressed(DIK_S) ) //Camera Pull Back
 		  m_Camera->MoveBackward();
 
-	   if ( m_Input->IsKeyDown(VK_LEFT) ) //Pan Camera Left
+	   if ( m_Input->keyPressed(DIK_LEFT) ) //Pan Camera Left
 	      m_Camera->PanLeft();
 
-	   if ( m_Input->IsKeyDown(VK_RIGHT) ) //Pan Camera Right
+	   if ( m_Input->keyPressed(DIK_RIGHT) ) //Pan Camera Right
 	      m_Camera->PanRight();
 	   
-	   if ( m_Input->IsKeyDown(VK_UP) ) //Tilt Camera Downward
+	   if ( m_Input->keyPressed(DIK_UP) ) //Tilt Camera Downward
 		  m_Camera->TiltUp();
 
-	   if ( m_Input->IsKeyDown(VK_DOWN) ) //Tilt Camera Upward
+	   if ( m_Input->keyPressed(DIK_DOWN) ) //Tilt Camera Upward
 		  m_Camera->TiltDown();	
 	}
 	//user is still playing
@@ -571,38 +548,8 @@ bool SystemClass::checkControls()
 
 LRESULT CALLBACK SystemClass::MessageHandler(HWND hwnd, UINT umsg, WPARAM wparam, LPARAM lparam)
 {
-	/*
-	The MessageHandler function is where windows system messages are directed into our application
-	Here we can listen for certain information that we are interested in. 
-	Currently we will just read if a key is pressed or if a key is released and pass that information on to the input object. 
-	All other information we will pass back to the windows default message handler. 
-	*/
-	switch(umsg)
-	{
-		// Check if a key has been pressed on the keyboard.
-		case WM_KEYDOWN:
-		{
-			// If a key is pressed send it to the input object so it can record that state.
-			// The input object will be polled by our game logic
-
-			m_Input->KeyDown((unsigned int)wparam);
-			return 0;
-		}
-
-		// Check if a key has been released on the keyboard.
-		case WM_KEYUP:
-		{
-			// If a key is released then send it to the input object so it can unset the state for that key.
-			m_Input->KeyUp((unsigned int)wparam);
-			return 0;
-		}
-
-		// Any other messages send to the default message handler as our application won't make use of them.
-		default:
-		{
-			return DefWindowProc(hwnd, umsg, wparam, lparam);
-		}
-	}
+	//removed all the jargan quote "Direct Input handles all of this for now"
+		return DefWindowProc(hwnd, umsg, wparam, lparam);
 }
 
 
@@ -680,8 +627,8 @@ void SystemClass::InitializeWindows(int& screenWidth, int& screenHeight)
 	else
 	{
 		// If windowed then set it to 800x600 resolution.
-		screenWidth  = 800;
-		screenHeight = 600;
+		screenWidth  = 1200;
+		screenHeight = 700;
 
 		// Place the window in the middle of the screen.
 		posX = (GetSystemMetrics(SM_CXSCREEN) - screenWidth)  / 2;

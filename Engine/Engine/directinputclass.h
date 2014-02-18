@@ -51,6 +51,7 @@ public:
 	bool Frame();
 
 	bool IsEscapePressed();
+	bool keyPressed(unsigned char);
 	void GetMouseLocation(int&, int&);
 
 private:

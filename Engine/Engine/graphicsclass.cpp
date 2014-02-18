@@ -212,7 +212,7 @@ void GraphicsClass::Shutdown()
 }
 
 
-bool GraphicsClass::Frame(int mouseX, int mouseY)
+bool GraphicsClass::Frame()
 {
 	bool result;
 

@@ -229,9 +229,12 @@ bool DirectInputClass::ReadMouse()
 
 void DirectInputClass::ProcessInput()
 {
+
 	// Update the location of the mouse cursor based on the change of the mouse location during the frame.
 	m_mouseX += m_mouseState.lX;
 	m_mouseY += m_mouseState.lY;
+
+	
 
 	// Ensure the mouse location doesn't exceed the screen width or height.
 	if(m_mouseX < 0)  { m_mouseX = 0; }
@@ -250,9 +253,20 @@ bool DirectInputClass::IsEscapePressed()
 	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
 	if(m_keyboardState[DIK_ESCAPE] & 0x80)
 	{
+		wchar_t* outstring = L"ESCAPE\n";
+		WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 		return true;
 	}
 
+	return false;
+}
+
+bool DirectInputClass::keyPressed(unsigned char key)
+{
+	
+	if(m_keyboardState[key] & 0x80){
+		return true;
+	}
 	return false;
 }
 
