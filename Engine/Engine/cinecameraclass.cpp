@@ -162,48 +162,58 @@ void CineCameraClass::StrafeRight()
 
 void CineCameraClass::TiltDown()
 {
-	//NOTE: currently the argument delta is not used
-	wchar_t* outstring = L"CineCameraClass::TiltDown\n";
-	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
+	float horizontalMagnitude = sqrt(direction.x * direction.x + direction.z * direction.z);
+	float angle = atan(direction.y / horizontalMagnitude);
+	if (angle - XM_PIDIV4/100*CAMERA_TILT_SPEED > -XM_PIDIV2)
+		{
+		//NOTE: currently the argument delta is not used
+		wchar_t* outstring = L"CineCameraClass::TiltDown\n";
+		WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 
-	//Compute the sideways vector of the camera.
-	//The sideways vector is the vector cross product of the up vector and the
-	//direction vector of the camera
+		//Compute the sideways vector of the camera.
+		//The sideways vector is the vector cross product of the up vector and the
+		//direction vector of the camera
 
-	XMVECTOR sideWaysVector = XMVector3Normalize(XMVector3Cross(XMLoadFloat3(&upDirection), XMLoadFloat3(&direction) ));
+		XMVECTOR sideWaysVector = XMVector3Normalize(XMVector3Cross(XMLoadFloat3(&upDirection), XMLoadFloat3(&direction) ));
 
-	//Tilt the camera downwards rotating about the sideways direction vector
+		//Tilt the camera downwards rotating about the sideways direction vector
 
-	//Create a Rotaton Quaternion that represents a rotation about the
-	//Sideways vector.
-	//A Quaternion is created by supplying a vector and an angle and
-	//represents a rotation of that angle about the vector
+		//Create a Rotaton Quaternion that represents a rotation about the
+		//Sideways vector.
+		//A Quaternion is created by supplying a vector and an angle and
+		//represents a rotation of that angle about the vector
 
-	//create the quaternion the rotates about the sideways vector of the camera
-	XMVECTOR tiltRotationQuaternion = XMQuaternionRotationAxis(sideWaysVector, XM_PIDIV4/100*CAMERA_TILT_SPEED);
+		//create the quaternion the rotates about the sideways vector of the camera
+		XMVECTOR tiltRotationQuaternion = XMQuaternionRotationAxis(sideWaysVector, XM_PIDIV4/100*CAMERA_TILT_SPEED);
 
-	//Modify both the camera's direction vector and its up vector using the
-	//rotation quaternion. Note we want the camera's direction vector and up vector
-	//to always be orthogonal so we rotate both of them by the same amount
-	//around the sideways vector
+		//Modify both the camera's direction vector and its up vector using the
+		//rotation quaternion. Note we want the camera's direction vector and up vector
+		//to always be orthogonal so we rotate both of them by the same amount
+		//around the sideways vector
 
-	XMStoreFloat3(&direction, XMVector3Rotate( XMLoadFloat3(&direction), tiltRotationQuaternion));
-	XMStoreFloat3(&upDirection, XMVector3Rotate( XMLoadFloat3(&upDirection), tiltRotationQuaternion));
+		XMStoreFloat3(&direction, XMVector3Rotate( XMLoadFloat3(&direction), tiltRotationQuaternion));
+		XMStoreFloat3(&upDirection, XMVector3Rotate( XMLoadFloat3(&upDirection), tiltRotationQuaternion));
+	}
 
 } 
 void CineCameraClass::TiltUp()
 {
-	//NOTE: currently the argument delta is not used
-	wchar_t* outstring = L"CineCameraClass::TiltUp\n";
-	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
+	float horizontalMagnitude = sqrt(direction.x * direction.x + direction.z * direction.z);
+	float angle = atan(direction.y / horizontalMagnitude);
+	if (angle + XM_PIDIV4/100*CAMERA_TILT_SPEED < XM_PIDIV2)
+	{
+		//NOTE: currently the argument delta is not used
+		wchar_t* outstring = L"CineCameraClass::TiltUp\n";
+		WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 
-	//Tilt the camera upwards rotating about the sideways direction vector
+		//Tilt the camera upwards rotating about the sideways direction vector
+	
+		XMVECTOR sideWaysVector = XMVector3Normalize(XMVector3Cross(XMLoadFloat3(&upDirection), XMLoadFloat3(&direction) ));
+		XMVECTOR tiltRotationQuaternion = XMQuaternionRotationAxis(sideWaysVector, -XM_PIDIV4/100*CAMERA_TILT_SPEED);
 
-	XMVECTOR sideWaysVector = XMVector3Normalize(XMVector3Cross(XMLoadFloat3(&upDirection), XMLoadFloat3(&direction) ));
-	XMVECTOR tiltRotationQuaternion = XMQuaternionRotationAxis(sideWaysVector, -XM_PIDIV4/100*CAMERA_TILT_SPEED);
-
-	XMStoreFloat3(&direction, XMVector3Rotate( XMLoadFloat3(&direction), tiltRotationQuaternion));
-	XMStoreFloat3(&upDirection, XMVector3Rotate( XMLoadFloat3(&upDirection), tiltRotationQuaternion));
+		XMStoreFloat3(&direction, XMVector3Rotate( XMLoadFloat3(&direction), tiltRotationQuaternion));
+		XMStoreFloat3(&upDirection, XMVector3Rotate( XMLoadFloat3(&upDirection), tiltRotationQuaternion));
+	}
 
 } 
 void CineCameraClass::PanLeft()
