@@ -20,7 +20,8 @@ class LevelClass
 		GameObject* CheckLocation(int, int);
 
 	private:
-		GameObject map[100][100];
+		GameObject* map[100][100];
+		GameObject* player;
 
 		int sizeX;
 		int sizeY;

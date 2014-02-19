@@ -3,20 +3,23 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
+#include "gamemodel.h"
+
 class GameObject
 {
 	public:
 		GameObject();
+		GameObject(GameModel*);
 		~GameObject();
 
 		GameModel* getModel();
 	protected:
 		void initialize();
-		void Shutdown();
+		void shutdown();
 
 		GameModel* myModel;
 };
 
-#include "gamemodel.h"
+
 
 #endif

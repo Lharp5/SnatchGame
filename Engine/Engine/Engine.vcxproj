@@ -93,8 +93,10 @@
     <ClCompile Include="directinputclass.cpp" />
     <ClCompile Include="gamemodel.cpp" />
     <ClCompile Include="d3dclass.cpp" />
+    <ClCompile Include="gameobject.cpp" />
     <ClCompile Include="graphicsclass.cpp" />
     <ClCompile Include="inputclass.cpp" />
+    <ClCompile Include="levelclass.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="modelclass.cpp" />
     <ClCompile Include="prismmodel.cpp" />
@@ -116,12 +118,17 @@
     <ClInclude Include="cubemodel.h" />
     <ClInclude Include="cubeTexturedModel.h" />
     <ClInclude Include="directinputclass.h" />
+    <ClInclude Include="enemyobject.h" />
+    <ClInclude Include="floorobject.h" />
     <ClInclude Include="gamemodel.h" />
     <ClInclude Include="d3dclass.h" />
+    <ClInclude Include="gameobject.h" />
     <ClInclude Include="graphicsclass.h" />
     <ClInclude Include="cinecameraclass.h" />
     <ClInclude Include="inputclass.h" />
+    <ClInclude Include="levelclass.h" />
     <ClInclude Include="modelclass.h" />
+    <ClInclude Include="playerobject.h" />
     <ClInclude Include="prismmodel.h" />
     <ClInclude Include="prismTexturedModel.h" />
     <ClInclude Include="quadModel.h" />
@@ -131,6 +138,7 @@
     <ClInclude Include="textureclass.h" />
     <ClInclude Include="textureshaderclass.h" />
     <ClInclude Include="vertextype.h" />
+    <ClInclude Include="wallobject.h" />
     <ClInclude Include="worldDefs.h" />
     <ClInclude Include="XYZaxis.h" />
   </ItemGroup>

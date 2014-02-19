@@ -14,9 +14,23 @@ GameObject::GameObject()
 	initialize();
 }
 
+GameObject::GameObject(GameModel* m)
+{
+	myModel = m;
+}
+
 GameObject::~GameObject()
 {
-	Shutdown();
+	shutdown();
+}
+
+
+void GameObject::initialize()
+{
+}
+
+void GameObject:: shutdown()
+{
 }
 
 GameModel* GameObject::getModel()

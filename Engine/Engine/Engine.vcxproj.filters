@@ -84,6 +84,12 @@
     <ClCompile Include="directinputclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="levelclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cameraclass.h">
@@ -162,6 +168,24 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="directinputclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="levelclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wallobject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="floorobject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="playerobject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="enemyobject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
