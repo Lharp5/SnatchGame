@@ -8,7 +8,7 @@
 
 #include "gameobject.h"
 
-class WallObject
+class WallObject: public virtual  GameObject
 {
 };
 #endif

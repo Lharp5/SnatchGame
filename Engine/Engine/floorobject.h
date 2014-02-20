@@ -6,8 +6,21 @@
 
 #include "gameobject.h"
 
-class FloorObject
+class FloorObject: public GameObject
 {
+public:
+	FloorObject();
+	FloorObject(GameModel*);
+	~FloorObject();
+
+private:
+
+	//floor lit up or not?
+	bool lit;
+
+	//location of the source of lighting (the mechanism to turn off and/or on.)
+	int sourceX;
+	int sourceY;
 
 };
 

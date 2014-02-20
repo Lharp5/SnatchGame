@@ -6,8 +6,11 @@
 
 #include "gameobject.h"
 
-class EnemyObject
+class EnemyObject: public GameObject
 {
+public:
+private:
+
 
 };
 

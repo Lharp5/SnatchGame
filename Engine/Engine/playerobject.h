@@ -6,7 +6,7 @@
 
 #include "gameobject.h"
 
-class PlayerObject
+class PlayerObject: public GameObject
 {
 
 };
