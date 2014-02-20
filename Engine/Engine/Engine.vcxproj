@@ -91,6 +91,7 @@
     <ClCompile Include="cubemodel.cpp" />
     <ClCompile Include="cubeTexturedModel.cpp" />
     <ClCompile Include="directinputclass.cpp" />
+    <ClCompile Include="enemymodel.cpp" />
     <ClCompile Include="gamemodel.cpp" />
     <ClCompile Include="d3dclass.cpp" />
     <ClCompile Include="gameobject.cpp" />
@@ -118,6 +119,7 @@
     <ClInclude Include="cubemodel.h" />
     <ClInclude Include="cubeTexturedModel.h" />
     <ClInclude Include="directinputclass.h" />
+    <ClInclude Include="enemymodel.h" />
     <ClInclude Include="enemyobject.h" />
     <ClInclude Include="floorobject.h" />
     <ClInclude Include="gamemodel.h" />

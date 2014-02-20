@@ -36,6 +36,7 @@
 #include "cinecameraclass.h"
 #include "ConeTexturedModel.h"
 #include "carModel.h"
+#include "enemymodel.h"
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -88,7 +89,8 @@ private:
 	AirPlaneModel* m_AirPlane; //our compound airplane model
 	CarModel* m_Car; //car model
 
-	ConeTexturedModel* m_cone; 
+	ConeTexturedModel* m_cone;
+	EnemyModel* m_enemy;
 	ArrayList<GameModel>* m_GameModels; //container to hold all our game world models
 
 

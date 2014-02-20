@@ -218,6 +218,7 @@ bool SystemClass::Initialize()
     m_cone->orientRotateZ(XM_PIDIV4); //orient relative to model origin
 	m_cone->worldTranslate(-2.5f, -2.5f, 0.0f); //move to location in the world
 
+	m_enemy = new EnemyModel(-10.0f, -20.0f, 60.0f, 15.0f);
 	
 	
 	//Add the  gameModel objects to the GameModels collection
@@ -232,6 +233,7 @@ bool SystemClass::Initialize()
 	m_GameModels->add(m_cone);
 	m_GameModels->addAll(m_AirPlane->GetGameModels());
 	m_GameModels->addAll(m_Car->GetGameModels());
+	m_GameModels->addAll(m_enemy->GetGameModels());
 
 
 
@@ -303,6 +305,13 @@ void SystemClass::Shutdown()
 		m_Enemy->Shutdown();
 		delete m_Enemy;
 		m_Enemy = 0;
+	}
+
+	if(m_enemy)
+	{
+		m_enemy->Shutdown();
+		delete m_enemy;
+		m_enemy = 0;
 	}
 
 	if(m_AirPlane)

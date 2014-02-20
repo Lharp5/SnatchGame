@@ -5,12 +5,15 @@
 #define ENEMYOBJECT_H
 
 #include "gameobject.h"
+#include "enemymodel.h"
 
 class EnemyObject: public GameObject
 {
 public:
-private:
 
+
+private:
+	EnemyModel m_model;
 
 };
 

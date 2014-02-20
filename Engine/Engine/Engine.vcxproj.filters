@@ -90,6 +90,9 @@
     <ClCompile Include="gameobject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="enemymodel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cameraclass.h">
@@ -186,6 +189,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="enemyobject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="enemymodel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
