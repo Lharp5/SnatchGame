@@ -14,9 +14,14 @@ GameObject::GameObject()
 	initialize();
 }
 
-GameObject::GameObject(GameModel* m)
+GameObject::GameObject(GameModel* m, float x, float y, float z)
 {
+	xLocation = x;
+	yLocation =y;
+	zLocation =z;
 	myModel = m;
+
+	myModel->worldTranslate(xLocation, yLocation, zLocation);
 }
 
 GameObject::~GameObject()

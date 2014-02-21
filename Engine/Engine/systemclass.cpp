@@ -219,7 +219,9 @@ bool SystemClass::Initialize()
 	m_cone->worldTranslate(-2.5f, -2.5f, 0.0f); //move to location in the world
 
 	m_enemy = new EnemyModel(-10.0f, -20.0f, 60.0f, 15.0f);
-	
+
+
+	m_levels = new LevelClass();
 	
 	//Add the  gameModel objects to the GameModels collection
 	//that will be rendered by the graphics system
@@ -235,6 +237,11 @@ bool SystemClass::Initialize()
 	m_GameModels->addAll(m_Car->GetGameModels());
 	m_GameModels->addAll(m_enemy->GetGameModels());
 
+	m_levels->loadLevel(0);
+	
+	for(int i=0; i<m_levels->getSizeX(); i++)
+		for(int j=0; j<m_levels->getSizeY(); j++)
+			m_GameModels->add(m_levels->CheckLocation(i,j)->getModel());
 
 
 	// Create the graphics object.  This object will handle rendering all the graphics for this application.
@@ -262,6 +269,11 @@ void SystemClass::Shutdown()
 {
 	//Shut down our game character objects and release their memory
 
+	if(m_levels)
+	{
+		delete m_levels;
+		m_levels = 0;
+	}
 
 	if(m_cokeSignFront)
 	{

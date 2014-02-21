@@ -5,13 +5,15 @@
 #define FLOOROBJECT_H
 
 #include "gameobject.h"
-
+#include "quadTexturedModel.h"
 class FloorObject: public GameObject
 {
 public:
 	FloorObject();
-	FloorObject(GameModel*);
+	FloorObject(float, float);
 	~FloorObject();
+
+	void checkSource();
 
 private:
 
@@ -21,6 +23,7 @@ private:
 	//location of the source of lighting (the mechanism to turn off and/or on.)
 	int sourceX;
 	int sourceY;
+
 
 };
 

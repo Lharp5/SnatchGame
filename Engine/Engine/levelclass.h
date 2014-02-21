@@ -6,6 +6,10 @@
 
 #include "worldDefs.h"
 #include "gameobject.h"
+#include "floorobject.h"
+#include "wallobject.h"
+#include "playerobject.h"
+#include "enemyobject.h"
 
 #include <windows.h> //needed to create and destroy windows and call Win32 functions
 
@@ -19,15 +23,22 @@ class LevelClass
 
 		GameObject* CheckLocation(int, int);
 
+		void loadLevel(int);
+		int getSizeX();
+		int getSizeY();
+
 	private:
 		GameObject* map[100][100];
-		GameObject* player;
+		//GameObject* player;
 
 		int sizeX;
 		int sizeY;
+		
 		//functions
-		void loadLevel();
+
 		void Shutdown();
+		void initialize();
+		void level0();
 };
 
 

@@ -7,8 +7,32 @@
 #define WALLOBJECT_H
 
 #include "gameobject.h"
+#include "worldDefs.h"
 
-class WallObject: public virtual  GameObject
+class WallObject: public  GameObject
 {
+public:
+	WallObject();
+	WallObject(WALL_TYPE, float, float);
+	~WallObject();
+
+
+	//light switch functions
+	void turnOn();
+	void turnOff();
+
+	//lock controls function
+	void unLock();
+	void lock();
+
+	//door type functions
+	void open();
+	void close();
+
+private:
+	bool lightOn;
+	bool doorLock;
+	WALL_TYPE myType;
+
 };
 #endif

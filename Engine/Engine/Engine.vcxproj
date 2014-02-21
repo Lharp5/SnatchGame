@@ -92,6 +92,8 @@
     <ClCompile Include="cubeTexturedModel.cpp" />
     <ClCompile Include="directinputclass.cpp" />
     <ClCompile Include="enemymodel.cpp" />
+    <ClCompile Include="enemyobject.cpp" />
+    <ClCompile Include="floorobject.cpp" />
     <ClCompile Include="gamemodel.cpp" />
     <ClCompile Include="d3dclass.cpp" />
     <ClCompile Include="gameobject.cpp" />
@@ -100,6 +102,7 @@
     <ClCompile Include="levelclass.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="modelclass.cpp" />
+    <ClCompile Include="playerobject.cpp" />
     <ClCompile Include="prismmodel.cpp" />
     <ClCompile Include="prismTexturedModel.cpp" />
     <ClCompile Include="quadModel.cpp" />
@@ -107,6 +110,8 @@
     <ClCompile Include="systemclass.cpp" />
     <ClCompile Include="textureclass.cpp" />
     <ClCompile Include="textureshaderclass.cpp" />
+    <ClCompile Include="wallobject.cpp" />
+    <ClCompile Include="worldclass.cpp" />
     <ClCompile Include="XYZaxis.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +146,7 @@
     <ClInclude Include="textureshaderclass.h" />
     <ClInclude Include="vertextype.h" />
     <ClInclude Include="wallobject.h" />
+    <ClInclude Include="worldclass.h" />
     <ClInclude Include="worldDefs.h" />
     <ClInclude Include="XYZaxis.h" />
   </ItemGroup>

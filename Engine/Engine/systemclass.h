@@ -37,6 +37,7 @@
 #include "ConeTexturedModel.h"
 #include "carModel.h"
 #include "enemymodel.h"
+#include "levelclass.h"
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -92,6 +93,7 @@ private:
 	ConeTexturedModel* m_cone;
 	EnemyModel* m_enemy;
 	ArrayList<GameModel>* m_GameModels; //container to hold all our game world models
+	LevelClass* m_levels; 
 
 
 	//move movement?

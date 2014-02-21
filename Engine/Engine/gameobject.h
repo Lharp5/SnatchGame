@@ -9,7 +9,7 @@ class GameObject
 {
 	public:
 		GameObject();
-		GameObject(GameModel*);
+		GameObject(GameModel*, float, float, float);
 		~GameObject();
 
 		virtual GameModel* getModel();
@@ -18,9 +18,9 @@ class GameObject
 		virtual void shutdown();
 
 		GameModel* myModel;
-		int xLocation;
-		int yLocation;
-		int zLocation;
+		float xLocation;
+		float yLocation;
+		float zLocation;
 };
 
 

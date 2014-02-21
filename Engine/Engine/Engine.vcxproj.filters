@@ -93,6 +93,21 @@
     <ClCompile Include="enemymodel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="floorobject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="worldclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wallobject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="enemyobject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="playerobject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cameraclass.h">
@@ -192,6 +207,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="enemymodel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="worldclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

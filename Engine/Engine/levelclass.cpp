@@ -10,9 +10,9 @@
 //creating a base level THE TEMP LEVEL
 LevelClass::LevelClass()
 {
-	sizeX =10;
-	sizeY=10;
-	wchar_t* outstring = L"Level Loaded";
+	initialize();
+	loadLevel(0);
+	wchar_t* outstring = L"...Levels Loaded\n";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 }
 
@@ -20,16 +20,69 @@ LevelClass::LevelClass()
 LevelClass::~LevelClass()
 {
 	Shutdown();
-	wchar_t* outstring = L"Level Closed";
+	wchar_t* outstring = L"Levels Closed";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 }
 
+/* Function:	initalize 
+ * Purpose:		to initalize the map.
+*/
+void LevelClass::initialize()
+{
+	sizeX = 100;
+	sizeY = 100;
+
+	for(int i=0; i<sizeX; i++){
+		for(int j=0; j<sizeY; j++){
+			map[i][j] = NULL;
+		}
+	}
+}
+
+
+/* Function:	loadLevel 
+ * Purpose:		to change the level
+ * in:			the level wishing to be assigned as an int.
+*/
+void LevelClass::loadLevel(int level)
+{
+	switch(level){
+	case 1:		break;
+	case 2:		break;
+	case 3:		break;
+	case 4:		break;
+	default:	level0(); break;
+	}
+}
+
+/* Function:	loadLevel 
+ * Purpose:		To assign level 1 to the map
+*/
+void LevelClass::level0()
+{
+	sizeX = 10;
+	sizeY = 10;
+
+	for(int i=0; i<sizeX; i++){
+		for(int j=0; j<sizeY; j++){
+			map[i][j] = new FloorObject(10.0f*i,10.0f*j);
+		}
+	}
+	wchar_t* outstring = L"Level 0: Loaded\n";
+	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
+}
 /* Function:	Shutdown
  * Purpose:		To free up any pointers, close any files.
 */
 void LevelClass::Shutdown()
 {
-	wchar_t* outstring = L"Shutting Level Down....";
+	for(int i=0; i<sizeX; i++){
+		for(int j=1; j<sizeY; j++){
+			if(map[i][j] != NULL)
+				delete map[i][j];
+		}
+	}
+	wchar_t* outstring = L"Levels Shutdown..";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 }
 
@@ -39,11 +92,25 @@ void LevelClass::Shutdown()
 */
 void LevelClass::getPlayerLocation(int* x, int* y)
 {
-	for(int i=0; i<sizeX; i++)
+/*	for(int i=0; i<sizeX; i++)
 		for(int j=0; j<sizeY; j++)
 			if(map[i][j] == player){
 				*x = i;
 				*y = j;
 			}
+*/}
+
+int LevelClass::getSizeX()
+{
+	return sizeX;
 }
 
+int LevelClass::getSizeY()
+{
+	return sizeY;
+}
+
+GameObject* LevelClass::CheckLocation(int x, int y)
+{
+	return map[x][y];
+}

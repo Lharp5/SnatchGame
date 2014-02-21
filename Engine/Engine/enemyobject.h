@@ -6,7 +6,7 @@
 
 #include "gameobject.h"
 #include "enemymodel.h"
-
+#include "worldDefs.h"
 class EnemyObject: public GameObject
 {
 public:
