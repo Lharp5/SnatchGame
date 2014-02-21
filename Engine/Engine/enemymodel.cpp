@@ -2,6 +2,7 @@
 #include "modelclass.h"
 #include "enemymodel.h"
 #include "arraylist.h"
+#include "worldDefs.h"
 
 EnemyModel::EnemyModel(void)
 {
@@ -12,7 +13,6 @@ EnemyModel::EnemyModel(void)
 	m_LeftLeg = 0;
 	m_RightLeg = 0;
 
-    m_directionVector = XMFLOAT3(0.0f,1.0f,0.0f); //face in positive X direction
 	m_InitialPosition = XMFLOAT3(0.0f, 0.0f, 0.0f);
 
 	InitializeModel();
@@ -28,7 +28,6 @@ EnemyModel::EnemyModel(float x, float y, float z, float s)
 	m_LeftLeg = 0;
 	m_RightLeg = 0;
 
-    m_directionVector = XMFLOAT3(0.0f,1.0f,0.0f); //face in positive X direction
 	m_InitialPosition = XMFLOAT3(x, y, z);
 	m_scale = s;
 
@@ -41,10 +40,8 @@ EnemyModel::~EnemyModel(void)
 	Shutdown();
 }
 
-ArrayList<GameModel> EnemyModel::GetGameModels(){
-
-	//Provide an arraylist of simple GameModel components that make up this airplane
-	//These will be given to the GraphicsClass object to render using the graphics pipeline
+ArrayList<GameModel> EnemyModel::GetGameModels()
+{
 
 	ArrayList<GameModel> list;
 
@@ -56,13 +53,19 @@ ArrayList<GameModel> EnemyModel::GetGameModels(){
 	list.add(m_RightLeg);
 
 	return list;
+
 }
 
 
 void EnemyModel::InitializeModel()
 {
 
-	float torsoLength = 0.5f;
+    m_directionVector = XMFLOAT3(0.0f,0.0f,1.0f); //face in positive Z direction
+	m_upDirectionVector = XMFLOAT3(0.0f, 1.0f, 0.0f);
+	torsoLength = 0.5f;
+	step = LEFT;
+	leftRotationAngle = -XM_PIDIV2;
+	rightRotationAngle = -XM_PIDIV2;
 
     WCHAR * placeholderFileNames[] = {
 		 L"../Engine/textures/wood_texture.dds", 
@@ -123,68 +126,75 @@ void EnemyModel::InitializeModel()
 
 void EnemyModel::WalkAnimation()
 {
-	/*
-	float propellerRadianAngularIncrement = -XM_PIDIV4/5;
-	m_Propeller->orientRotateX(propellerRadianAngularIncrement);
-	*/
+	if (leftRotationAngle >= -XM_PIDIV4) step = RIGHT;
+	if (leftRotationAngle <= -XM_PIDIV2-XM_PIDIV4) step = LEFT;
+
+	float rotationRadianAngle;
+	if (step == LEFT) rotationRadianAngle = -XM_PIDIV4/20;
+	else if (step == RIGHT) rotationRadianAngle = XM_PIDIV4/20;
+	
+	m_LeftArm->orientTranslate(0.0f, 0.0f, -cos(leftRotationAngle) * (m_scale * ((torsoLength * 0.9f) / 2.0f)));
+	m_RightArm->orientTranslate(0.0f, 0.0f, -cos(rightRotationAngle) * (m_scale * ((torsoLength * 0.9f) / 2.0f)));
+	m_LeftLeg->orientTranslate(0.0f, 0.0f, -cos(rightRotationAngle) * (m_scale * ((torsoLength * 0.9f) / 2.0f)));
+	m_RightLeg->orientTranslate(0.0f, 0.0f, -cos(leftRotationAngle) * (m_scale * ((torsoLength * 0.9f) / 2.0f)));
+
+	m_LeftArm->orientRotateX(rotationRadianAngle);
+	m_RightArm->orientRotateX(-rotationRadianAngle);
+	m_LeftLeg->orientRotateX(-rotationRadianAngle);
+	m_RightLeg->orientRotateX(rotationRadianAngle);
+	leftRotationAngle -= rotationRadianAngle;
+	rightRotationAngle += rotationRadianAngle;
+	
+	m_LeftArm->orientTranslate(0.0f, 0.0f, cos(leftRotationAngle) * (m_scale * ((torsoLength * 0.9f) / 2.0f)));
+	m_RightArm->orientTranslate(0.0f, 0.0f, cos(rightRotationAngle) * (m_scale * ((torsoLength * 0.9f) / 2.0f)));
+	m_LeftLeg->orientTranslate(0.0f, 0.0f, cos(rightRotationAngle) * (m_scale * ((torsoLength * 0.9f) / 2.0f)));
+	m_RightLeg->orientTranslate(0.0f, 0.0f, cos(leftRotationAngle) * (m_scale * ((torsoLength * 0.9f) / 2.0f)));
 }
 
 void EnemyModel::MoveForward()
 {
-	/*
+	WalkAnimation();
 	XMFLOAT3 effectiveDirectionVector;
-	XMFLOAT4X4 fuselageDirectionMatrix = m_Fuselage->GetWorldRotateMatrix();
-    XMStoreFloat3( &effectiveDirectionVector,  XMVector3Transform( XMLoadFloat3(&m_directionVector), XMLoadFloat4x4(&fuselageDirectionMatrix) ));
+	XMFLOAT4X4 torsoDirectionMatrix = m_Torso->GetWorldRotateMatrix();
+    XMStoreFloat3( &effectiveDirectionVector,  XMVector3Transform( XMLoadFloat3(&m_directionVector), XMLoadFloat4x4(&torsoDirectionMatrix) ));
 
-	float deltaX = effectiveDirectionVector.x*AIRPLANE_FORWARD_SPEED_FACTOR;
-	float deltaY = effectiveDirectionVector.y*AIRPLANE_FORWARD_SPEED_FACTOR;
-	float deltaZ = effectiveDirectionVector.z*AIRPLANE_FORWARD_SPEED_FACTOR;
-
-	m_Fuselage->worldTranslate(deltaX, deltaY, deltaZ);
-	m_Wing->worldTranslate(deltaX, deltaY, deltaZ);
-	m_Propeller->worldTranslate(deltaX, deltaY, deltaZ);
-    m_PontoonLeft->worldTranslate(deltaX, deltaY, deltaZ);
-    m_PontoonRight->worldTranslate(deltaX, deltaY, deltaZ);
-    
-	m_StrutFrontLeft->worldTranslate(deltaX, deltaY, deltaZ);
-    m_StrutFrontRight->worldTranslate(deltaX, deltaY, deltaZ);
-    m_StrutBackLeft->worldTranslate(deltaX, deltaY, deltaZ);
-    m_StrutBackRight->worldTranslate(deltaX, deltaY, deltaZ);
-	*/
+	float deltaX = effectiveDirectionVector.x*ADVANCE_SPEED;
+	float deltaY = effectiveDirectionVector.y*ADVANCE_SPEED;
+	float deltaZ = effectiveDirectionVector.z*ADVANCE_SPEED;
+	
+	m_Head->worldTranslate(deltaX, deltaY, deltaZ);
+	m_Torso->worldTranslate(deltaX, deltaY, deltaZ);
+	m_LeftArm->worldTranslate(deltaX, deltaY, deltaZ);
+	m_RightArm->worldTranslate(deltaX, deltaY, deltaZ);
+	m_LeftLeg->worldTranslate(deltaX, deltaY, deltaZ);
+	m_RightLeg->worldTranslate(deltaX, deltaY, deltaZ);
+	
 }
 
 
 void EnemyModel::TurnLeft()
 {
-	/*
+	
 	float rotationRadianAngle = -XM_PIDIV4/40;
-	m_Fuselage->worldRotateY(rotationRadianAngle);
-	m_Wing->worldRotateY(rotationRadianAngle);
-	m_Propeller->worldRotateY(rotationRadianAngle);
-	m_PontoonLeft->worldRotateY(rotationRadianAngle);
-	m_PontoonRight->worldRotateY(rotationRadianAngle);
-
-	m_StrutFrontLeft->worldRotateY(rotationRadianAngle);
-    m_StrutFrontRight->worldRotateY(rotationRadianAngle);
-    m_StrutBackLeft->worldRotateY(rotationRadianAngle);
-    m_StrutBackRight->worldRotateY(rotationRadianAngle);
-	*/
+	m_Head->worldRotateY(rotationRadianAngle);
+	m_Torso->worldRotateY(rotationRadianAngle);
+	m_LeftArm->worldRotateY(rotationRadianAngle);
+	m_RightArm->worldRotateY(rotationRadianAngle);
+	m_LeftLeg->worldRotateY(rotationRadianAngle);
+	m_RightLeg->worldRotateY(rotationRadianAngle);
+	
 }
 void EnemyModel::TurnRight()
 {
-	/*
+	
 	float rotationRadianAngle = XM_PIDIV4/40;
-	m_Fuselage->worldRotateY(rotationRadianAngle);
-	m_Wing->worldRotateY(rotationRadianAngle);
-	m_Propeller->worldRotateY(rotationRadianAngle);
-	m_PontoonLeft->worldRotateY(rotationRadianAngle);
-	m_PontoonRight->worldRotateY(rotationRadianAngle);
+	m_Head->worldRotateY(rotationRadianAngle);
+	m_Torso->worldRotateY(rotationRadianAngle);
+	m_LeftArm->worldRotateY(rotationRadianAngle);
+	m_RightArm->worldRotateY(rotationRadianAngle);
+	m_LeftLeg->worldRotateY(rotationRadianAngle);
+	m_RightLeg->worldRotateY(rotationRadianAngle);
 
-	m_StrutFrontLeft->worldRotateY(rotationRadianAngle);
-    m_StrutFrontRight->worldRotateY(rotationRadianAngle);
-    m_StrutBackLeft->worldRotateY(rotationRadianAngle);
-    m_StrutBackRight->worldRotateY(rotationRadianAngle);
-	*/
 }
 
 

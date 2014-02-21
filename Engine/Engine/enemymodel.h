@@ -5,11 +5,13 @@
 #include "gamemodel.h"
 #include "cubeTexturedModel.h"
 #include "arraylist.h"
-
+#include "enemyobject.h"
 
 #include <string>
 
 using namespace DirectX;
+
+enum SteppingState { LEFT, RIGHT };
 
 class EnemyModel
 {
@@ -38,7 +40,13 @@ private:
 	CubeTexturedModel* m_RightLeg;
 
 	XMFLOAT3 m_directionVector; //direction plane is facing when constructed
+	XMFLOAT3 m_upDirectionVector;
 	XMFLOAT3 m_InitialPosition;
-	float m_scale;
-};
 
+	float m_scale;
+	float torsoLength;
+	float leftRotationAngle;
+	float rightRotationAngle;
+
+	SteppingState step;
+};
