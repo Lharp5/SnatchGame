@@ -25,6 +25,7 @@ LevelClass::~LevelClass()
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Function:	initalize 
  * Purpose:		to initalize the map.
 */
@@ -75,6 +76,9 @@ void LevelClass::level0()
 =======
 
 >>>>>>> ccfb6a73796238df84156047a14d614ce8ad8f47
+=======
+
+>>>>>>> ccfb6a73796238df84156047a14d614ce8ad8f47
 /* Function:	Shutdown
  * Purpose:		To free up any pointers, close any files.
 */
@@ -110,6 +114,7 @@ int LevelClass::getSizeX()
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 int LevelClass::getSizeY()
 {
 	return sizeY;
@@ -120,6 +125,8 @@ GameObject* LevelClass::CheckLocation(int x, int y)
 	return map[x][y];
 }
 =======
+=======
+>>>>>>> ccfb6a73796238df84156047a14d614ce8ad8f47
 
 /* Function:	CheckLocation
  * Purpose:		To see if there exists an object at a location.
@@ -129,5 +136,9 @@ GameObject* LevelClass::CheckLocation(int x, int y)
 GameObject* LevelClass::CheckLocation(int x, int y)
 {
 	return NULL;
+<<<<<<< HEAD
+}
+>>>>>>> ccfb6a73796238df84156047a14d614ce8ad8f47
+=======
 }
 >>>>>>> ccfb6a73796238df84156047a14d614ce8ad8f47
