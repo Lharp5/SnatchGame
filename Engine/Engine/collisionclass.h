@@ -9,6 +9,6 @@ class CollisionClass
 public:
 	CollisionClass(void);
 	~CollisionClass(void);
-	static bool CheckCollision(int x, int y);
+	static bool CheckCollision(LevelClass* level, int x, int y);
 };
 

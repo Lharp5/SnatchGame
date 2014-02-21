@@ -10,7 +10,7 @@ CollisionClass::~CollisionClass(void)
 {
 }
 
-bool CollisionClass::CheckCollision(int x, int y)
+bool CollisionClass::CheckCollision(LevelClass* level, int x, int y)
 {
-	return (LevelClass::CheckLocation(x, y) != NULL);
+	return (level->CheckLocation(x, y) != NULL);
 }
