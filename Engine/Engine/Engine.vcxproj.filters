@@ -93,6 +93,7 @@
     <ClCompile Include="enemymodel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="floorobject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -106,6 +107,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="playerobject.cpp">
+=======
+    <ClCompile Include="collisionclass.cpp">
+>>>>>>> ccfb6a73796238df84156047a14d614ce8ad8f47
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -209,7 +213,11 @@
     <ClInclude Include="enemymodel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="worldclass.h">
+=======
+    <ClInclude Include="collisionclass.h">
+>>>>>>> ccfb6a73796238df84156047a14d614ce8ad8f47
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

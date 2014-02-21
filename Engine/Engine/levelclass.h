@@ -20,7 +20,7 @@ class LevelClass
 		~LevelClass();
 
 		void getPlayerLocation(int*, int*);
-
+		
 		GameObject* CheckLocation(int, int);
 
 		void loadLevel(int);

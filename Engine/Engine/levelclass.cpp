@@ -24,6 +24,7 @@ LevelClass::~LevelClass()
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 }
 
+<<<<<<< HEAD
 /* Function:	initalize 
  * Purpose:		to initalize the map.
 */
@@ -71,6 +72,9 @@ void LevelClass::level0()
 	wchar_t* outstring = L"Level 0: Loaded\n";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 }
+=======
+
+>>>>>>> ccfb6a73796238df84156047a14d614ce8ad8f47
 /* Function:	Shutdown
  * Purpose:		To free up any pointers, close any files.
 */
@@ -105,6 +109,7 @@ int LevelClass::getSizeX()
 	return sizeX;
 }
 
+<<<<<<< HEAD
 int LevelClass::getSizeY()
 {
 	return sizeY;
@@ -114,3 +119,15 @@ GameObject* LevelClass::CheckLocation(int x, int y)
 {
 	return map[x][y];
 }
+=======
+
+/* Function:	CheckLocation
+ * Purpose:		To see if there exists an object at a location.
+ * in:			X and Y coordinates to check.
+ * out:			Pointer to object that exists there - null otherwise.
+ */
+GameObject* LevelClass::CheckLocation(int x, int y)
+{
+	return NULL;
+}
+>>>>>>> ccfb6a73796238df84156047a14d614ce8ad8f47

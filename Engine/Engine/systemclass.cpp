@@ -509,11 +509,11 @@ bool SystemClass::checkControls()
 
 	if ( m_Input->keyPressed(DIK_LSHIFT)){   
 		if ( m_Input->keyPressed(DIK_LEFT))
-		   m_AirPlane->TurnLeft();
+		   m_enemy->TurnLeft();
 	   if ( m_Input->keyPressed(DIK_RIGHT))
-		   m_AirPlane->TurnRight();
+		   m_enemy->TurnRight();
 	   if ( m_Input->keyPressed(DIK_UP))
-		   m_AirPlane->MoveForward();
+		   m_enemy->MoveForward();
 	   if ( m_Input->keyPressed(DIK_DOWN))
 		   m_Player->MoveDown();	
 	}
