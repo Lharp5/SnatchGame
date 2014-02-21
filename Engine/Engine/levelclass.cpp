@@ -24,6 +24,7 @@ LevelClass::~LevelClass()
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 }
 
+
 /* Function:	Shutdown
  * Purpose:		To free up any pointers, close any files.
 */
@@ -47,3 +48,13 @@ void LevelClass::getPlayerLocation(int* x, int* y)
 			}
 }
 
+
+/* Function:	CheckLocation
+ * Purpose:		To see if there exists an object at a location.
+ * in:			X and Y coordinates to check.
+ * out:			Pointer to object that exists there - null otherwise.
+ */
+GameObject* LevelClass::CheckLocation(int x, int y)
+{
+	return NULL;
+}

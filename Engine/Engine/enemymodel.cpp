@@ -109,7 +109,7 @@ void EnemyModel::InitializeModel()
 	
 	m_LeftLeg = new CubeTexturedModel(m_scale * (torsoLength / 5.0f),
 										m_scale * (torsoLength * 0.9f),
-										m_scale * (torsoLength / 2.0f),
+										m_scale * (torsoLength / 2.5f),
 										placeholderFileNames);
 	m_LeftLeg->orientTranslate(-m_scale * (torsoLength / 8.0f), -m_scale * (torsoLength - torsoLength * 0.05f), 0.0f);
 	m_LeftLeg->worldTranslate(m_InitialPosition.x, m_InitialPosition.y, m_InitialPosition.z);
@@ -117,7 +117,7 @@ void EnemyModel::InitializeModel()
 	
 	m_RightLeg = new CubeTexturedModel(m_scale * (torsoLength / 5.0f),
 										m_scale * (torsoLength * 0.9f),
-										m_scale * (torsoLength / 2.0f),
+										m_scale * (torsoLength / 2.5f),
 										placeholderFileNames);
 	m_RightLeg->orientTranslate(m_scale * (torsoLength / 8.0f), -m_scale * (torsoLength - torsoLength * 0.05f), 0.0f);
 	m_RightLeg->worldTranslate(m_InitialPosition.x, m_InitialPosition.y, m_InitialPosition.z);

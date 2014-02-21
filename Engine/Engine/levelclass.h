@@ -17,7 +17,7 @@ class LevelClass
 
 		void getPlayerLocation(int*, int*);
 
-		GameObject* CheckLocation(int, int);
+		static GameObject* CheckLocation(int, int);
 
 	private:
 		GameObject* map[100][100];
