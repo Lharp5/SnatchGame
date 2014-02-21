@@ -5,7 +5,6 @@
 #include "gamemodel.h"
 #include "cubeTexturedModel.h"
 #include "arraylist.h"
-#include "enemyobject.h"
 
 #include <string>
 
