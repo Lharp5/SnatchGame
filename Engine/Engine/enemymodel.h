@@ -23,6 +23,9 @@ public:
 
 	void TurnLeft();
 	void TurnRight();
+	void TurnLeft90();
+	void TurnRight90();
+	void Turn(float rotationRadianAngle);
 	void MoveForward();
 	void WalkAnimation();
 

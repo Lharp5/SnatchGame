@@ -174,30 +174,33 @@ void EnemyModel::MoveForward()
 
 void EnemyModel::TurnLeft()
 {
-	
-	float rotationRadianAngle = -XM_PIDIV4/40;
-	m_Head->worldRotateY(rotationRadianAngle);
-	m_Torso->worldRotateY(rotationRadianAngle);
-	m_LeftArm->worldRotateY(rotationRadianAngle);
-	m_RightArm->worldRotateY(rotationRadianAngle);
-	m_LeftLeg->worldRotateY(rotationRadianAngle);
-	m_RightLeg->worldRotateY(rotationRadianAngle);
-	
+	Turn(-XM_PIDIV4/40);
 }
+
 void EnemyModel::TurnRight()
 {
-	
-	float rotationRadianAngle = XM_PIDIV4/40;
+	Turn(XM_PIDIV4/40);
+}
+
+void EnemyModel::TurnLeft90()
+{
+	Turn(-XM_PIDIV2);
+}
+
+void EnemyModel::TurnRight90()
+{
+	Turn(XM_PIDIV2);
+}
+
+void EnemyModel::Turn(float rotationRadianAngle)
+{
 	m_Head->worldRotateY(rotationRadianAngle);
 	m_Torso->worldRotateY(rotationRadianAngle);
 	m_LeftArm->worldRotateY(rotationRadianAngle);
 	m_RightArm->worldRotateY(rotationRadianAngle);
 	m_LeftLeg->worldRotateY(rotationRadianAngle);
 	m_RightLeg->worldRotateY(rotationRadianAngle);
-
 }
-
-
 
 void EnemyModel::Shutdown()
 {
