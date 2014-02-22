@@ -59,19 +59,26 @@ void CineCameraClass::MoveForward()
 	You can adjust the constant ADVANCE_SPEED to get a nice
 	smooth motion
 	*/
-	position.x += direction.x * ADVANCE_SPEED;
-	position.y += direction.y * ADVANCE_SPEED;
-	position.z += direction.z * ADVANCE_SPEED;
+
+	XMVECTOR sideWaysVector = XMVector3Normalize(XMVector3Cross(XMLoadFloat3(&upDirection), XMLoadFloat3(&direction) ));
+	XMVECTOR forwardVector = XMVector3Normalize(XMVector3Cross(XMLoadFloat3(&trueUpDirection), sideWaysVector ));
+		
+	position.x -= XMVectorGetX(forwardVector) * ADVANCE_SPEED;
+	position.y -= XMVectorGetY(forwardVector) * ADVANCE_SPEED;
+	position.z -= XMVectorGetZ(forwardVector) * ADVANCE_SPEED;
 	return;
 }
 void CineCameraClass::MoveBackward()
 {
 	wchar_t* outstring = L"CineCameraClass::Move Backward\n";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
-
-	position.x -= direction.x * ADVANCE_SPEED;
-	position.y -= direction.y * ADVANCE_SPEED;
-	position.z -= direction.z * ADVANCE_SPEED;
+	
+	XMVECTOR sideWaysVector = XMVector3Normalize(XMVector3Cross(XMLoadFloat3(&upDirection), XMLoadFloat3(&direction) ));
+	XMVECTOR forwardVector = XMVector3Normalize(XMVector3Cross(XMLoadFloat3(&trueUpDirection), sideWaysVector ));
+		
+	position.x += XMVectorGetX(forwardVector) * ADVANCE_SPEED;
+	position.y += XMVectorGetY(forwardVector) * ADVANCE_SPEED;
+	position.z += XMVectorGetZ(forwardVector) * ADVANCE_SPEED;
 	return;
 }
 
