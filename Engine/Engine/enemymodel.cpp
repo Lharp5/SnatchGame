@@ -67,58 +67,98 @@ void EnemyModel::InitializeModel()
 	leftRotationAngle = -XM_PIDIV2;
 	rightRotationAngle = -XM_PIDIV2;
 
-    WCHAR * placeholderFileNames[] = {
-		 L"../Engine/textures/wood_texture.dds", 
-		 L"../Engine/textures/wood_texture.dds",
-		 L"../Engine/textures/wood_texture.dds",
-		 L"../Engine/textures/wood_texture.dds",
-		 L"../Engine/textures/end_grain.dds",
-		 L"../Engine/textures/end_grain.dds",
+    WCHAR * headFileNames[] = {
+		 L"../Engine/textures/EnemyTextures/EnemyHeadBack.dds", 
+		 L"../Engine/textures/EnemyTextures/EnemyHeadFront.dds",
+		 L"../Engine/textures/EnemyTextures/EnemyHeadSides.dds",
+		 L"../Engine/textures/EnemyTextures/EnemyHeadSides.dds",
+		 L"../Engine/textures/EnemyTextures/EnemyHeadTop.dds",
+		 L"../Engine/textures/EnemyTextures/EnemyHeadBottom.dds",
 	};
 
 	m_Head = new CubeTexturedModel(m_scale * (torsoLength * 0.7f),
 									m_scale * (torsoLength * 0.7f),
 									m_scale * (torsoLength * 0.7f),
-									placeholderFileNames);
+									headFileNames);
 	m_Head->orientTranslate(0.0f, m_scale * (torsoLength / 2.0f + (torsoLength * 0.7f) / 2.0f), 0.0f);
 	m_Head->worldTranslate(m_InitialPosition.x, m_InitialPosition.y, m_InitialPosition.z);
 	
+	WCHAR * torsoFileNames[] = {
+		 L"../Engine/textures/EnemyTextures/EnemyTorsoBack.dds", 
+		 L"../Engine/textures/EnemyTextures/EnemyTorsoFront.dds",
+		 L"../Engine/textures/EnemyTextures/EnemyTorsoSides.dds",
+		 L"../Engine/textures/EnemyTextures/EnemyTorsoSides.dds",
+		 L"../Engine/textures/EnemyTextures/EnemyTorsoTopBot.dds",
+		 L"../Engine/textures/EnemyTextures/EnemyTorsoTopBot.dds",
+	};
 
 	m_Torso = new CubeTexturedModel(m_scale * (torsoLength / 2.0f),
 									m_scale * (torsoLength),
 									m_scale * (torsoLength / 2.0f),
-									placeholderFileNames);
+									torsoFileNames);
 	m_Torso->worldTranslate(m_InitialPosition.x, m_InitialPosition.y, m_InitialPosition.z);
-
 	
+	WCHAR * leftArmFileNames[] = {
+		 L"../Engine/textures/EnemyTextures/EnemyArms.dds", 
+		 L"../Engine/textures/EnemyTextures/EnemyArms.dds",
+		 L"../Engine/textures/EnemyTextures/EnemyArmsInsides.dds",
+		 L"../Engine/textures/EnemyTextures/EnemyArms.dds",
+		 L"../Engine/textures/EnemyTextures/EnemyShoulders.dds",
+		 L"../Engine/textures/EnemyTextures/EnemyHands.dds",
+	};
+
 	m_LeftArm = new CubeTexturedModel(m_scale * (torsoLength / 5.0f),
 										m_scale * (torsoLength * 0.9f),
 										m_scale * (torsoLength / 3.0f),
-										placeholderFileNames);
+										leftArmFileNames);
 	m_LeftArm->orientTranslate(-m_scale * (torsoLength / 2.0f - (torsoLength / 4.0f) / 2.0f), m_scale * (torsoLength * 0.05f), 0.0f);
 	m_LeftArm->worldTranslate(m_InitialPosition.x, m_InitialPosition.y, m_InitialPosition.z);
-
+	
+	WCHAR * rightArmFileNames[] = {
+		 L"../Engine/textures/EnemyTextures/EnemyArms.dds", 
+		 L"../Engine/textures/EnemyTextures/EnemyArms.dds",
+		 L"../Engine/textures/EnemyTextures/EnemyArms.dds",
+		 L"../Engine/textures/EnemyTextures/EnemyArmsInsides.dds",
+		 L"../Engine/textures/EnemyTextures/EnemyShoulders.dds",
+		 L"../Engine/textures/EnemyTextures/EnemyHands.dds",
+	};
 	
 	m_RightArm = new CubeTexturedModel(m_scale * (torsoLength / 5.0f),
 										m_scale * (torsoLength * 0.9f),
 										m_scale * (torsoLength / 3.0f),
-										placeholderFileNames);
+										rightArmFileNames);
 	m_RightArm->orientTranslate(m_scale * (torsoLength / 2.0f - (torsoLength / 4.0f) / 2.0f), m_scale * (torsoLength * 0.05f), 0.0f);
 	m_RightArm->worldTranslate(m_InitialPosition.x, m_InitialPosition.y, m_InitialPosition.z);
-
+	
+	WCHAR * leftLegFileNames[] = {
+		 L"../Engine/textures/EnemyTextures/EnemyLegsSides.dds", 
+		 L"../Engine/textures/EnemyTextures/EnemyLegsFront.dds",
+		 L"../Engine/textures/EnemyTextures/EnemyLegsInsides.dds",
+		 L"../Engine/textures/EnemyTextures/EnemyLegsSides.dds",
+		 L"../Engine/textures/EnemyTextures/EnemyShoulders.dds",
+		 L"../Engine/textures/EnemyTextures/EnemyTorsoTopBot.dds",
+	};
 	
 	m_LeftLeg = new CubeTexturedModel(m_scale * (torsoLength / 5.0f),
 										m_scale * (torsoLength * 0.9f),
 										m_scale * (torsoLength / 2.5f),
-										placeholderFileNames);
+										leftLegFileNames);
 	m_LeftLeg->orientTranslate(-m_scale * (torsoLength / 8.0f), -m_scale * (torsoLength - torsoLength * 0.05f), 0.0f);
 	m_LeftLeg->worldTranslate(m_InitialPosition.x, m_InitialPosition.y, m_InitialPosition.z);
-
+	
+	WCHAR * rightLegFileNames[] = {
+		 L"../Engine/textures/EnemyTextures/EnemyLegsSides.dds", 
+		 L"../Engine/textures/EnemyTextures/EnemyLegsFront.dds",
+		 L"../Engine/textures/EnemyTextures/EnemyLegsSides.dds",
+		 L"../Engine/textures/EnemyTextures/EnemyLegsInsides.dds",
+		 L"../Engine/textures/EnemyTextures/EnemyShoulders.dds",
+		 L"../Engine/textures/EnemyTextures/EnemyTorsoTopBot.dds",
+	};
 	
 	m_RightLeg = new CubeTexturedModel(m_scale * (torsoLength / 5.0f),
 										m_scale * (torsoLength * 0.9f),
 										m_scale * (torsoLength / 2.5f),
-										placeholderFileNames);
+										rightLegFileNames);
 	m_RightLeg->orientTranslate(m_scale * (torsoLength / 8.0f), -m_scale * (torsoLength - torsoLength * 0.05f), 0.0f);
 	m_RightLeg->worldTranslate(m_InitialPosition.x, m_InitialPosition.y, m_InitialPosition.z);
 
@@ -158,9 +198,9 @@ void EnemyModel::MoveForward()
 	XMFLOAT4X4 torsoDirectionMatrix = m_Torso->GetWorldRotateMatrix();
     XMStoreFloat3( &effectiveDirectionVector,  XMVector3Transform( XMLoadFloat3(&m_directionVector), XMLoadFloat4x4(&torsoDirectionMatrix) ));
 
-	float deltaX = effectiveDirectionVector.x*ADVANCE_SPEED;
-	float deltaY = effectiveDirectionVector.y*ADVANCE_SPEED;
-	float deltaZ = effectiveDirectionVector.z*ADVANCE_SPEED;
+	float deltaX = effectiveDirectionVector.x*ADVANCE_SPEED/3.0f;
+	float deltaY = effectiveDirectionVector.y*ADVANCE_SPEED/3.0f;
+	float deltaZ = effectiveDirectionVector.z*ADVANCE_SPEED/3.0f;
 	
 	m_Head->worldTranslate(deltaX, deltaY, deltaZ);
 	m_Torso->worldTranslate(deltaX, deltaY, deltaZ);
@@ -174,12 +214,12 @@ void EnemyModel::MoveForward()
 
 void EnemyModel::TurnLeft()
 {
-	Turn(-XM_PIDIV4/40);
+	Turn(-XM_PIDIV4/20);
 }
 
 void EnemyModel::TurnRight()
 {
-	Turn(XM_PIDIV4/40);
+	Turn(XM_PIDIV4/20);
 }
 
 void EnemyModel::TurnLeft90()
