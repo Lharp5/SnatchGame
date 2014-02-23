@@ -62,12 +62,32 @@ void LevelClass::level0()
 {
 	sizeX = 10;
 	sizeY = 10;
-
+	
 	for(int i=0; i<sizeX; i++){
 		for(int j=0; j<sizeY; j++){
 			map[i][j] = new FloorObject(10.0f*i,10.0f*j);
 		}
 	}
+
+	//creates the wall images. adjusting their location side walls
+	for(int a=0; a<sizeY; a++){
+		map[0][a] = new WallObject(wall, 0.0f, 10.0f*a);
+		map[0][a]->getModel()->worldRotateY(-XM_PIDIV2);
+		map[0][a]->getModel()->worldTranslate(5.0f,0.0f,0.0f);
+		map[sizeX-1][a] = new WallObject(wall, 10.0f*sizeX-1, 10.0f*a);
+		map[sizeX-1][a]->getModel()->worldRotateY(XM_PIDIV2);
+		map[sizeX-1][a]->getModel()->worldTranslate(-14.0f,0.0f,0.0f);
+	}
+	//back/front walls walls
+	for(int b=0; b<sizeX; b++){
+		map[b][0] = new WallObject(wall, 10.0f*b, 0.0f);
+		map[b][0]->getModel()->worldRotateY(XM_PI);
+		map[b][0]->getModel()->worldTranslate(0.0f,0.0f,5.0f);
+		map[b][sizeY-1] = new WallObject(wall, 10.0f*b,10.0f*sizeY-1);
+		//map[b][sizeY-1]->getModel()->worldRotateY(XM_PI);
+		map[b][sizeY-1]->getModel()->worldTranslate(0.0f,0.0f,-14.0f);
+	}
+
 	wchar_t* outstring = L"Level 0: Loaded\n";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 }
@@ -110,13 +130,15 @@ int LevelClass::getSizeY()
 	return sizeY;
 }
 
-GameObject* LevelClass::CheckLocation(int x, int y)
-{
-	return map[x][y];
-}
 
 /* Function:	CheckLocation
  * Purpose:		To see if there exists an object at a location.
  * in:			X and Y coordinates to check.
  * out:			Pointer to object that exists there - null otherwise.
  */
+GameObject* LevelClass::CheckLocation(int x, int y)
+{
+	return map[x][y];
+}
+
+

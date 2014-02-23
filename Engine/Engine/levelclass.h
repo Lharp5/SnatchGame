@@ -10,6 +10,7 @@
 #include "wallobject.h"
 #include "playerobject.h"
 #include "enemyobject.h"
+#include "gamemodel.h"
 
 #include <windows.h> //needed to create and destroy windows and call Win32 functions
 

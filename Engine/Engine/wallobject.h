@@ -8,6 +8,7 @@
 
 #include "gameobject.h"
 #include "worldDefs.h"
+#include "quadTexturedModel.h"
 
 class WallObject: public  GameObject
 {

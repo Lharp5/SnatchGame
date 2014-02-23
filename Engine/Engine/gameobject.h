@@ -12,10 +12,10 @@ class GameObject
 		GameObject(GameModel*, float, float, float);
 		~GameObject();
 
-		virtual GameModel* getModel();
+		GameModel* getModel();
 	protected:
-		virtual void initialize();
-		virtual void shutdown();
+		void initialize();
+		void shutdown();
 
 		GameModel* myModel;
 		float xLocation;
