@@ -96,9 +96,9 @@ void CineCameraClass::CraneUp()
 	(that is along a y-axis). If the camera is tilted up or down that will affect
 	the up vector. See the implementation of the camera tilt method below.
 	*/
-	position.x += upDirection.x * CAMERA_CRANE_SPEED;
-	position.y += upDirection.y * CAMERA_CRANE_SPEED;
-	position.z += upDirection.z * CAMERA_CRANE_SPEED;
+	position.x += trueUpDirection.x * CAMERA_CRANE_SPEED;
+	position.y += trueUpDirection.y * CAMERA_CRANE_SPEED;
+	position.z += trueUpDirection.z * CAMERA_CRANE_SPEED;
 	return;
 }
 void CineCameraClass::CraneDown()
@@ -117,9 +117,9 @@ void CineCameraClass::CraneDown()
 	the up vector. See the implementation of the camera tilt method below.
 	*/
 
-	position.x -= upDirection.x * CAMERA_CRANE_SPEED;
-	position.y -= upDirection.y * CAMERA_CRANE_SPEED;
-	position.z -= upDirection.z * CAMERA_CRANE_SPEED;
+	position.x -= trueUpDirection.x * CAMERA_CRANE_SPEED;
+	position.y -= trueUpDirection.y * CAMERA_CRANE_SPEED;
+	position.z -= trueUpDirection.z * CAMERA_CRANE_SPEED;
 	return;
 }
 void CineCameraClass::StrafeLeft()
