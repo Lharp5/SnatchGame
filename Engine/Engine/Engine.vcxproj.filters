@@ -1,27 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Shader Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
+    <ClCompile Include="airplanemodel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="cameraclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="carModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cinecameraclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="collisionclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="colorshaderclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ConeTexturedModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cubemodel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cubeTexturedModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="d3dclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="directinputclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="enemymodel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="enemyobject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="floorobject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gamemodel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="graphicsclass.cpp">
@@ -30,34 +55,31 @@
     <ClCompile Include="inputclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="levelclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="modelclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="systemclass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="XYZaxis.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="cinecameraclass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="gamemodel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="cubemodel.cpp">
+    <ClCompile Include="playerobject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="prismmodel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="airplanemodel.cpp">
+    <ClCompile Include="prismTexturedModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="quadModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="quadTexturedModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="systemclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="textureclass.cpp">
@@ -66,65 +88,66 @@
     <ClCompile Include="textureshaderclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="quadTexturedModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="cubeTexturedModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="prismTexturedModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ConeTexturedModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="carModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="directinputclass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="levelclass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="gameobject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="enemymodel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <ClCompile Include="floorobject.cpp">
+    <ClCompile Include="wallobject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="worldclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="wallobject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="enemyobject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="playerobject.cpp">
-=======
-    <ClCompile Include="collisionclass.cpp">
->>>>>>> ccfb6a73796238df84156047a14d614ce8ad8f47
-=======
-    <ClCompile Include="collisionclass.cpp">
->>>>>>> ccfb6a73796238df84156047a14d614ce8ad8f47
+    <ClCompile Include="XYZaxis.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="airplanemodel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="arraylist.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="cameraclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="carModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cinecameraclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="collisionclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="colorshaderclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ConeTexturedModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cubemodel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cubeTexturedModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="d3dclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="directinputclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="enemymodel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="enemyobject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="floorobject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gamemodel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="graphicsclass.h">
@@ -133,40 +156,31 @@
     <ClInclude Include="inputclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="levelclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="modelclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="systemclass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="vertextype.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="XYZaxis.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="cinecameraclass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="arraylist.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="gamemodel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="cubemodel.h">
+    <ClInclude Include="playerobject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="prismmodel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="airplanemodel.h">
+    <ClInclude Include="prismTexturedModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="quadModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="quadTexturedModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="quadModel.h">
+    <ClInclude Include="systemclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="textureclass.h">
@@ -175,72 +189,45 @@
     <ClInclude Include="textureshaderclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="quadTexturedModel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="cubeTexturedModel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="prismTexturedModel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ConeTexturedModel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="carModel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="worldDefs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="directinputclass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="levelclass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="gameobject.h">
+    <ClInclude Include="vertextype.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="wallobject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="floorobject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="playerobject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="enemyobject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="enemymodel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-<<<<<<< HEAD
-<<<<<<< HEAD
     <ClInclude Include="worldclass.h">
-=======
-    <ClInclude Include="collisionclass.h">
->>>>>>> ccfb6a73796238df84156047a14d614ce8ad8f47
-=======
-    <ClInclude Include="collisionclass.h">
->>>>>>> ccfb6a73796238df84156047a14d614ce8ad8f47
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="worldDefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="XYZaxis.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="color.ps">
-      <Filter>Shader Files</Filter>
-    </None>
     <None Include="color.vs">
-      <Filter>Shader Files</Filter>
+      <Filter>Resource Files</Filter>
     </None>
-    <None Include="texture.ps">
-      <Filter>Shader Files</Filter>
+    <None Include="color.ps">
+      <Filter>Resource Files</Filter>
     </None>
     <None Include="texture.vs">
-      <Filter>Shader Files</Filter>
+      <Filter>Resource Files</Filter>
     </None>
+    <None Include="texture.ps">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{ebba9cff-20ca-435f-9561-71ecb3969f57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{9ec5479f-9b37-4f2f-8325-aee42b68c86e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{8d9c69e8-812e-4343-aa94-da2b228a065a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
