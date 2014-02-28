@@ -279,3 +279,10 @@ void DirectInputClass::GetMouseLocation(int& mouseX, int& mouseY)
 	return;
 }
 
+void DirectInputClass::GetMouseDisplacement(int& mouseX, int& mouseY)
+{
+	mouseX = m_mouseState.lX;
+	mouseY = m_mouseState.lY;
+	return;
+}
+

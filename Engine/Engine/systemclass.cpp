@@ -480,7 +480,6 @@ bool SystemClass::Frame()
 	// Check if the user pressed escape and wants to exit the application.
 	if(!checkControls())
 		return false;
-
 	
 	//Move camera or models based on input
 	
@@ -497,6 +496,8 @@ bool SystemClass::Frame()
 	{
 		return false;
 	}
+	
+	SetCursorPos(GetSystemMetrics(SM_CXSCREEN)  / 2, GetSystemMetrics(SM_CYSCREEN)  / 2);
 
 	return true;
 }
@@ -550,7 +551,7 @@ bool SystemClass::checkControls()
 
 	   if ( m_Input->keyPressed(DIK_S) ) //Camera Pull Back
 		  m_Camera->MoveBackward();
-
+	   /*
 	   if ( m_Input->keyPressed(DIK_LEFT) ) //Pan Camera Left
 	      m_Camera->PanLeft();
 
@@ -562,7 +563,19 @@ bool SystemClass::checkControls()
 
 	   if ( m_Input->keyPressed(DIK_DOWN) ) //Tilt Camera Upward
 		  m_Camera->TiltDown();	
+	   */
+	   
 	}
+	int x, y;
+	m_Input->GetMouseDisplacement(x, y);
+	if (abs(x) > 0 || abs(y) > 0)
+	{
+		wchar_t s[32];
+		wsprintf(s, L"Mouse Displacement: %d, %d\n", x, y);
+		WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), s, wcslen(s), NULL, NULL);
+		m_Camera->CameraAim(x, y);
+	}
+
 	//user is still playing
 	return true;
 }
@@ -678,7 +691,8 @@ void SystemClass::InitializeWindows(int& screenWidth, int& screenHeight)
 	SetFocus(m_hwnd);            //give window input focus
 
 	// Hide the mouse cursor if you don't want it over your game window.
-	//ShowCursor(false);
+	ShowCursor(false);
+	SetCursorPos(GetSystemMetrics(SM_CXSCREEN)  / 2, GetSystemMetrics(SM_CYSCREEN)  / 2);
 
 	return;
 }

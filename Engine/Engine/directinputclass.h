@@ -53,6 +53,7 @@ public:
 	bool IsEscapePressed();
 	bool keyPressed(unsigned char);
 	void GetMouseLocation(int&, int&);
+	void GetMouseDisplacement(int& mouseX, int& mouseY);
 
 private:
 	bool ReadKeyboard();

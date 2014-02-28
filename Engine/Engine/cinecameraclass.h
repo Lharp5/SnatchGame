@@ -26,8 +26,8 @@ Pan-Tilt_Strafe-Dolly-Crane-Zooom
 	//these constants can be adjusted to provide smooth feel for the 
 	//camera moves
 
-	const float CAMERA_TILT_SPEED = 2.0f; //up and down rotation about the sideways vector direction
-	const float CAMERA_PAN_SPEED = 2.0f; //left and right rotation about the up vector
+	const float CAMERA_TILT_SPEED = 1.0f; //up and down rotation about the sideways vector direction
+	const float CAMERA_PAN_SPEED = 1.0f; //left and right rotation about the up vector
 	const float CAMERA_ROLL_SPEED = 1.0f; //left and right rotation about the camera direction vector
 	const float CAMERA_DOLLY_SPEED = 0.1f;; //used for forward and backward travel along the camera direction vector
 	const float CAMERA_STRAFE_SPEED = 0.1f; //sideways translation along the sideways vector direction
@@ -64,10 +64,13 @@ public:
 	void TiltDown(); //rotate lens, or view, downwards around camera sideways vector
 	void PanLeft(); //rotate left around camera up vector
 	void PanRight(); //rotate right around cameara up vector
+	void Tilt(float degree);
+	void Pan(float degree);
 	void RollLeft(); //rotate left around camera direction vector
 	void RollRight(); //rotate right around cameara direction vector
 	void ZoomIn(); //increase the effective focal length for camera lens (smaller field of view angle)
 	void ZoomOut(); //decrease the effectigve focal length of the camera lens (greater field of view angle)
+	void CameraAim(int&, int&);
 
 	XMFLOAT3 GetPosition();
 

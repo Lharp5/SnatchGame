@@ -93,8 +93,10 @@ private:
 	ConeTexturedModel* m_cone;
 	EnemyModel* m_enemy;
 	ArrayList<GameModel>* m_GameModels; //container to hold all our game world models
-	LevelClass* m_levels; 
+	LevelClass* m_levels;
 
+	int prevMouseX;
+	int prevMouseY;
 
 	//move movement?
 
