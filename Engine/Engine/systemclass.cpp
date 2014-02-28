@@ -551,7 +551,7 @@ bool SystemClass::checkControls()
 
 	   if ( m_Input->keyPressed(DIK_S) ) //Camera Pull Back
 		  m_Camera->MoveBackward();
-	   /*
+	   
 	   if ( m_Input->keyPressed(DIK_LEFT) ) //Pan Camera Left
 	      m_Camera->PanLeft();
 
@@ -563,7 +563,7 @@ bool SystemClass::checkControls()
 
 	   if ( m_Input->keyPressed(DIK_DOWN) ) //Tilt Camera Upward
 		  m_Camera->TiltDown();	
-	   */
+	   
 	   
 	}
 	int x, y;

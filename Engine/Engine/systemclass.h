@@ -95,9 +95,6 @@ private:
 	ArrayList<GameModel>* m_GameModels; //container to hold all our game world models
 	LevelClass* m_levels;
 
-	int prevMouseX;
-	int prevMouseY;
-
 	//move movement?
 
 
