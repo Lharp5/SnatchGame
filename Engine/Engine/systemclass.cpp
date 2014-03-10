@@ -220,7 +220,7 @@ bool SystemClass::Initialize()
     m_cone->orientRotateZ(XM_PIDIV4); //orient relative to model origin
 	m_cone->worldTranslate(-2.5f, -2.5f, 0.0f); //move to location in the world
 
-	m_enemy = new EnemyModel(15.0f, 0.0f, 60.0f, 5.0f);
+	m_enemy = new EnemyModel(15.0f, -1.85f, 60.0f, 5.0f);
 
 
 	m_levels = new LevelClass();

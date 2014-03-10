@@ -143,7 +143,7 @@ void EnemyModel::InitializeModel()
 										m_scale * (torsoLength * 0.9f),
 										m_scale * (torsoLength / 2.5f),
 										leftLegFileNames);
-	m_LeftLeg->orientTranslate(-m_scale * (torsoLength / 8.0f), -m_scale * (torsoLength - torsoLength * 0.2f), 0.0f);
+	m_LeftLeg->orientTranslate(-m_scale * (torsoLength / 8.0f), -m_scale * (torsoLength * 0.8f), 0.0f);
 	m_LeftLeg->worldTranslate(m_InitialPosition.x, m_InitialPosition.y, m_InitialPosition.z);
 	
 	WCHAR * rightLegFileNames[] = {
@@ -159,7 +159,7 @@ void EnemyModel::InitializeModel()
 										m_scale * (torsoLength * 0.9f),
 										m_scale * (torsoLength / 2.5f),
 										rightLegFileNames);
-	m_RightLeg->orientTranslate(m_scale * (torsoLength / 8.0f), -m_scale * (torsoLength - torsoLength * 0.2f), 0.0f);
+	m_RightLeg->orientTranslate(m_scale * (torsoLength / 8.0f), -m_scale * (torsoLength * 0.8f), 0.0f);
 	m_RightLeg->worldTranslate(m_InitialPosition.x, m_InitialPosition.y, m_InitialPosition.z);
 
 }
