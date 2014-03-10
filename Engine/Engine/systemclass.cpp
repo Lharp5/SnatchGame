@@ -236,8 +236,6 @@ bool SystemClass::Initialize()
 	m_GameModels->addAll(m_AirPlane->GetGameModels());
 	m_GameModels->addAll(m_Car->GetGameModels());
 	m_GameModels->addAll(m_enemy->GetGameModels());
-	m_GameModels->add(m_cokeSignFront);
-	m_GameModels->add(m_cokeSignBack);
 
 	m_levels->loadLevel(0);
 	
@@ -245,7 +243,9 @@ bool SystemClass::Initialize()
 		for(int j=0; j<m_levels->getSizeY(); j++)
 			m_GameModels->add(m_levels->CheckLocation(i,j)->getModel());
 
-
+	
+	m_GameModels->add(m_cokeSignFront);
+	m_GameModels->add(m_cokeSignBack);
 	// Create the graphics object.  This object will handle rendering all the graphics for this application.
 	m_Graphics = new GraphicsClass;
 	if(!m_Graphics)
