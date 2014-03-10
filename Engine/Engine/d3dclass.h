@@ -59,7 +59,9 @@ public:
 	//view matrix will be obtained from a camera object when needed
 
 	void GetVideoCardInfo(char*, int&);
-
+		
+	void TurnOnAlphaBlending();
+	void TurnOffAlphaBlending();
 
 private:
 	bool m_vsync_enabled;
@@ -76,7 +78,8 @@ private:
 	XMFLOAT4X4 m_projectionMatrix;
 	XMFLOAT4X4 m_worldMatrix;
 	XMFLOAT4X4 m_orthoMatrix;
-
+	ID3D11BlendState* m_alphaEnableBlendingState;
+	ID3D11BlendState* m_alphaDisableBlendingState;
 
 
 };

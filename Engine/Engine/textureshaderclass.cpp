@@ -11,6 +11,7 @@ TextureShaderClass::TextureShaderClass()
 	m_layout = 0;
 	m_matrixBuffer = 0;
 	m_sampleState = 0;
+	m_transparentBuffer = 0;
 }
 
 
@@ -50,13 +51,13 @@ void TextureShaderClass::Shutdown()
 
 
 bool TextureShaderClass::Render(ID3D11DeviceContext* deviceContext, int indexCount, XMFLOAT4X4 worldMatrix, XMFLOAT4X4 viewMatrix, 
-								XMFLOAT4X4 projectionMatrix, ID3D11ShaderResourceView* texture)
+								XMFLOAT4X4 projectionMatrix, ID3D11ShaderResourceView* texture, float blend)
 {
 	bool result;
 
 
 	// Set the shader parameters that it will use for rendering.
-	result = SetShaderParameters(deviceContext, worldMatrix, viewMatrix, projectionMatrix, texture);
+	result = SetShaderParameters(deviceContext, worldMatrix, viewMatrix, projectionMatrix, texture, blend);
 	if(!result)
 	{
 		return false;
@@ -79,7 +80,7 @@ bool TextureShaderClass::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR
 	unsigned int numElements;
 	D3D11_BUFFER_DESC matrixBufferDesc;
     D3D11_SAMPLER_DESC samplerDesc;
-
+	D3D11_BUFFER_DESC transparentBufferDesc;
 
 	// Initialize the pointers this function will use to null.
 	errorMessage = 0;
@@ -210,6 +211,20 @@ bool TextureShaderClass::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR
 	{
 		return false;
 	}
+	// Setup the description of the transparent dynamic constant buffer that is in the pixel shader.
+	transparentBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+	transparentBufferDesc.ByteWidth = sizeof(TransparentBufferType);
+	transparentBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	transparentBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	transparentBufferDesc.MiscFlags = 0;
+	transparentBufferDesc.StructureByteStride = 0;
+
+	// Create the constant buffer pointer so we can access the pixel shader constant buffer from within this class.
+	result = device->CreateBuffer(&transparentBufferDesc, NULL, &m_transparentBuffer);
+	if(FAILED(result))
+	{
+		return false;
+	}
 
 	return true;
 }
@@ -217,6 +232,13 @@ bool TextureShaderClass::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR
 
 void TextureShaderClass::ShutdownShader()
 {
+	// Release the transparent constant buffer.
+	if(m_transparentBuffer)
+	{
+		m_transparentBuffer->Release();
+		m_transparentBuffer = 0;
+	}
+
 	// Release the sampler state.
 	if(m_sampleState)
 	{
@@ -293,13 +315,13 @@ void TextureShaderClass::OutputShaderErrorMessage(ID3D10Blob* errorMessage, HWND
 
 
 bool TextureShaderClass::SetShaderParameters(ID3D11DeviceContext* deviceContext, XMFLOAT4X4 worldMatrix, XMFLOAT4X4 viewMatrix, 
-											 XMFLOAT4X4 projectionMatrix, ID3D11ShaderResourceView* texture)
+											 XMFLOAT4X4 projectionMatrix, ID3D11ShaderResourceView* texture, float blend)
 {
 	HRESULT result;
     D3D11_MAPPED_SUBRESOURCE mappedResource;
 	MatrixBufferType* dataPtr;
 	unsigned int bufferNumber;
-
+	TransparentBufferType* dataPtr2;
 
 	// Transpose the matrices to prepare them for the shader.
 	XMStoreFloat4x4(&worldMatrix, XMMatrixTranspose(XMLoadFloat4x4(&worldMatrix)));
@@ -332,6 +354,27 @@ bool TextureShaderClass::SetShaderParameters(ID3D11DeviceContext* deviceContext,
 
 	// Set shader texture resource in the pixel shader.
 	deviceContext->PSSetShaderResources(0, 1, &texture);
+	// Lock the transparent constant buffer so it can be written to.
+	result = deviceContext->Map(m_transparentBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+	if(FAILED(result))
+	{
+		return false;
+	}
+
+	// Get a pointer to the data in the transparent constant buffer.
+	dataPtr2 = (TransparentBufferType*)mappedResource.pData;
+
+	// Copy the blend amount value into the transparent constant buffer.
+	dataPtr2->blendAmount = blend;
+
+	// Unlock the buffer.
+	deviceContext->Unmap(m_transparentBuffer, 0);
+
+	// Set the position of the transparent constant buffer in the pixel shader.
+	bufferNumber = 0;
+
+	// Now set the texture translation constant buffer in the pixel shader with the updated values.
+	deviceContext->PSSetConstantBuffers(bufferNumber, 1, &m_transparentBuffer);
 
 	return true;
 }

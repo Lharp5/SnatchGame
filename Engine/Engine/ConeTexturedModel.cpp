@@ -242,8 +242,8 @@ bool ConeTexturedModel::Render(ID3D11DeviceContext* deviceContext,  XMFLOAT4X4 v
 								          GetWorldMatrix(), 
 								          viewMatrix, 
 								          projectionMatrix,
-										  GetTexture(i) //get the texture to render
-										  ); 
+										  GetTexture(i), //get the texture to render
+										  1.0f); 
 
 	 if(!result) return false;
 	

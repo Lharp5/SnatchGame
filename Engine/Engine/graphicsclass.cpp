@@ -275,7 +275,7 @@ bool GraphicsClass::Render()
 
 	// Clear the buffers to begin the scene.
 	m_D3D->BeginScene(0.0f, 0.0f, 0.0f, 1.0f); //R,G,B,A values for background (Opaque Black)
-
+	m_D3D->TurnOnAlphaBlending();
 	// Generate the view matrix based on the camera's position.
 	m_Camera->Render();
 
@@ -284,7 +284,8 @@ bool GraphicsClass::Render()
 	m_Camera->GetProjectionMatrix(projectionMatrix);
 
 	m_D3D->GetWorldMatrix(axisWorld); //set to identity matrix
-
+	
+	// Turn on alpha blending for the transparency to work.
 
 	if(m_GameWorldModels && !m_GameWorldModels->isEmpty())
 
@@ -300,12 +301,14 @@ bool GraphicsClass::Render()
 								          projectionMatrix,
 										  m_ColorShader,
 										  m_TextureShader); 
+		     	// Turn off alpha blending.
+
 	
 	       if(!result) {return false;}
  
 
 	}
- 
+	m_D3D->TurnOffAlphaBlending();
 
 	// Set up the model for axis scale
 

@@ -5,7 +5,7 @@
 #include "textureclass.h"
 #include "modelclass.h"
 #include "gamemodel.h"
-
+#include "d3dclass.h"
 
 #include <string>
 
@@ -23,6 +23,7 @@ public:
     virtual bool initializeTextures(ID3D11Device* d3dDevice);
 	virtual ID3D11ShaderResourceView* GetTexture();
 	virtual bool Render(ID3D11DeviceContext* deviceContext,  XMFLOAT4X4 viewMatrix, XMFLOAT4X4 projectionMatrix, ColorShaderClass* colorShader, TextureShaderClass* textureShader);
+	void setBlend(float b);
 
 protected:
 	virtual void InitializeModel(float lengthX, float lengthY, WCHAR* aTextureFileName);
@@ -30,10 +31,10 @@ protected:
 private:
 	WCHAR * m_textureFileName; 
 	TextureClass * m_quadTexture;
-
+	D3DClass* m_D3D;
 	TextureVertexType* m_textureVertices;
 	unsigned long*	m_indices;
-
+	float blendAmount;
 	ModelClass*     m_VertexModel; //vertices to put on graphics pipeline for rendering
 
 };

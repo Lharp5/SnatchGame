@@ -131,7 +131,8 @@ bool SystemClass::Initialize()
 
     float signBackZ = -3;
 	m_cokeSignFront->worldTranslate(4.0f, -cokeSignHeightY, signBackZ); //move to location in the world
-
+	m_cokeSignFront->setBlend(0.5f);
+	
 	//make coke sign quads
 	m_cokeSignBack = new QuadTexturedModel(
 		                     cokeSignWidthX,  //length in X direction
@@ -141,6 +142,7 @@ bool SystemClass::Initialize()
 	
 	m_cokeSignBack->orientRotateY(XM_PI); //rotate 180 degrees around Y so it is facing opposite of front
 	m_cokeSignBack->worldTranslate(4.0f, -cokeSignHeightY, signBackZ); //move to location in the world
+	m_cokeSignBack->setBlend(0.5f);
 
 	
 	XMFLOAT4 cubeColors[] = {
@@ -226,8 +228,6 @@ bool SystemClass::Initialize()
 	//Add the  gameModel objects to the GameModels collection
 	//that will be rendered by the graphics system
 
-	m_GameModels->add(m_cokeSignFront);
-	m_GameModels->add(m_cokeSignBack);
 	m_GameModels->add(m_backDrop);
 	m_GameModels->add(m_groundCover);
 	m_GameModels->add(m_Player);
@@ -236,6 +236,8 @@ bool SystemClass::Initialize()
 	m_GameModels->addAll(m_AirPlane->GetGameModels());
 	m_GameModels->addAll(m_Car->GetGameModels());
 	m_GameModels->addAll(m_enemy->GetGameModels());
+	m_GameModels->add(m_cokeSignFront);
+	m_GameModels->add(m_cokeSignBack);
 
 	m_levels->loadLevel(0);
 	
