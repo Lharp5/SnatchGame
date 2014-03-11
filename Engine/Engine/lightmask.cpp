@@ -3,6 +3,7 @@
 #include "quadmodel.h"
 #include "lightmask.h"
 
+LightState LightMask::lightState = LightState::ON;
 
 LightMask::LightMask(XMFLOAT3 camPos)
 {
@@ -97,6 +98,14 @@ void LightMask::frame(XMFLOAT3 camPos)
 	float dz = camPos.z - camPosition.z;
 	Translate(dx, dy, dz);
 	camPosition = camPos;
+	if (lightState == LightState::ON)
+	{
+		setLight(0.0f);
+	}
+	else if (lightState == LightState::OFF)
+	{
+		setLight(0.8f);
+	}
 }
 
 ArrayList<GameModel> LightMask::GetModels()

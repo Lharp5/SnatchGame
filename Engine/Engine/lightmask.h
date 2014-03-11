@@ -12,9 +12,18 @@
 
 using namespace DirectX;
 
+enum LightState
+{
+	ON,
+	OFF
+};
+
+
 class LightMask
 {
 	public:
+		static LightState lightState;
+
 		LightMask(XMFLOAT3 camPos = XMFLOAT3(0.0f,0.0f,0.0f));
 		virtual ~LightMask(void);
 		virtual void Translate(float deltaX, float deltaY, float deltaZ);
