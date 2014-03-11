@@ -38,6 +38,7 @@
 #include "carModel.h"
 #include "enemymodel.h"
 #include "levelclass.h"
+#include "lightmask.h"
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -94,6 +95,7 @@ private:
 	EnemyModel* m_enemy;
 	ArrayList<GameModel>* m_GameModels; //container to hold all our game world models
 	LevelClass* m_levels;
+	LightMask* m_lightMask;
 
 	//move movement?
 

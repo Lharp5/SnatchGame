@@ -224,6 +224,8 @@ bool SystemClass::Initialize()
 
 
 	m_levels = new LevelClass();
+
+	m_lightMask = new LightMask(m_Camera->GetPosition());
 	
 	//Add the  gameModel objects to the GameModels collection
 	//that will be rendered by the graphics system
@@ -246,6 +248,9 @@ bool SystemClass::Initialize()
 	
 	m_GameModels->add(m_cokeSignFront);
 	m_GameModels->add(m_cokeSignBack);
+
+	m_GameModels->addAll(m_lightMask->GetModels());
+
 	// Create the graphics object.  This object will handle rendering all the graphics for this application.
 	m_Graphics = new GraphicsClass;
 	if(!m_Graphics)
@@ -341,6 +346,14 @@ void SystemClass::Shutdown()
 		m_Car = 0;
 	}
 
+	// Release the Light Mask object's memory.
+	if(m_lightMask)
+	{
+		m_lightMask->Shutdown();
+		delete m_lightMask;
+		m_lightMask = 0;
+	}
+
 	//release the memory for the m_GameModels collection
 	//all objects in it should have been released my the code immediately above
 	if(m_GameModels)
@@ -372,8 +385,6 @@ void SystemClass::Shutdown()
 		delete m_Camera;
 		m_Camera = 0;
 	}
-
-
 
 	// Shutdown the actual Window's window.
 	ShutdownWindows();
@@ -485,6 +496,7 @@ bool SystemClass::Frame()
 	
 	//Move camera or models based on input
 	
+	m_lightMask->frame(m_Camera->GetPosition());
 
 	/*
 	We will combinations for a key + arrow keys to control the camera
