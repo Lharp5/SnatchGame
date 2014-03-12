@@ -11,6 +11,8 @@ SystemClass::SystemClass()
 	m_Graphics = 0;
 	m_Camera = 0;
 	m_GameModels = new ArrayList<GameModel>();
+	keyPressedE = false;
+	prevEPressedState = false;
 }
 
 
@@ -533,7 +535,6 @@ bool SystemClass::checkControls()
 		   m_Player->MoveDown();	
 	}
 	 else if ( m_Input->keyPressed(DIK_C)){
-
 	   if ( m_Input->keyPressed(DIK_UP) ) //Crane Up
 		  m_Camera->CraneUp();
 	   if ( m_Input->keyPressed(DIK_DOWN) ) //Crane Down
@@ -565,6 +566,17 @@ bool SystemClass::checkControls()
 
 	   if ( m_Input->keyPressed(DIK_S) ) //Camera Pull Back
 		  m_Camera->MoveBackward();
+
+	   if ( m_Input->keyPressed(DIK_E) )
+	   {
+		   if (!keyPressedE)
+		       LightMask::lightState = LightMask::lightState == LightState::OFF ? LightState::ON : LightState::OFF;
+		   keyPressedE = true;
+	   }
+	   else
+	   {
+		   keyPressedE = false;
+	   }
 	   
 	   if ( m_Input->keyPressed(DIK_LEFT) ) //Pan Camera Left
 	      m_Camera->PanLeft();

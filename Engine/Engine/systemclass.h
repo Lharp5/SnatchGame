@@ -97,6 +97,9 @@ private:
 	LevelClass* m_levels;
 	LightMask* m_lightMask;
 
+	bool keyPressedE;
+	bool prevEPressedState;
+
 	//move movement?
 
 

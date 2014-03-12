@@ -5,7 +5,10 @@
 *	Date:		feb. 19/14
 **************************/
 #include "levelclass.h"
-
+#include <iostream>
+#include <sstream>
+#include <string>
+using namespace std;
 
 //creating a base level THE TEMP LEVEL
 LevelClass::LevelClass()
@@ -29,8 +32,8 @@ LevelClass::~LevelClass()
 */
 void LevelClass::initialize()
 {
-	sizeX = 100;
-	sizeY = 100;
+	sizeX = 5;
+	sizeY = 5;
 
 	for(int i=0; i<sizeX; i++){
 		for(int j=0; j<sizeY; j++){
@@ -46,6 +49,40 @@ void LevelClass::initialize()
 */
 void LevelClass::loadLevel(int level)
 {
+	/*
+	string level1[] = {"W W W W W",
+						"W 0 0 0 W",
+						"W 0 0 0 W",
+						"W 0 0 0 W",
+						"W W W W W", };
+	WCHAR* wallTextures[] = { L"../Engine/textures/wood_texture.dds",
+								L"../Engine/textures/wood_texture.dds",
+								L"../Engine/textures/wood_texture.dds",
+								L"../Engine/textures/wood_texture.dds",
+								L"../Engine/textures/wood_texture.dds",
+								L"../Engine/textures/wood_texture.dds", };
+	for (int i = 0; i < 5; i++)
+	{
+		int j = 0;
+		stringstream ss(level1[i]);
+		string s;
+		while (getline(ss, s, ' '))
+		{
+			if (s == "W")
+			{
+				map[i][j] = new WallObject(wall, 10.0f*i, 10.0f*j, wallTextures);
+				//map[0][a]->getModel()->worldRotateY(-XM_PIDIV2);
+			}
+			else if (s == "0")
+			{
+				map[i][j] = new FloorObject(10.0f*i,10.0f*j);
+			}
+			map[i][j]->getModel()->worldTranslate(-50.0f,0.0f,0.0f);
+			j++;
+		}
+	}
+	*/
+	
 	switch(level){
 	case 1:		break;
 	case 2:		break;
@@ -53,6 +90,7 @@ void LevelClass::loadLevel(int level)
 	case 4:		break;
 	default:	level0(); break;
 	}
+	
 }
 
 /* Function:	loadLevel 
