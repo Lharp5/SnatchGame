@@ -11,7 +11,8 @@ class GameObject
 		GameObject();
 		GameObject(GameModel*, float, float, float);
 		~GameObject();
-
+		
+		//virtual void toggleRender();
 		GameModel* getModel();
 	protected:
 		void initialize();
@@ -21,6 +22,8 @@ class GameObject
 		float xLocation;
 		float yLocation;
 		float zLocation;
+
+	//	bool renderObj;
 };
 
 

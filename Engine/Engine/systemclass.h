@@ -39,6 +39,7 @@
 #include "enemymodel.h"
 #include "levelclass.h"
 #include "lightmask.h"
+#include "worldclass.h"
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -94,7 +95,7 @@ private:
 	ConeTexturedModel* m_cone;
 	EnemyModel* m_enemy;
 	ArrayList<GameModel>* m_GameModels; //container to hold all our game world models
-	LevelClass* m_levels;
+	WorldClass* m_World;
 	LightMask* m_lightMask;
 
 	bool keyPressedE;

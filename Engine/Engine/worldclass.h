@@ -11,13 +11,16 @@ public:
 	WorldClass();
 	~WorldClass();
 	void runGame();
-	void getModels(ArrayList<GameModel>*); //models to be sent back to the system for rendering.
+	void toggleFloor();
+
+	ArrayList<GameModel> getModels(); //models to be sent back to the system for rendering.
 private:
 	//objects
-	LevelClass levels;
-	ArrayList<GameModel>* renderModels; //Lists of models that can be stored so they can be rendered.
+	LevelClass* levels;
+	ArrayList<GameModel> renderModels; //Lists of models that can be stored so they can be rendered.
 	GameModel* floor[100][100];
 	GameModel* roof[100][100];
+	int worldSize;
 
 	//functions
 
@@ -26,9 +29,11 @@ private:
 	void initalizeRoof();
 	void initalizeFloor();
 
-//removing the world
+	//removing the world
 	void Shutdown();
 
+	WCHAR* floorImage;
+	WCHAR* roofImage;
 	void Menu();
 	void playGame();
 	void advanceLevel();

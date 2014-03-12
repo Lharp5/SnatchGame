@@ -7,45 +7,62 @@
 
 #include "worldclass.h"
 
-WorldClass::WorldClass()
+WorldClass::WorldClass():worldSize(50), floorImage(L"../Engine/textures/tireTread.dds"), roofImage(L"../Engine/textures/tireTread.dds")
 {
-	renderModels =0;
-
+	//renderModels =0;
 	initalizeWorld();
+	
 }
 
-
+WorldClass::~WorldClass()
+{
+	Shutdown();
+}
 
 void WorldClass::initalizeWorld()
 {
-	initalizeRoof();
-	initalizeFloor();
+	levels = new LevelClass();
+	//initalizeRoof();
+	//initalizeFloor();
+	
+	/*for(int i=0; i<worldSize; i++){
+		for(int j=0; j<worldSize; j++){
+			renderModels.add(roof[i][j]); 
+			renderModels.add(floor[i][j]);
+		}
+		//renderModels.add(roof[0][0]);
+	}*/
+
+	levels->loadLevel(0);
+	
+	//NEEDS TO FINISH THIS CLASS
+
+	renderModels.addAll(levels->getGameModels());
+	
+	
+	wchar_t* outstring = L"Models added..";
+	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 }
 
 
 void WorldClass::Shutdown()
 {
-	/*for(int i=0; i<100; i++){
-		for(int j=1; j<100; j++){
-			if(floor[i][j] != NULL)
-				delete floor[i][j];
-			if(roof[i][j] !=NULL)
-				delete roof[i][j];
-		}
-	}*/
-
-	delete [] floor;
-	delete [] roof;
 	wchar_t* outstring = L"World Shutdown..";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 }
 
+ArrayList<GameModel> WorldClass::getModels()
+{
+	wchar_t* outstring = L"Adding models Uh OH!!!";
+	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
+	return renderModels;
+}
 
 void WorldClass::initalizeRoof()
 {
-	for(int i=0; i<100; i++){
-		for(int j=0; j<100; j++){
-			roof[i][j] =  new QuadTexturedModel(10.0f, 10.0f, L"../Engine/textures/die1.dds");
+	for(int i=0; i<worldSize; i++){
+		for(int j=0; j<worldSize; j++){
+			roof[i][j] =  new QuadTexturedModel(10.0f, 10.0f, roofImage);
 			roof[i][j]->worldTranslate(10.0f*i, 15.0f,10.0f*j);
 			roof[i][j]->worldRotateX(-XM_PIDIV2);
 		}
@@ -54,12 +71,17 @@ void WorldClass::initalizeRoof()
 
 void WorldClass::initalizeFloor()
 {
-	for(int i=0; i<100; i++){
-		for(int j=0; j<100; j++){
-			floor[i][j] =  new QuadTexturedModel(10.0f, 10.0f, L"../Engine/textures/die1.dds");
+	for(int i=0; i<worldSize; i++){
+		for(int j=0; j<worldSize; j++){
+			floor[i][j] =  new QuadTexturedModel(10.0f, 10.0f, floorImage);
 			floor[i][j]->worldTranslate(10.0f*i, -5.0f,10.0f*j);
 			floor[i][j]->worldRotateX(XM_PIDIV2);
 		}
 	}
 	
+}
+
+void WorldClass::toggleFloor()
+{
+	//levels->toggleFloor();
 }

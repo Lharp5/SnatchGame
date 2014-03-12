@@ -15,26 +15,21 @@ class WallObject: public  GameObject
 {
 public:
 	WallObject();
-	WallObject(WALL_TYPE, float, float, WCHAR**);
+	WallObject(float, float, WCHAR**);
 	~WallObject();
 
 
 	//light switch functions
-	void turnOn();
-	void turnOff();
+	virtual void turnOn();
+	virtual void turnOff();
 
 	//lock controls function
-	void unLock();
-	void lock();
+	virtual void unlock();
+	virtual void lock();
 
 	//door type functions
-	void open();
-	void close();
-
-private:
-	bool lightOn;
-	bool doorLock;
-	WALL_TYPE myType;
+	virtual void open();
+	virtual void close();
 
 };
 #endif

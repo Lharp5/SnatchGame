@@ -7,7 +7,7 @@
 
 #include "floorobject.h"
 
-FloorObject::FloorObject(float x, float z):GameObject((new QuadTexturedModel(10.0f, 10.0f, L"../Engine/textures/die1.dds")), x, -5.0f,z)
+FloorObject::FloorObject(float x, float z, WCHAR* textures):GameObject(new QuadTexturedModel(10.0f, 10.0f, textures), x, -5.0f,z)
 {
 	sourceX=-5;
 	sourceY=-5;

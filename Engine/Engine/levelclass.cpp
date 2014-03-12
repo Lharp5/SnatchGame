@@ -37,7 +37,7 @@ void LevelClass::initialize()
 
 	for(int i=0; i<sizeX; i++){
 		for(int j=0; j<sizeY; j++){
-			map[i][j] = NULL;
+			map[i][j] = C_DEFAULT;
 		}
 	}
 }
@@ -103,10 +103,41 @@ void LevelClass::level0()
 	
 	for(int i=0; i<sizeX; i++){
 		for(int j=0; j<sizeY; j++){
-			map[i][j] = new FloorObject(10.0f*i,10.0f*j);
+			map[i][j] = C_FLOOR;
 		}
 	}
 
+	//creates the wall images. adjusting their location side walls
+	for(int a=0; a<sizeY; a++){
+		map[0][a] = C_WALL;
+	}
+	//back/front walls walls
+	for(int b=0; b<sizeX; b++){
+		map[b][0] = C_WALL;
+	}
+
+	loadObjects();
+
+	wchar_t* outstring = L"Level 0: Loaded\n";
+	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
+}
+
+void LevelClass::loadObjects()
+{
+	for(int i=0; i<sizeX; i++)
+		for(int j=0; j<sizeY; j++){
+			switch(map[i][j]){
+			case C_WALL:	buildWall(i,j);			break;
+			case C_DOOR:	buildDoor(i,j);			break;
+			case C_FLOOR:	buildFloor(i,j);		break;
+			case C_LIGHT:	buildLight(i,j);		break;
+			case C_LOCK:	buildLock(i,j);			break;
+			}
+		}
+}
+
+void LevelClass::buildWall(int x, int y)
+{
 	WCHAR* wallTextures[] = { L"../Engine/textures/wood_texture.dds",
 								L"../Engine/textures/wood_texture.dds",
 								L"../Engine/textures/wood_texture.dds",
@@ -115,38 +146,36 @@ void LevelClass::level0()
 								L"../Engine/textures/wood_texture.dds",
 							};
 
-	//creates the wall images. adjusting their location side walls
-	for(int a=0; a<sizeY; a++){
-		map[0][a] = new WallObject(wall, -5.0f, 10.0f*a, wallTextures);
-		//map[0][a]->getModel()->worldRotateY(-XM_PIDIV2);
-		map[0][a]->getModel()->worldTranslate(5.0f,0.0f,0.0f);
-		map[sizeX-1][a] = new WallObject(wall, 10.0f*sizeX+4.0f, 10.0f*a, wallTextures);
-		map[sizeX-1][a]->getModel()->worldRotateY(XM_PIDIV2);
-		map[sizeX-1][a]->getModel()->worldTranslate(-14.0f,0.0f,0.0f);
-	}
-	//back/front walls walls
-	for(int b=0; b<sizeX; b++){
-		map[b][0] = new WallObject(wall, 10.0f*b, -5.0f, wallTextures);
-		//map[b][0]->getModel()->worldRotateY(XM_PI);
-		map[b][0]->getModel()->worldTranslate(0.0f,0.0f,5.0f);
-		map[b][sizeY-1] = new WallObject(wall, 10.0f*b,10.0f*sizeY+4.0f, wallTextures);
-		//map[b][sizeY-1]->getModel()->worldRotateY(XM_PI);
-		map[b][sizeY-1]->getModel()->worldTranslate(0.0f,0.0f,-14.0f);
-	}
+	WallObject* newWall = new WallObject(x+0.0f,y+0.0f, wallTextures);
+	gamePieces.add(newWall);
+}
 
-	wchar_t* outstring = L"Level 0: Loaded\n";
-	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
+void LevelClass::buildDoor(int x, int y)
+{
+}
+
+void LevelClass::buildFloor(int x, int y)
+{
+	WCHAR * floorTexture = L"../Engine/textures/tireTread.dds";
+
+	FloorObject * newFloor = new FloorObject(x+0.0f,y+0.0f,floorTexture);
+	gamePieces.add(newFloor);
+}
+
+void LevelClass::buildLight(int x, int y)
+{
+}
+
+void LevelClass::buildLock(int x, int y)
+{
 }
 /* Function:	Shutdown
  * Purpose:		To free up any pointers, close any files.
 */
 void LevelClass::Shutdown()
 {
-	for(int i=0; i<sizeX; i++){
-		for(int j=1; j<sizeY; j++){
-			if(map[i][j] != NULL)
-				delete map[i][j];
-		}
+	for(int i=0; i<gamePieces.size(); i++){
+		delete gamePieces.elementAt(i);
 	}
 	wchar_t* outstring = L"Levels Shutdown..";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
@@ -176,15 +205,22 @@ int LevelClass::getSizeY()
 	return sizeY;
 }
 
-
-/* Function:	CheckLocation
- * Purpose:		To see if there exists an object at a location.
- * in:			X and Y coordinates to check.
- * out:			Pointer to object that exists there - null otherwise.
- */
-GameObject* LevelClass::CheckLocation(int x, int y)
+ArrayList<GameModel> LevelClass::getGameModels()
 {
-	return map[x][y];
+	ArrayList<GameModel> gameModels;
+
+	for(int i=0; i<gamePieces.size(); i++)
+		gameModels.add(gamePieces.elementAt(i)->getModel());
+
+	return gameModels;
 }
 
+/*void LevelClass::toggleFloor()
+{
+	for(int i=0; i<sizeX; i++){
+		for(int j=0; j<sizeY; j++){
+			map[i][j] = new FloorObject(10.0f*i,10.0f*j);
+		}
+	}
+}*/
 

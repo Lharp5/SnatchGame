@@ -10,7 +10,7 @@ class FloorObject: public GameObject
 {
 public:
 	FloorObject();
-	FloorObject(float, float);
+	FloorObject(float, float, WCHAR*);
 	~FloorObject();
 
 	void checkSource();

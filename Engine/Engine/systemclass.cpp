@@ -225,7 +225,7 @@ bool SystemClass::Initialize()
 	m_enemy = new EnemyModel(15.0f, -1.85f, 60.0f, 5.0f);
 
 
-	m_levels = new LevelClass();
+	m_World = new WorldClass();
 
 	m_lightMask = new LightMask(m_Camera->GetPosition());
 	
@@ -241,11 +241,8 @@ bool SystemClass::Initialize()
 	m_GameModels->addAll(m_Car->GetGameModels());
 	m_GameModels->addAll(m_enemy->GetGameModels());
 
-	m_levels->loadLevel(0);
-	
-	for(int i=0; i<m_levels->getSizeX(); i++)
-		for(int j=0; j<m_levels->getSizeY(); j++)
-			m_GameModels->add(m_levels->CheckLocation(i,j)->getModel());
+	m_GameModels->addAll(m_World->getModels());
+
 
 	
 	m_GameModels->add(m_cokeSignFront);
@@ -265,6 +262,9 @@ bool SystemClass::Initialize()
 	// a chance to initialize
 
 	result = m_Graphics->Initialize(screenWidth, screenHeight, m_hwnd, m_Camera, m_GameModels);
+	
+	wchar_t* outstring = L"Rendered";
+	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 	if(!result)
 	{
 		return false;
@@ -278,10 +278,10 @@ void SystemClass::Shutdown()
 {
 	//Shut down our game character objects and release their memory
 
-	if(m_levels)
+	if(m_World)
 	{
-		delete m_levels;
-		m_levels = 0;
+		delete m_World;
+		m_World = 0;
 	}
 
 	if(m_cokeSignFront)
@@ -523,7 +523,11 @@ bool SystemClass::checkControls()
 {	
 	//Move camera or models based on input
 	//We will combinations for a key + arrow keys to control the camera
-
+	if(m_Input->keyPressed(DIK_SPACE)){
+		//QuadTexturedModel * myModel = new QuadTexturedModel(2,2, L"../Engine/textures/die6.dds");
+		//myModel->worldTranslate(m_Camera->GetPosition().x,m_Camera->GetPosition().y, m_Camera->GetPosition().z);
+		m_World->toggleFloor();
+	}
 	if ( m_Input->keyPressed(DIK_LSHIFT)){   
 		if ( m_Input->keyPressed(DIK_LEFT))
 		   m_enemy->TurnLeft();

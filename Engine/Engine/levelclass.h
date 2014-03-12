@@ -22,14 +22,18 @@ class LevelClass
 
 		void getPlayerLocation(int*, int*);
 		
-		GameObject* CheckLocation(int, int);
+		ArrayList<GameModel> getGameModels();
 
 		void loadLevel(int);
 		int getSizeX();
 		int getSizeY();
 
+		void toggleFloor();
+
 	private:
-		GameObject* map[100][100];
+		//the map of the objects
+		WALL_TYPE map[100][100];
+		ArrayList <GameObject> gamePieces; 
 		//GameObject* player;
 
 		int sizeX;
@@ -40,6 +44,16 @@ class LevelClass
 		void Shutdown();
 		void initialize();
 		void level0();
+
+		void loadObjects();
+
+		///factory methods for building game Objects
+
+		void buildWall(int, int);
+		void buildFloor(int, int);
+		void buildLight(int, int);
+		void buildDoor(int, int);
+		void buildLock(int, int);
 };
 
 
