@@ -26,6 +26,9 @@ private:
 	void initalizeRoof();
 	void initalizeFloor();
 
+//removing the world
+	void Shutdown();
+
 	void Menu();
 	void playGame();
 	void advanceLevel();
