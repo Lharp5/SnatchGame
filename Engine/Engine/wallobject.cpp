@@ -11,7 +11,7 @@ WallObject::WallObject()
 {
 }
 
-WallObject::WallObject(WALL_TYPE t, float x, float z):GameObject((new QuadTexturedModel(10.0f, 15.0f, L"../Engine/textures/wood_texture.dds")), x, 2.0f,z)
+WallObject::WallObject(WALL_TYPE t, float x, float z, WCHAR* textures[]):GameObject((new CubeTexturedModel(10.0f, 15.0f, 10.0f, textures)), x, 2.0f,z)
 {
 	myType = t;
 }

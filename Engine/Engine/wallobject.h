@@ -9,12 +9,13 @@
 #include "gameobject.h"
 #include "worldDefs.h"
 #include "quadTexturedModel.h"
+#include "cubeTexturedModel.h"
 
 class WallObject: public  GameObject
 {
 public:
 	WallObject();
-	WallObject(WALL_TYPE, float, float);
+	WallObject(WALL_TYPE, float, float, WCHAR**);
 	~WallObject();
 
 

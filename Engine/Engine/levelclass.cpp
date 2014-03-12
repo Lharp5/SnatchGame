@@ -69,21 +69,29 @@ void LevelClass::level0()
 		}
 	}
 
+	WCHAR* wallTextures[] = { L"../Engine/textures/wood_texture.dds",
+								L"../Engine/textures/wood_texture.dds",
+								L"../Engine/textures/wood_texture.dds",
+								L"../Engine/textures/wood_texture.dds",
+								L"../Engine/textures/wood_texture.dds",
+								L"../Engine/textures/wood_texture.dds",
+							};
+
 	//creates the wall images. adjusting their location side walls
 	for(int a=0; a<sizeY; a++){
-		map[0][a] = new WallObject(wall, 0.0f, 10.0f*a);
-		map[0][a]->getModel()->worldRotateY(-XM_PIDIV2);
+		map[0][a] = new WallObject(wall, -5.0f, 10.0f*a, wallTextures);
+		//map[0][a]->getModel()->worldRotateY(-XM_PIDIV2);
 		map[0][a]->getModel()->worldTranslate(5.0f,0.0f,0.0f);
-		map[sizeX-1][a] = new WallObject(wall, 10.0f*sizeX-1, 10.0f*a);
+		map[sizeX-1][a] = new WallObject(wall, 10.0f*sizeX+4.0f, 10.0f*a, wallTextures);
 		map[sizeX-1][a]->getModel()->worldRotateY(XM_PIDIV2);
 		map[sizeX-1][a]->getModel()->worldTranslate(-14.0f,0.0f,0.0f);
 	}
 	//back/front walls walls
 	for(int b=0; b<sizeX; b++){
-		map[b][0] = new WallObject(wall, 10.0f*b, 0.0f);
-		map[b][0]->getModel()->worldRotateY(XM_PI);
+		map[b][0] = new WallObject(wall, 10.0f*b, -5.0f, wallTextures);
+		//map[b][0]->getModel()->worldRotateY(XM_PI);
 		map[b][0]->getModel()->worldTranslate(0.0f,0.0f,5.0f);
-		map[b][sizeY-1] = new WallObject(wall, 10.0f*b,10.0f*sizeY-1);
+		map[b][sizeY-1] = new WallObject(wall, 10.0f*b,10.0f*sizeY+4.0f, wallTextures);
 		//map[b][sizeY-1]->getModel()->worldRotateY(XM_PI);
 		map[b][sizeY-1]->getModel()->worldTranslate(0.0f,0.0f,-14.0f);
 	}
