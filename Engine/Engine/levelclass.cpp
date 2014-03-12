@@ -110,10 +110,12 @@ void LevelClass::level0()
 	//creates the wall images. adjusting their location side walls
 	for(int a=0; a<sizeY; a++){
 		map[0][a] = C_WALL;
+		map[sizeX-1][a] = C_WALL;
 	}
 	//back/front walls walls
 	for(int b=0; b<sizeX; b++){
 		map[b][0] = C_WALL;
+		map[b][sizeY-1] = C_WALL;
 	}
 
 	loadObjects();
