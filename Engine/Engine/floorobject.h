@@ -13,7 +13,39 @@ public:
 	FloorObject(float, float, WCHAR*);
 	~FloorObject();
 
-	void checkSource();
+	/************
+	*	Function:	CreateSource
+	*	in:			x and y map positions of source
+	*	Purpose:	To assign the source of the light.
+	*************/
+	void createSource(int, int);
+
+	/************
+	*	Function:	getSourceX
+	*	out:		sourceX as int
+	*	Purpose:	To get the X Location of the Source
+	*************/
+	int getSourceX();
+
+	/************
+	*	Function:	getSourceY
+	*	out:		sourceY as int
+	*	Purpose:	To get the Y Location of the Source
+	*************/
+	int getSourceY();
+
+	/************
+	*	Function:	isLit
+	*	out:		boolean
+	*	Purpose:	To see whether the floor is lit
+	*************/
+	bool isLit();
+
+	/************
+	*	Function:	toggleLight
+	*	Purpose:	Turns the light either on or off
+	*************/
+	void toggleLight();
 
 private:
 

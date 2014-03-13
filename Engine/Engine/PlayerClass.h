@@ -13,6 +13,7 @@ public:
 	int getXLocation();
 	int getYLocation();
 
+
 private:
 	int xLocation;
 	int yLocation;

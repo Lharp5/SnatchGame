@@ -107,7 +107,7 @@
     <ClCompile Include="LockObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="modelclass.cpp" />
-    <ClCompile Include="playerobject.cpp" />
+    <ClCompile Include="PlayerClass.cpp" />
     <ClCompile Include="prismmodel.cpp" />
     <ClCompile Include="prismTexturedModel.cpp" />
     <ClCompile Include="quadModel.cpp" />
@@ -145,7 +145,7 @@
     <ClInclude Include="LightObject.h" />
     <ClInclude Include="LockObject.h" />
     <ClInclude Include="modelclass.h" />
-    <ClInclude Include="playerobject.h" />
+    <ClInclude Include="PlayerClass.h" />
     <ClInclude Include="prismmodel.h" />
     <ClInclude Include="prismTexturedModel.h" />
     <ClInclude Include="quadModel.h" />
