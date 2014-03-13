@@ -38,7 +38,6 @@
 #include "carModel.h"
 #include "enemymodel.h"
 #include "levelclass.h"
-#include "lightmask.h"
 #include "worldclass.h"
 
 
