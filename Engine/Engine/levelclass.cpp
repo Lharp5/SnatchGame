@@ -61,7 +61,7 @@ void LevelClass::loadLevel(int level)
 								L"../Engine/textures/wood_texture.dds",
 								L"../Engine/textures/wood_texture.dds",
 								L"../Engine/textures/wood_texture.dds", };
-	for (int i = 0; i < sizeX; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		int j = 0;
 		stringstream ss(level1[i]);

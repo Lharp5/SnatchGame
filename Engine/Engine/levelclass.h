@@ -8,6 +8,7 @@
 #include "gameobject.h"
 #include "floorobject.h"
 #include "wallobject.h"
+#include "playerobject.h"
 #include "enemyobject.h"
 #include "gamemodel.h"
 
