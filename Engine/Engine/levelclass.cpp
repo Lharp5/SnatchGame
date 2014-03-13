@@ -118,6 +118,9 @@ void LevelClass::level0()
 		map[b][sizeY-1] = C_WALL;
 	}
 
+	map[sizeX-1][sizeY/2] = C_LIGHT;
+	map[0][sizeY/2] = C_LOCK;
+	map[sizeX/2][0] = C_DOOR;
 	loadObjects();
 
 	wchar_t* outstring = L"Level 0: Loaded\n";
@@ -154,6 +157,16 @@ void LevelClass::buildWall(int x, int y)
 
 void LevelClass::buildDoor(int x, int y)
 {
+	WCHAR* doorTextures[] = { L"../Engine/textures/toblerone.dds",
+								L"../Engine/textures/toblerone.dds",
+								L"../Engine/textures/toblerone.dds",
+								L"../Engine/textures/toblerone.dds",
+								L"../Engine/textures/toblerone.dds",
+								L"../Engine/textures/toblerone.dds",
+							};
+
+	DoorObject* newDoor = new DoorObject(-1,-1,x+0.0f,y+0.0f,doorTextures);
+	gamePieces.add(newDoor);
 }
 
 void LevelClass::buildFloor(int x, int y)
@@ -166,10 +179,30 @@ void LevelClass::buildFloor(int x, int y)
 
 void LevelClass::buildLight(int x, int y)
 {
+	WCHAR* lightTextures[] = { L"../Engine/textures/coca_cola.dds",
+								L"../Engine/textures/coca_cola.dds",
+								L"../Engine/textures/coca_cola.dds",
+								L"../Engine/textures/coca_cola.dds",
+								L"../Engine/textures/coca_cola.dds",
+								L"../Engine/textures/coca_cola.dds",
+							};
+
+	LightObject* newLight = new LightObject(x+0.0f,y+0.0f, lightTextures);
+	gamePieces.add(newLight);
 }
 
 void LevelClass::buildLock(int x, int y)
 {
+	WCHAR* lockTextures[] = { L"../Engine/textures/penciltexture.dds",
+								L"../Engine/textures/penciltexture.dds",
+								L"../Engine/textures/penciltexture.dds",
+								L"../Engine/textures/penciltexture.dds",
+								L"../Engine/textures/penciltexture.dds",
+								L"../Engine/textures/penciltexture.dds",
+							};
+
+	LockObject* newLock = new LockObject(x+0.0f,y+0.0f, lockTextures);
+	gamePieces.add(newLock);
 }
 /* Function:	Shutdown
  * Purpose:		To free up any pointers, close any files.
@@ -187,15 +220,7 @@ void LevelClass::Shutdown()
  * Purpose:		to find the player on the map.
  * in/out:		X and Y position of the player.
 */
-void LevelClass::getPlayerLocation(int* x, int* y)
-{
-/*	for(int i=0; i<sizeX; i++)
-		for(int j=0; j<sizeY; j++)
-			if(map[i][j] == player){
-				*x = i;
-				*y = j;
-			}
-*/}
+
 
 int LevelClass::getSizeX()
 {

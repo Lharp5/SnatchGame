@@ -8,9 +8,11 @@
 #include "gameobject.h"
 #include "floorobject.h"
 #include "wallobject.h"
-#include "playerobject.h"
 #include "enemyobject.h"
 #include "gamemodel.h"
+#include "LightObject.h"
+#include "LockObject.h"
+#include "DoorObject.h"
 
 #include <windows.h> //needed to create and destroy windows and call Win32 functions
 
@@ -19,8 +21,6 @@ class LevelClass
 	public:
 		LevelClass();
 		~LevelClass();
-
-		void getPlayerLocation(int*, int*);
 		
 		ArrayList<GameModel> getGameModels();
 
