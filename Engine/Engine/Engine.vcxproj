@@ -92,6 +92,7 @@
     <ClCompile Include="cubemodel.cpp" />
     <ClCompile Include="cubeTexturedModel.cpp" />
     <ClCompile Include="directinputclass.cpp" />
+    <ClCompile Include="DoorObject.cpp" />
     <ClCompile Include="enemymodel.cpp" />
     <ClCompile Include="enemyobject.cpp" />
     <ClCompile Include="floorobject.cpp" />
@@ -102,6 +103,8 @@
     <ClCompile Include="inputclass.cpp" />
     <ClCompile Include="levelclass.cpp" />
     <ClCompile Include="lightmask.cpp" />
+    <ClCompile Include="LightObject.cpp" />
+    <ClCompile Include="LockObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="modelclass.cpp" />
     <ClCompile Include="playerobject.cpp" />
@@ -127,6 +130,7 @@
     <ClInclude Include="cubemodel.h" />
     <ClInclude Include="cubeTexturedModel.h" />
     <ClInclude Include="directinputclass.h" />
+    <ClInclude Include="DoorObject.h" />
     <ClInclude Include="enemymodel.h" />
     <ClInclude Include="enemyobject.h" />
     <ClInclude Include="floorobject.h" />
@@ -138,6 +142,8 @@
     <ClInclude Include="inputclass.h" />
     <ClInclude Include="levelclass.h" />
     <ClInclude Include="lightmask.h" />
+    <ClInclude Include="LightObject.h" />
+    <ClInclude Include="LockObject.h" />
     <ClInclude Include="modelclass.h" />
     <ClInclude Include="playerobject.h" />
     <ClInclude Include="prismmodel.h" />

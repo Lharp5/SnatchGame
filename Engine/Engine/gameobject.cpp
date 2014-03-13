@@ -14,13 +14,8 @@ GameObject::GameObject()
 	initialize();
 }
 
-GameObject::GameObject(GameModel* m, float x, float y, float z)
+GameObject::GameObject(GameModel* m, float x, float y, float z): xLocation(x), yLocation(y), zLocation(z), myModel(m)
 {
-	xLocation = x;
-	yLocation =y;
-	zLocation =z;
-	myModel = m;
-
 	myModel->worldTranslate(xLocation, yLocation, zLocation);
 }
 
@@ -36,6 +31,10 @@ void GameObject::initialize()
 
 void GameObject:: shutdown()
 {
+	if(myModel){
+		delete myModel;
+		myModel = 0;
+	}
 }
 
 GameModel* GameObject::getModel()

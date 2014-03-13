@@ -1,13 +1,8 @@
-/**************************
-*	Project:	Snatch
-*	Name:		Luke Harper
-*	Program:	wallObject
-*	Date:		feb. 22/14
-**************************/
+/* WallObject.CPP ::: Luke Harper */
 
 #include "wallobject.h"
 
-WallObject::WallObject()
+WallObject::WallObject(): GameObject()
 {
 }
 
@@ -15,26 +10,6 @@ WallObject::WallObject(float x, float z, WCHAR* textures[]):GameObject((new Cube
 {
 }
 
-//light switch functions
-	void WallObject::turnOn()
-	{
-	}
-	void WallObject::turnOff()
-	{
-	}
-
-	//lock controls function
-	void WallObject::unlock()
-	{
-	}
-	void WallObject::lock()
-	{
-	}
-
-	//door type functions
-	void WallObject::open()
-	{
-	}
-	void WallObject::close()
-	{
-	}
+void WallObject::doAction()
+{
+}

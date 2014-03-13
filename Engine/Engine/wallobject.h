@@ -1,7 +1,10 @@
 
-/* WallObject.h ::: Luke Harper */
-
-
+/**************************
+*	Project:	Snatch
+*	Name:		Luke Harper
+*	Program:	wallObject
+*	Date:		feb. 22/14
+**************************/
 
 #ifndef WALLOBJECT_H
 #define WALLOBJECT_H
@@ -18,18 +21,11 @@ public:
 	WallObject(float, float, WCHAR**);
 	~WallObject();
 
-
-	//light switch functions
-	virtual void turnOn();
-	virtual void turnOff();
-
-	//lock controls function
-	virtual void unlock();
-	virtual void lock();
-
-	//door type functions
-	virtual void open();
-	virtual void close();
-
+	/*********** 
+	*	Function:	Do Action
+	*	Purpose:	To do the appropriate action when the player uses an action on the wall
+	*	Additionally:	Implementation will call either light, door, or lock functions.
+	*************/
+	virtual void doAction();
 };
 #endif
