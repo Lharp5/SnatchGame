@@ -116,112 +116,7 @@ bool SystemClass::Initialize()
 
 	m_groundCover->orientRotateX(XM_PIDIV2); //rotate 90 degrees around X so it is parallel to XZ ground plane
 	m_groundCover->worldTranslate(0.0f, -backdropHeightY/2, groundCoverHeightY/2); //move to location in the world
-
-
-	WCHAR * cokeSignFrontFileName = L"../Engine/textures/coca_cola.dds";
-	WCHAR * cokeSignBackFileName = L"../Engine/textures/slogan.dds";
-
-	float cokeSignWidthX = 4.0f;
-	float cokeSignHeightY = 3.0f;
-
-	//make a background textured quad
-	m_cokeSignFront = new QuadTexturedModel(
-		                     cokeSignWidthX,  //length in X direction
-							 cokeSignHeightY,  //length in Y direction
-							 cokeSignFrontFileName  //path name of .dds texture file
-							 );
-
-    float signBackZ = -3;
-	m_cokeSignFront->worldTranslate(4.0f, -cokeSignHeightY, signBackZ); //move to location in the world
-	m_cokeSignFront->setBlend(0.5f);
 	
-	//make coke sign quads
-	m_cokeSignBack = new QuadTexturedModel(
-		                     cokeSignWidthX,  //length in X direction
-							 cokeSignHeightY,  //length in Y direction
-							 cokeSignBackFileName  //path name of .dds texture file
-							 );
-	
-	m_cokeSignBack->orientRotateY(XM_PI); //rotate 180 degrees around Y so it is facing opposite of front
-	m_cokeSignBack->worldTranslate(4.0f, -cokeSignHeightY, signBackZ); //move to location in the world
-	m_cokeSignBack->setBlend(0.5f);
-
-	
-	XMFLOAT4 cubeColors[] = {
-	    XMFLOAT4(153.0f/255, 76.0f/255, 0.0f, 1.0f), //front face brown1
-	    XMFLOAT4(153.0f/255, 76.0f/255, 0.0f, 1.0f), //back face brown1
-	    XMFLOAT4(204.0f/255, 102.0f/255, 0.0f, 1.0f), //right side brown2
-	    XMFLOAT4(204.0f/255, 102.0f/255, 0.0f, 1.0f), //left side brown2
-	    XMFLOAT4(255.0f/255, 128.0f/255, 0.0f, 1.0f), //top face brown3
-	    XMFLOAT4(255.0f/255, 128.0f/255, 0.0f, 1.0f), //bottom face brown3
-	};
-
-
-   	WCHAR * dieFileNames[] = {
-		 L"../Engine/textures/die1.dds",
-		 L"../Engine/textures/die2.dds",
-		 L"../Engine/textures/die3.dds",
-		 L"../Engine/textures/die4.dds",
-		 L"../Engine/textures/die5.dds",
-		 L"../Engine/textures/die6.dds",
-	};
-
-	m_Player = 0; //for safety
-	
-	m_Player = new CubeTexturedModel(3.0f,  //length in X direction
-							 3.0f,  //length in Y direction
-							 3.0f, //length in Z direction
-							 dieFileNames //file names of cube face textures
-							 );
-
-   
-	m_Player->orientRotateY(XM_PIDIV4); //orient relative to model origin
-	m_Player->worldTranslate(2.5f, -2.0f, 0.0f); //move to location in the world
-	
-	
-
-	m_AirPlane = new AirPlaneModel();
-
-	m_Car = new CarModel();
-
-
-	XMFLOAT4 prismColors[] = {
-	    XMFLOAT4(230.0f/255, 230.0f/255, 0.0f, 1.0f), //prism faces yellow1
-	    XMFLOAT4(204.0f/255, 204.0f/255, 0.0f, 1.0f), //prism ends yellow2
-	};
-
-	WCHAR * cokeCanTextureFiles[] = {
-		 L"../Engine/textures/dietCokeCanSide.dds",
-		 L"../Engine/textures/cokeCanTop.dds",
-		 L"../Engine/textures/cokeCanBottom.dds",
-	};
-
-	m_Enemy = 0; //for safety
-	m_Enemy = new PrismTexturedModel(3.5f,  //height (Y direction)
-							 1.0f,  //radius (X direction)
-							 24,      //number of faces
-							 cokeCanTextureFiles //side and end textures 
-							 ); 
-
-	m_Enemy->orientRotateZ(XM_PIDIV4); //orient relative to model origin
-	m_Enemy->worldTranslate(2.5f, 2.5f, 0.0f); //move to location in the world
-
-
-	WCHAR * ConeTextureFiles[] = {
-		 L"../Engine/textures/wood_texture.dds",
-		 L"../Engine/textures/wood_texture.dds",
-		 L"../Engine/textures/wood_texture.dds",
-	};
-
-	m_cone = new ConeTexturedModel(3.5f,  //height (Y direction)
-							 1.0f,  //radius (X direction)
-							 3,      //number of faces
-							 ConeTextureFiles //side and end textures 
-							 );
-
-    m_cone->orientRotateZ(XM_PIDIV4); //orient relative to model origin
-	m_cone->worldTranslate(-2.5f, -2.5f, 0.0f); //move to location in the world
-
 	m_enemy = new EnemyModel(15.0f, -1.85f, 60.0f, 5.0f);
 
 
@@ -234,19 +129,9 @@ bool SystemClass::Initialize()
 
 	m_GameModels->add(m_backDrop);
 	m_GameModels->add(m_groundCover);
-	m_GameModels->add(m_Player);
-	m_GameModels->add(m_Enemy);
-	m_GameModels->add(m_cone);
-	m_GameModels->addAll(m_AirPlane->GetGameModels());
-	m_GameModels->addAll(m_Car->GetGameModels());
 	m_GameModels->addAll(m_enemy->GetGameModels());
 
 	m_GameModels->addAll(m_World->getModels());
-
-
-	
-	m_GameModels->add(m_cokeSignFront);
-	m_GameModels->add(m_cokeSignBack);
 
 	m_GameModels->addAll(m_lightMask->GetModels());
 
@@ -286,21 +171,6 @@ void SystemClass::Shutdown()
 		m_World = 0;
 	}
 
-	if(m_cokeSignFront)
-	{
-		m_cokeSignFront->Shutdown();
-		delete m_cokeSignFront;
-		m_cokeSignFront = 0;
-	}
-
-	if(m_cokeSignBack)
-	{
-		m_cokeSignBack->Shutdown();
-		delete m_cokeSignBack;
-		m_cokeSignBack = 0;
-	}
-
-
 	if(m_backDrop)
 	{
 		m_backDrop->Shutdown();
@@ -315,39 +185,11 @@ void SystemClass::Shutdown()
 		m_groundCover = 0;
 	}
 
-
-	if(m_Player)
-	{
-		m_Player->Shutdown();
-		delete m_Player;
-		m_Player = 0;
-	}
-
-	if(m_Enemy)
-	{
-		m_Enemy->Shutdown();
-		delete m_Enemy;
-		m_Enemy = 0;
-	}
-
 	if(m_enemy)
 	{
 		m_enemy->Shutdown();
 		delete m_enemy;
 		m_enemy = 0;
-	}
-
-	if(m_AirPlane)
-	{
-		m_AirPlane->Shutdown();
-		delete m_AirPlane;
-		m_AirPlane = 0;
-	}
-	if(m_Car)
-	{
-		m_Car->Shutdown();
-		delete m_Car;
-		m_Car = 0;
 	}
 
 	// Release the Light Mask object's memory.
@@ -473,18 +315,7 @@ bool SystemClass::Frame()
 	*/
 
 	//Rotate the object a bit around some axis
-	m_Enemy->orientRotateZ(XM_PIDIV4/100);
-	m_Enemy->orientRotateX(XM_PIDIV4/70);
-
-	m_Player->orientRotateZ(XM_PIDIV4/100);
-	m_Player->orientRotateX(XM_PIDIV4/70);
-	m_Player->orientRotateY(XM_PIDIV4/50);
 	
-	m_AirPlane->Advance();
-
-    m_cokeSignFront->orientRotateY(-XM_PIDIV2/70);
-	m_cokeSignBack->orientRotateY(-XM_PIDIV2/70);
-
 	m_World->runGame();
 
 	//Handle user inputs
@@ -538,8 +369,6 @@ bool SystemClass::checkControls()
 		   m_enemy->TurnRight();
 	   if ( m_Input->keyPressed(DIK_UP))
 		   m_enemy->MoveForward();
-	   if ( m_Input->keyPressed(DIK_DOWN))
-		   m_Player->MoveDown();	
 	}
 	 else if ( m_Input->keyPressed(DIK_C)){
 	   if ( m_Input->keyPressed(DIK_UP) ) //Crane Up

@@ -25,17 +25,8 @@
 #include "directinputclass.h"
 #include "graphicsclass.h"
 #include "gamemodel.h"
-#include "cubemodel.h"
-#include "cubeTexturedModel.h"
-#include "quadmodel.h"
-#include "quadtexturedmodel.h"
-#include "prismmodel.h"
-#include "prismTexturedModel.h"
-#include "airplanemodel.h"
 #include "arraylist.h"
 #include "cinecameraclass.h"
-#include "ConeTexturedModel.h"
-#include "carModel.h"
 #include "enemymodel.h"
 #include "levelclass.h"
 #include "lightmask.h"
@@ -82,17 +73,8 @@ private:
 	//Game World Items
 
 	//QuadModel * m_blueQuad; //a simple colored quad
-	QuadTexturedModel* m_cokeSignFront; //front coke sign quad
-	QuadTexturedModel* m_cokeSignBack; //back coke sign quad
-
 	QuadTexturedModel* m_backDrop; //a background quad object
 	QuadTexturedModel* m_groundCover; //a ground quad object
-	CubeTexturedModel* m_Player; //our protagonist game character object
-	PrismTexturedModel* m_Enemy; //our  antagonist game character object
-	AirPlaneModel* m_AirPlane; //our compound airplane model
-	CarModel* m_Car; //car model
-
-	ConeTexturedModel* m_cone;
 	EnemyModel* m_enemy;
 	ArrayList<GameModel>* m_GameModels; //container to hold all our game world models
 	WorldClass* m_World;
