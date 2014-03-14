@@ -13,6 +13,13 @@ public:
 	int getXLocation();
 	int getYLocation();
 
+	/************
+	*	Function:	setPosition
+	*	in:			position of where the player is.
+	*	Purpose:	to set the player position in the world.
+	************/
+	void setPosition(int, int);
+
 
 private:
 	int xLocation;

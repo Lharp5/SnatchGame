@@ -269,6 +269,8 @@ bool SystemClass::Initialize()
 	{
 		return false;
 	}
+
+	m_Camera->SetPosition(m_World->getPlayerStartX(), m_World->getPlayerStartY(), m_World->getPlayerStartZ());
 	
 	return true;
 }
@@ -483,6 +485,7 @@ bool SystemClass::Frame()
     m_cokeSignFront->orientRotateY(-XM_PIDIV2/70);
 	m_cokeSignBack->orientRotateY(-XM_PIDIV2/70);
 
+	m_World->runGame();
 
 	//Handle user inputs
 	bool result;

@@ -7,7 +7,7 @@
 
 #include "worldclass.h"
 
-WorldClass::WorldClass():worldSize(50), floorImage(L"../Engine/textures/tireTread.dds"), roofImage(L"../Engine/textures/tireTread.dds")
+WorldClass::WorldClass()
 {
 	//renderModels =0;
 	initalizeWorld();
@@ -21,23 +21,15 @@ WorldClass::~WorldClass()
 
 void WorldClass::initalizeWorld()
 {
-	levels = new LevelClass();
-	//initalizeRoof();
-	//initalizeFloor();
-	
-	/*for(int i=0; i<worldSize; i++){
-		for(int j=0; j<worldSize; j++){
-			renderModels.add(roof[i][j]); 
-			renderModels.add(floor[i][j]);
-		}
-		//renderModels.add(roof[0][0]);
-	}*/
+	level = new LevelClass();
 
-	levels->loadLevel(0);
+	level->loadLevel(0);
+
+	player = new PlayerClass();
 	
 	//NEEDS TO FINISH THIS CLASS
 
-	renderModels.addAll(levels->getGameModels());
+	renderModels.addAll(level->getGameModels());
 	
 	
 	wchar_t* outstring = L"Models added..";
@@ -47,6 +39,14 @@ void WorldClass::initalizeWorld()
 
 void WorldClass::Shutdown()
 {
+	/*if(level)
+		delete level;
+	if(player)
+		delete player;
+
+	level = 0;
+	player = 0;*/
+
 	wchar_t* outstring = L"World Shutdown..";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 }
@@ -58,30 +58,26 @@ ArrayList<GameModel> WorldClass::getModels()
 	return renderModels;
 }
 
-void WorldClass::initalizeRoof()
+// returning the player start position functions
+float WorldClass::getPlayerStartX()
 {
-	for(int i=0; i<worldSize; i++){
-		for(int j=0; j<worldSize; j++){
-			roof[i][j] =  new QuadTexturedModel(10.0f, 10.0f, roofImage);
-			roof[i][j]->worldTranslate(10.0f*i, 15.0f,10.0f*j);
-			roof[i][j]->worldRotateX(-XM_PIDIV2);
-		}
-	}
+	return 50.0f;
 }
 
-void WorldClass::initalizeFloor()
+float WorldClass::getPlayerStartY()
 {
-	for(int i=0; i<worldSize; i++){
-		for(int j=0; j<worldSize; j++){
-			floor[i][j] =  new QuadTexturedModel(10.0f, 10.0f, floorImage);
-			floor[i][j]->worldTranslate(10.0f*i, -5.0f,10.0f*j);
-			floor[i][j]->worldRotateX(XM_PIDIV2);
-		}
-	}
-	
+	return 0.0f;
 }
 
+float WorldClass::getPlayerStartZ()
+{
+	return 50.0f;
+}
+
+void WorldClass::runGame()
+{
+}
 void WorldClass::toggleFloor()
 {
-	//levels->toggleFloor();
+	//level->toggleFloor();
 }
