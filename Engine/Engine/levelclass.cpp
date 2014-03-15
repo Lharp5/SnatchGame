@@ -134,21 +134,21 @@ void LevelClass::loadObjects()
 			switch(map[i][j]){
 			case C_WALL:	buildWall(i,j);			break;
 			case C_DOOR:	buildDoor(i,j);			break;
-			case C_FLOOR:	buildFloor(i,j);		break;
 			case C_LIGHT:	buildLight(i,j);		break;
 			case C_LOCK:	buildLock(i,j);			break;
 			}
+			buildFloor(i,j);
 		}
 }
 
 void LevelClass::buildWall(int x, int y)
 {
-	WCHAR* wallTextures[] = { L"../Engine/textures/wood_texture.dds",
-								L"../Engine/textures/wood_texture.dds",
-								L"../Engine/textures/wood_texture.dds",
-								L"../Engine/textures/wood_texture.dds",
-								L"../Engine/textures/wood_texture.dds",
-								L"../Engine/textures/wood_texture.dds",
+	WCHAR* wallTextures[] = { L"../Engine/textures/walltexture.dds",
+								L"../Engine/textures/walltexture.dds",
+								L"../Engine/textures/walltexture.dds",
+								L"../Engine/textures/walltexture.dds",
+								L"../Engine/textures/walltexture.dds",
+								L"../Engine/textures/walltexture.dds",
 							};
 
 	WallObject* newWall = new WallObject(x+0.0f,y+0.0f, wallTextures);
@@ -157,8 +157,8 @@ void LevelClass::buildWall(int x, int y)
 
 void LevelClass::buildDoor(int x, int y)
 {
-	WCHAR* doorTextures[] = { L"../Engine/textures/toblerone.dds",
-								L"../Engine/textures/toblerone.dds",
+	WCHAR* doorTextures[] = { L"../Engine/textures/doortexture.dds",
+								L"../Engine/textures/doortexture.dds",
 								L"../Engine/textures/toblerone.dds",
 								L"../Engine/textures/toblerone.dds",
 								L"../Engine/textures/toblerone.dds",
@@ -171,7 +171,7 @@ void LevelClass::buildDoor(int x, int y)
 
 void LevelClass::buildFloor(int x, int y)
 {
-	WCHAR * floorTexture = L"../Engine/textures/tireTread.dds";
+	WCHAR * floorTexture = L"../Engine/textures/carpettexture.dds";
 
 	FloorObject * newFloor = new FloorObject(x+0.0f,y+0.0f,floorTexture);
 	gamePieces.add(newFloor);

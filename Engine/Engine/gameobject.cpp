@@ -41,3 +41,13 @@ GameModel* GameObject::getModel()
 {
 	return myModel;
 }
+
+bool GameObject::getRenderValue()
+{
+	return myModel->getRenderVal();
+}
+
+void GameObject::setRenderValue(bool b)
+{
+	myModel->setRenderVal(b);
+}

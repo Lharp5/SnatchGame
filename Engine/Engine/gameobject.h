@@ -11,6 +11,8 @@ class GameObject
 		GameObject();
 		GameObject(GameModel*, float, float, float);
 		~GameObject();
+		bool getRenderValue();
+		void setRenderValue(bool);
 		
 		//virtual void toggleRender();
 		GameModel* getModel();

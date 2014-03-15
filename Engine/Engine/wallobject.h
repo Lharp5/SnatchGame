@@ -18,7 +18,7 @@ class WallObject: public  GameObject
 {
 public:
 	WallObject();
-	WallObject(float, float, WCHAR**);
+	WallObject(float, float, WCHAR**, float width=10.0f, float height=15.0f, float depth=10.0f);
 	~WallObject();
 
 	/*********** 

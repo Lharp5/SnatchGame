@@ -3,7 +3,7 @@
 
 GameModel::GameModel()
 {
-
+	render = true;
 	//initialize all matrices to identity matrix
 	XMStoreFloat4x4(&m_orientRotateMatrix, XMMatrixIdentity());
 	XMStoreFloat4x4(&m_orientTranslateMatrix, XMMatrixIdentity());
@@ -162,4 +162,14 @@ void GameModel::RotateRight()
 {
 	orientRotateY(XM_PIDIV4*ROTATION_SPEED);
 
+}
+
+bool GameModel::getRenderVal()
+{
+	return render;
+}
+
+void GameModel::setRenderVal(bool b)
+{
+	render = b;
 }

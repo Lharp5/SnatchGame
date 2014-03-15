@@ -292,19 +292,22 @@ bool GraphicsClass::Render()
 		for(int i=0; i< m_GameWorldModels->size(); i++){
 			GameModel* gameModel = m_GameWorldModels->elementAt(i);
 
-		   // Provide the game models with a graphics device context,
-		   // view and projection matrices, and
-		   // shaders and ask them to render themselves
+			if (gameModel->getRenderVal())
+			{
+				// Provide the game models with a graphics device context,
+				// view and projection matrices, and
+				// shaders and ask them to render themselves
 
-		  result = gameModel->Render(m_D3D->GetDeviceContext(), 
-								          viewMatrix, 
-								          projectionMatrix,
-										  m_ColorShader,
-										  m_TextureShader); 
-		     	// Turn off alpha blending.
+				result = gameModel->Render(m_D3D->GetDeviceContext(), 
+											  viewMatrix, 
+											  projectionMatrix,
+											  m_ColorShader,
+											  m_TextureShader); 
+		     		// Turn off alpha blending.
 
 	
-	       if(!result) {return false;}
+				if(!result) {return false;}
+			}
  
 
 	}

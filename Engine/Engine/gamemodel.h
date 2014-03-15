@@ -72,6 +72,9 @@ public:
 
 	virtual void			RotateLeft();
 	virtual void			RotateRight();
+	
+	virtual bool			getRenderVal();
+	virtual void			setRenderVal(bool);
 
 
 protected:
@@ -86,6 +89,7 @@ protected:
 	//Construction World translate and rotate matrices
     XMFLOAT4X4 m_worldRotateMatrix; //matrix to orient object in model co-ord system
     XMFLOAT4X4 m_worldTranslateMatrix; //matrix to translate object in model co-ord system
+	bool render;
 
 };
 
