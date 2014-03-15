@@ -143,12 +143,12 @@ void LevelClass::loadObjects()
 
 void LevelClass::buildWall(int x, int y)
 {
-	WCHAR* wallTextures[] = { L"../Engine/textures/walltexture.dds",
-								L"../Engine/textures/walltexture.dds",
-								L"../Engine/textures/walltexture.dds",
-								L"../Engine/textures/walltexture.dds",
-								L"../Engine/textures/walltexture.dds",
-								L"../Engine/textures/walltexture.dds",
+	WCHAR* wallTextures[] = { L"../Engine/textures/brickwalltexture2.dds",
+								L"../Engine/textures/brickwalltexture2.dds",
+								L"../Engine/textures/brickwalltexture2.dds",
+								L"../Engine/textures/brickwalltexture2.dds",
+								L"../Engine/textures/brickwalltexture2.dds",
+								L"../Engine/textures/brickwalltexture2.dds",
 							};
 
 	WallObject* newWall = new WallObject(x+0.0f,y+0.0f, wallTextures);
@@ -171,7 +171,7 @@ void LevelClass::buildDoor(int x, int y)
 
 void LevelClass::buildFloor(int x, int y)
 {
-	WCHAR * floorTexture = L"../Engine/textures/carpettexture.dds";
+	WCHAR * floorTexture = L"../Engine/textures/concretetexture.dds";
 
 	FloorObject * newFloor = new FloorObject(x+0.0f,y+0.0f,floorTexture);
 	gamePieces.add(newFloor);
