@@ -61,3 +61,10 @@ void GameObject::setRenderValue(bool b)
 		myModel->setRenderVal(b);
 	}
 }
+
+ArrayList<GameModel> GameObject::GetGameModels()
+{
+	ArrayList<GameModel> list;
+	list.add(myModel);
+	return list;
+}

@@ -4,6 +4,7 @@
 #define GAMEOBJECT_H
 
 #include "gamemodel.h"
+#include "arraylist.h"
 
 class GameObject
 {
@@ -15,6 +16,8 @@ class GameObject
 		virtual void setRenderValue(bool);
 		
 		GameModel* getModel();
+		virtual ArrayList<GameModel> GetGameModels();
+
 	protected:
 		void initialize();
 		void shutdown();

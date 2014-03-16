@@ -117,11 +117,13 @@ void LevelClass::level0()
 		map[b][0] = C_WALL;
 		map[b][sizeY-1] = C_WALL;
 	}
-
+	
 	map[sizeX-1][sizeY/2] = C_LIGHT;
 	map[0][sizeY/2] = C_LOCK;
 	map[sizeX/2][0] = C_DOOR;
+	map[3][6] = C_ENEMY;
 	loadObjects();
+
 
 	wchar_t* outstring = L"Level 0: Loaded\n";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
@@ -136,6 +138,7 @@ void LevelClass::loadObjects()
 			case C_DOOR:	buildDoor(i,j);			break;
 			case C_LIGHT:	buildLight(i,j);		break;
 			case C_LOCK:	buildLock(i,j);			break;
+			case C_ENEMY:	buildEnemy(i,j);		break;
 			}
 			buildFloor(i,j);
 			buildCeiling(i, j);
@@ -218,7 +221,7 @@ void LevelClass::buildLock(int x, int y)
 
 void LevelClass::buildEnemy(int x, int y)
 {
-	EnemyObject* newEnemy = new EnemyObject((float)x, -1.85f, (float)y, 5.0f);
+	EnemyObject* newEnemy = new EnemyObject(x+0.0f, -1.85f, y+0.0f, 5.0f);
 	gamePieces.add(newEnemy);
 }
 
@@ -255,7 +258,7 @@ ArrayList<GameModel> LevelClass::getGameModels()
 	ArrayList<GameModel> gameModels;
 
 	for(int i=0; i<gamePieces.size(); i++)
-		gameModels.add(gamePieces.elementAt(i)->getModel());
+		gameModels.addAll(gamePieces.elementAt(i)->GetGameModels());
 
 	return gameModels;
 }
