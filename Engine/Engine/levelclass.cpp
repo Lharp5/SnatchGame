@@ -215,6 +215,13 @@ void LevelClass::buildLock(int x, int y)
 	LockObject* newLock = new LockObject(x+0.0f,y+0.0f, lockTextures);
 	gamePieces.add(newLock);
 }
+
+void LevelClass::buildEnemy(int x, int y)
+{
+	EnemyObject* newEnemy = new EnemyObject((float)x, -1.85f, (float)y, 5.0f);
+	gamePieces.add(newEnemy);
+}
+
 /* Function:	Shutdown
  * Purpose:		To free up any pointers, close any files.
 */

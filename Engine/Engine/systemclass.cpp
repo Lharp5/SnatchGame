@@ -76,9 +76,6 @@ bool SystemClass::Initialize()
 	m_Camera->SetUpDirection(0.0f, 1.0f, 0.0f); //up points in positive Y direction
 	/*IMPORTANT:  note camera direction and up must be orthogonal */
 
-
-
-	
 	//Create the game objects for our game
 
 	//Set up some colors that are variations of each other
@@ -117,8 +114,7 @@ bool SystemClass::Initialize()
 	m_groundCover->orientRotateX(XM_PIDIV2); //rotate 90 degrees around X so it is parallel to XZ ground plane
 	m_groundCover->worldTranslate(0.0f, -backdropHeightY/2, groundCoverHeightY/2); //move to location in the world
 	
-	m_enemy = new EnemyModel(15.0f, -1.85f, 60.0f, 5.0f);
-
+	m_enemy = new EnemyObject(15.0f, -1.85f, 60.0f, 5.0f);
 
 	m_World = new WorldClass();
 
@@ -187,7 +183,7 @@ void SystemClass::Shutdown()
 
 	if(m_enemy)
 	{
-		m_enemy->Shutdown();
+		m_enemy->shutdown();
 		delete m_enemy;
 		m_enemy = 0;
 	}

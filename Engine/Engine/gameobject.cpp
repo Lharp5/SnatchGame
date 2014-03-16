@@ -14,9 +14,12 @@ GameObject::GameObject()
 	initialize();
 }
 
-GameObject::GameObject(GameModel* m, float x, float y, float z): xLocation(x), yLocation(y), zLocation(z), myModel(m)
+GameObject::GameObject(float x, float y, float z, GameModel* m): xLocation(x), yLocation(y), zLocation(z), myModel(m)
 {
-	myModel->worldTranslate(xLocation, yLocation, zLocation);
+	if (myModel)
+	{
+		myModel->worldTranslate(xLocation, yLocation, zLocation);
+	}
 }
 
 GameObject::~GameObject()
@@ -29,7 +32,7 @@ void GameObject::initialize()
 {
 }
 
-void GameObject:: shutdown()
+void GameObject::shutdown()
 {
 	if(myModel){
 		delete myModel;
@@ -44,10 +47,17 @@ GameModel* GameObject::getModel()
 
 bool GameObject::getRenderValue()
 {
-	return myModel->getRenderVal();
+	if (myModel)
+	{
+		return myModel->getRenderVal();
+	}
+	return true;
 }
 
 void GameObject::setRenderValue(bool b)
 {
-	myModel->setRenderVal(b);
+	if (myModel)
+	{
+		myModel->setRenderVal(b);
+	}
 }

@@ -27,6 +27,7 @@
 #include "gamemodel.h"
 #include "arraylist.h"
 #include "cinecameraclass.h"
+#include "enemyobject.h"
 #include "enemymodel.h"
 #include "levelclass.h"
 #include "lightmask.h"
@@ -75,7 +76,7 @@ private:
 	//QuadModel * m_blueQuad; //a simple colored quad
 	QuadTexturedModel* m_backDrop; //a background quad object
 	QuadTexturedModel* m_groundCover; //a ground quad object
-	EnemyModel* m_enemy;
+	EnemyObject* m_enemy;
 	ArrayList<GameModel>* m_GameModels; //container to hold all our game world models
 	WorldClass* m_World;
 	LightMask* m_lightMask;

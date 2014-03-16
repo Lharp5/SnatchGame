@@ -4,20 +4,6 @@
 #include "arraylist.h"
 #include "worldDefs.h"
 
-EnemyModel::EnemyModel(void)
-{
-	m_Head = 0;
-	m_Torso = 0;
-	m_LeftArm = 0;
-	m_RightArm = 0;
-	m_LeftLeg = 0;
-	m_RightLeg = 0;
-
-	m_InitialPosition = XMFLOAT3(0.0f, 0.0f, 0.0f);
-
-	InitializeModel();
-}
-
 
 EnemyModel::EnemyModel(float x, float y, float z, float s)
 {
@@ -178,12 +164,12 @@ void EnemyModel::WalkAnimation()
 	m_LeftLeg->orientTranslate(0.0f, 0.0f, -cos(rightRotationAngle) * (m_scale * ((torsoLength * 0.9f) / 2.0f)));
 	m_RightLeg->orientTranslate(0.0f, 0.0f, -cos(leftRotationAngle) * (m_scale * ((torsoLength * 0.9f) / 2.0f)));
 
-	m_LeftArm->orientRotateX(rotationRadianAngle);
-	m_RightArm->orientRotateX(-rotationRadianAngle);
-	m_LeftLeg->orientRotateX(-rotationRadianAngle);
-	m_RightLeg->orientRotateX(rotationRadianAngle);
-	leftRotationAngle -= rotationRadianAngle;
-	rightRotationAngle += rotationRadianAngle;
+	m_LeftArm->orientRotateX(rotationRadianAngle*1.3f);
+	m_RightArm->orientRotateX(-rotationRadianAngle*1.3f);
+	m_LeftLeg->orientRotateX(-rotationRadianAngle*1.3f);
+	m_RightLeg->orientRotateX(rotationRadianAngle*1.3f);
+	leftRotationAngle -= rotationRadianAngle*1.3f;
+	rightRotationAngle += rotationRadianAngle*1.3f;
 	
 	m_LeftArm->orientTranslate(0.0f, 0.0f, cos(leftRotationAngle) * (m_scale * ((torsoLength * 0.9f) / 2.0f)));
 	m_RightArm->orientTranslate(0.0f, 0.0f, cos(rightRotationAngle) * (m_scale * ((torsoLength * 0.9f) / 2.0f)));
@@ -198,9 +184,9 @@ void EnemyModel::MoveForward()
 	XMFLOAT4X4 torsoDirectionMatrix = m_Torso->GetWorldRotateMatrix();
     XMStoreFloat3( &effectiveDirectionVector,  XMVector3Transform( XMLoadFloat3(&m_directionVector), XMLoadFloat4x4(&torsoDirectionMatrix) ));
 
-	float deltaX = effectiveDirectionVector.x*ADVANCE_SPEED/3.0f;
-	float deltaY = effectiveDirectionVector.y*ADVANCE_SPEED/3.0f;
-	float deltaZ = effectiveDirectionVector.z*ADVANCE_SPEED/3.0f;
+	float deltaX = effectiveDirectionVector.x*ADVANCE_SPEED*1.1f;
+	float deltaY = effectiveDirectionVector.y*ADVANCE_SPEED*1.1f;
+	float deltaZ = effectiveDirectionVector.z*ADVANCE_SPEED*1.1f;
 	
 	m_Head->worldTranslate(deltaX, deltaY, deltaZ);
 	m_Torso->worldTranslate(deltaX, deltaY, deltaZ);

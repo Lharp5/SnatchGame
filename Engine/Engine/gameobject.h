@@ -9,12 +9,11 @@ class GameObject
 {
 	public:
 		GameObject();
-		GameObject(GameModel*, float, float, float);
+		GameObject(float, float, float, GameModel* m=0);
 		~GameObject();
-		bool getRenderValue();
-		void setRenderValue(bool);
+		virtual bool getRenderValue();
+		virtual void setRenderValue(bool);
 		
-		//virtual void toggleRender();
 		GameModel* getModel();
 	protected:
 		void initialize();
@@ -24,8 +23,6 @@ class GameObject
 		float xLocation;
 		float yLocation;
 		float zLocation;
-
-	//	bool renderObj;
 };
 
 

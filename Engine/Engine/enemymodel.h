@@ -15,8 +15,7 @@ enum SteppingState { LEFT, RIGHT };
 class EnemyModel
 {
 public:
-	EnemyModel(void);
-	EnemyModel(float x, float y, float z, float s);
+	EnemyModel(float x=0.0f, float y=0.0f, float z=0.0f, float s=1.0f);
 	virtual ~EnemyModel(void);
 	virtual void Shutdown();
 	ArrayList<GameModel> GetGameModels();

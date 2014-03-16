@@ -12,6 +12,7 @@
 #include "LightObject.h"
 #include "LockObject.h"
 #include "DoorObject.h"
+#include "enemyobject.h"
 #include "arraylist.h"
 
 #include <windows.h> //needed to create and destroy windows and call Win32 functions
@@ -55,6 +56,7 @@ class LevelClass
 		void buildLight(int, int);
 		void buildDoor(int, int);
 		void buildLock(int, int);
+		void buildEnemy(int, int);
 };
 
 

@@ -104,7 +104,7 @@ void LightMask::frame(XMFLOAT3 camPos)
 	}
 	else if (lightState == LightState::OFF)
 	{
-		setLight(0.6f);
+		setLight(0.7f);
 	}
 }
 
