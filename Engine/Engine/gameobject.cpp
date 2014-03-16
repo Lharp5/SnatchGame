@@ -18,7 +18,7 @@ GameObject::GameObject(float x, float y, float z, GameModel* m): xLocation(x), y
 {
 	if (myModel)
 	{
-		myModel->worldTranslate(xLocation, yLocation, zLocation);
+		myModel->worldTranslate(xLocation*10.0f, yLocation, zLocation*10.0f);
 	}
 }
 
@@ -32,12 +32,17 @@ void GameObject::initialize()
 {
 }
 
+bool GameObject::isLit()
+{
+	return false;
+}
+
 void GameObject::shutdown()
 {
-	if(myModel){
+	/*if(myModel){
 		delete myModel;
 		myModel = 0;
-	}
+	}*/
 }
 
 GameModel* GameObject::getModel()
@@ -68,3 +73,33 @@ ArrayList<GameModel> GameObject::GetGameModels()
 	list.add(myModel);
 	return list;
 }
+
+bool GameObject::getLocation(int x, int z)
+{
+	return((x == xLocation)&&(z==zLocation));
+}
+
+bool GameObject::doAction()
+{
+	return false;
+}
+
+int GameObject::getSourceX()
+{
+	return 0;
+}
+
+int GameObject::getSourceY()
+{
+	return 0;
+}
+
+bool GameObject::getStatus()
+{
+	return false;
+}
+
+void GameObject::toggleLight(bool Light)
+{
+}
+

@@ -29,6 +29,16 @@ class LevelClass
 		int getSizeX();
 		int getSizeY();
 
+		GameObject* getLocation(int, int);
+
+		/**********
+		*	Function:	checkMap
+		*	In:			co-ordinates of desired location
+		*	Out:		Object type at location
+		*	Purpose:	To get the object type on the map
+		***********/
+		WALL_TYPE checkMap(int, int);
+
 		int getPlayerStartX();
 		int getPlayerStartZ();
 

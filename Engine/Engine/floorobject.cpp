@@ -7,7 +7,7 @@
 
 #include "floorobject.h"
 
-FloorObject::FloorObject(float x, float z, WCHAR* textures):GameObject(x*10, -5.0f,z*10, new QuadTexturedModel(10.0f, 10.0f, textures))
+FloorObject::FloorObject(float x, float z, WCHAR* textures):GameObject(x, -5.0f,z, new QuadTexturedModel(10.0f, 10.0f, textures))
 {
 	sourceX=-5;
 	sourceY=-5;
@@ -42,7 +42,7 @@ bool FloorObject::isLit()
 	return lit;
 }
 
-void FloorObject::toggleLight()
+void FloorObject::toggleLight(bool light)
 {
-	lit = !lit;
+	lit = light;
 }

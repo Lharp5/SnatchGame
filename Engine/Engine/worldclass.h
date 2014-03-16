@@ -15,6 +15,14 @@ public:
 	~WorldClass();
 	void runGame();
 	void toggleFloor();
+	void doAction();
+	
+	/*********
+	*	Function:	checkLight
+	*	out:		boolean whether light is on or off
+	*	Purpose:	to check location of the player and determine if that floor is lit up.
+	**********/
+	bool checkLight();
 	void updatePlayer(float, float);
 
 	ArrayList<GameModel> getModels(); //models to be sent back to the system for rendering.
@@ -73,6 +81,8 @@ private:
 	void playGame();
 	void advanceLevel();
 	void endGame();
+	void updateLight(int,int);
+	void scan(int, int);
 };
 
 #endif

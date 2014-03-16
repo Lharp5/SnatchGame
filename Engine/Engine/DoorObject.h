@@ -22,7 +22,7 @@ public:
 	*	Purpose:	To do the appropriate action when the player uses an action on the wall
 	*	Additionally:	Will  turn light on/off
 	*************/
-	void doAction();
+	bool doAction();
 
 private:
 	bool isOpen;

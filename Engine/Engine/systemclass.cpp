@@ -36,7 +36,7 @@ bool SystemClass::Initialize()
 {
 	int screenWidth, screenHeight;
 	bool result;
-
+	spacePressed = false;
 
 	// Initialize the width and height of the screen to zero before sending the variables into 
 	// InitializeWindows() function which will cause them to get set.
@@ -314,6 +314,11 @@ bool SystemClass::Frame()
 	
 	m_World->runGame();
 
+	if(m_World->checkLight())
+		LightMask::lightState = LightState::ON;
+	else
+		LightMask::lightState = LightState::OFF;
+
 	//Handle user inputs
 	bool result;
 
@@ -321,7 +326,7 @@ bool SystemClass::Frame()
 	if(!result)
 		return false;
 
-
+	
 	// Check if the user pressed escape and wants to exit the application.
 	if(!checkControls())
 		return false;
@@ -329,12 +334,6 @@ bool SystemClass::Frame()
 	//Move camera or models based on input
 	
 	m_lightMask->frame(m_Camera->GetPosition());
-
-	/*
-	We will combinations for a key + arrow keys to control the camera
-	*/
-	wchar_t* outstring = L"-----\n";
-	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 
 	// Do the frame processing for the graphics object.
 	result = m_Graphics->Frame();
@@ -354,9 +353,12 @@ bool SystemClass::checkControls()
 	//Move camera or models based on input
 	//We will combinations for a key + arrow keys to control the camera
 	if(m_Input->keyPressed(DIK_SPACE)){
-		//QuadTexturedModel * myModel = new QuadTexturedModel(2,2, L"../Engine/textures/die6.dds");
-		//myModel->worldTranslate(m_Camera->GetPosition().x,m_Camera->GetPosition().y, m_Camera->GetPosition().z);
-		//m_World->toggleFloor();
+		if(!spacePressed)
+			m_World->doAction();
+		spacePressed = true;
+	}
+	else{
+		spacePressed = false;
 	}
 	if ( m_Input->keyPressed(DIK_LSHIFT)){   
 		if ( m_Input->keyPressed(DIK_LEFT))
@@ -388,18 +390,21 @@ bool SystemClass::checkControls()
 	}
 	else{
 	   if ( m_Input->keyPressed(DIK_A) ){ //Move Camera Left
-		   m_World->updatePlayer(m_Camera->GetPosition().x, m_Camera->GetPosition().z);
-	      m_Camera->StrafeLeft();
+			m_World->updatePlayer(m_Camera->GetPosition().x, m_Camera->GetPosition().z);
+			m_Camera->StrafeLeft();
 	   }
 
 	   if ( m_Input->keyPressed(DIK_D) ){ //Move Camera Right
-	      m_Camera->StrafeRight();
+			m_World->updatePlayer(m_Camera->GetPosition().x, m_Camera->GetPosition().z);
+			m_Camera->StrafeRight();
 	   }
 
 	   if ( m_Input->keyPressed(DIK_W) ){ //Camera Move Forward
+		  m_World->updatePlayer(m_Camera->GetPosition().x, m_Camera->GetPosition().z);
 		  m_Camera->MoveForward();
 	   }
 	   if ( m_Input->keyPressed(DIK_S) ){ //Camera Pull Back
+		  m_World->updatePlayer(m_Camera->GetPosition().x, m_Camera->GetPosition().z);
 		  m_Camera->MoveBackward();
 	   }
 	   if ( m_Input->keyPressed(DIK_E) )

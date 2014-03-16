@@ -22,7 +22,7 @@ public:
 	*	Purpose:	To do the appropriate action when the player uses an action on the wall
 	*	Additionally:	Will  lock/unlock
 	*************/
-	void doAction();
+	bool doAction();
 
 private:
 	bool isLocked;

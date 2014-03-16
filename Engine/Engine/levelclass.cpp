@@ -181,6 +181,7 @@ void LevelClass::buildFloor(int x, int y)
 	WCHAR * floorTexture = L"../Engine/textures/tilefloortexture.dds";
 
 	FloorObject * newFloor = new FloorObject(x+0.0f,y+0.0f,floorTexture);
+	newFloor->createSource(9,5);
 	gamePieces.add(newFloor);
 }
 
@@ -240,11 +241,6 @@ void LevelClass::Shutdown()
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 }
 
-/* Function:	getPlayerLocation
- * Purpose:		to find the player on the map.
- * in/out:		X and Y position of the player.
-*/
-
 
 int LevelClass::getSizeX()
 {
@@ -274,6 +270,29 @@ int LevelClass::getPlayerStartX()
 int LevelClass::getPlayerStartZ()
 {
 	return playerStartZ;
+}
+
+GameObject* LevelClass::getLocation(int x, int z)
+{
+	if(x<sizeX && z<sizeY && x>=0 && z>=0){
+	for(int i=0; i<gamePieces.size(); i++)
+		if(gamePieces.elementAt(i)->getLocation(x,z)== true)
+		{
+			return gamePieces.elementAt(i);
+		}
+	}
+	return NULL;
+}
+
+WALL_TYPE LevelClass::checkMap(int x, int z)
+{
+	//wchar_t s[32];
+	//wsprintf(s, L"Checking Location: %d, %d\n", x, z);
+	//WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), s, wcslen(s), NULL, NULL);
+	//if(map[x][z] == C_DEFAULT){
+	//
+	//}
+	return map[x][z];
 }
 /*void LevelClass::toggleFloor()
 {

@@ -81,6 +81,9 @@ private:
 	WorldClass* m_World;
 	LightMask* m_lightMask;
 
+	bool spacePressed;
+	bool prevSpacePressed;
+
 	bool keyPressedE;
 	bool prevEPressedState;
 

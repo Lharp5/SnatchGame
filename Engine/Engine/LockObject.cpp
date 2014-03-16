@@ -10,7 +10,8 @@ LockObject::LockObject(float x, float z, WCHAR* textures[]): isLocked(true), Wal
 {
 }
 
-void LockObject::doAction()
+bool LockObject::doAction()
 {
 	isLocked = !isLocked;
+	return true;
 }

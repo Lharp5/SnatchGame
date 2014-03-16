@@ -26,6 +26,6 @@ public:
 	*	Purpose:	To do the appropriate action when the player uses an action on the wall
 	*	Additionally:	Implementation will call either light, door, or lock functions.
 	*************/
-	virtual void doAction();
+	virtual bool doAction();
 };
 #endif

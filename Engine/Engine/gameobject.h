@@ -12,9 +12,20 @@ class GameObject
 		GameObject();
 		GameObject(float, float, float, GameModel* m=0);
 		~GameObject();
+		virtual bool isLit();
+		virtual bool doAction();
 		virtual bool getRenderValue();
 		virtual void setRenderValue(bool);
-		
+		virtual int getSourceX();
+		virtual int getSourceY();
+		virtual bool getStatus();
+		virtual void toggleLight(bool);
+		/************
+		*	Function:	getLocation
+		*	in:			x and z locations
+		*	Purpose:	To determine if the location is what your looking for.
+		*/
+		bool getLocation(int, int);
 		GameModel* getModel();
 		virtual ArrayList<GameModel> GetGameModels();
 

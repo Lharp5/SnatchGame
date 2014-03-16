@@ -10,7 +10,8 @@ DoorObject::DoorObject(int xL, int yL, float x, float z, WCHAR* textures[]): loc
 {
 }
 
-void DoorObject::doAction()
+bool DoorObject::doAction()
 {
 	isOpen = !isOpen;
+	return true;
 }

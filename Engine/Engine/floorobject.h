@@ -45,7 +45,7 @@ public:
 	*	Function:	toggleLight
 	*	Purpose:	Turns the light either on or off
 	*************/
-	void toggleLight();
+	void toggleLight(bool);
 
 private:
 
