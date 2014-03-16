@@ -172,7 +172,7 @@ void LevelClass::buildDoor(int x, int y)
 
 void LevelClass::buildFloor(int x, int y)
 {
-	WCHAR * floorTexture = L"../Engine/textures/concretetexture.dds";
+	WCHAR * floorTexture = L"../Engine/textures/tilefloortexture.dds";
 
 	FloorObject * newFloor = new FloorObject(x+0.0f,y+0.0f,floorTexture);
 	gamePieces.add(newFloor);
@@ -180,7 +180,7 @@ void LevelClass::buildFloor(int x, int y)
 
 void LevelClass::buildCeiling(int x, int y)
 {
-	WCHAR * ceilingTexture = L"../Engine/textures/ceilingtexture.dds";
+	WCHAR * ceilingTexture = L"../Engine/textures/concretetexture.dds";
 
 	FloorObject * newCeiling = new FloorObject(x+0.0f, y+0.0f, ceilingTexture);
 	newCeiling->getModel()->orientRotateX(XM_PI);
