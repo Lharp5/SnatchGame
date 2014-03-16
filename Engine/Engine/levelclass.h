@@ -51,6 +51,7 @@ class LevelClass
 
 		void buildWall(int, int);
 		void buildFloor(int, int);
+		void buildCeiling(int, int);
 		void buildLight(int, int);
 		void buildDoor(int, int);
 		void buildLock(int, int);

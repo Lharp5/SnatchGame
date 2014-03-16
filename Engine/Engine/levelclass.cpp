@@ -138,6 +138,7 @@ void LevelClass::loadObjects()
 			case C_LOCK:	buildLock(i,j);			break;
 			}
 			buildFloor(i,j);
+			buildCeiling(i, j);
 		}
 }
 
@@ -175,6 +176,16 @@ void LevelClass::buildFloor(int x, int y)
 
 	FloorObject * newFloor = new FloorObject(x+0.0f,y+0.0f,floorTexture);
 	gamePieces.add(newFloor);
+}
+
+void LevelClass::buildCeiling(int x, int y)
+{
+	WCHAR * ceilingTexture = L"../Engine/textures/ceilingtexture.dds";
+
+	FloorObject * newCeiling = new FloorObject(x+0.0f, y+0.0f, ceilingTexture);
+	newCeiling->getModel()->orientRotateX(XM_PI);
+	newCeiling->getModel()->worldTranslate(0.0f, 15.0f, 0.0f);
+	gamePieces.add(newCeiling);
 }
 
 void LevelClass::buildLight(int x, int y)
