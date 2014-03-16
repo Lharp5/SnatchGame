@@ -84,6 +84,8 @@ private:
 	bool spacePressed;
 	bool prevSpacePressed;
 
+	XMFLOAT3 prevCamPos;
+
 	bool keyPressedE;
 	bool prevEPressedState;
 

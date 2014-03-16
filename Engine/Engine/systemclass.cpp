@@ -152,7 +152,7 @@ bool SystemClass::Initialize()
 	}
 
 	m_Camera->SetPosition(m_World->getPlayerStartX(), m_World->getPlayerStartY(), m_World->getPlayerStartZ());
-	
+	prevCamPos = m_Camera->GetPosition();
 	return true;
 }
 
@@ -389,23 +389,35 @@ bool SystemClass::checkControls()
 		  m_Camera->ZoomOut();	
 	}
 	else{
-	   if ( m_Input->keyPressed(DIK_A) ){ //Move Camera Left
-			m_World->updatePlayer(m_Camera->GetPosition().x, m_Camera->GetPosition().z);
+	   if ( m_Input->keyPressed(DIK_A) ){ //Move Camera Left			
 			m_Camera->StrafeLeft();
+			if(!(m_World->updatePlayer(m_Camera->GetPosition().x, m_Camera->GetPosition().z)))
+				m_Camera->SetPosition(prevCamPos.x, prevCamPos.y, prevCamPos.z);
+			else
+				prevCamPos = m_Camera->GetPosition();
 	   }
 
 	   if ( m_Input->keyPressed(DIK_D) ){ //Move Camera Right
-			m_World->updatePlayer(m_Camera->GetPosition().x, m_Camera->GetPosition().z);
 			m_Camera->StrafeRight();
+			if(!(m_World->updatePlayer(m_Camera->GetPosition().x, m_Camera->GetPosition().z)))
+				m_Camera->SetPosition(prevCamPos.x, prevCamPos.y, prevCamPos.z);
+			else
+				prevCamPos = m_Camera->GetPosition();
 	   }
 
 	   if ( m_Input->keyPressed(DIK_W) ){ //Camera Move Forward
-		  m_World->updatePlayer(m_Camera->GetPosition().x, m_Camera->GetPosition().z);
 		  m_Camera->MoveForward();
+		  if(!(m_World->updatePlayer(m_Camera->GetPosition().x, m_Camera->GetPosition().z)))
+				m_Camera->SetPosition(prevCamPos.x, prevCamPos.y, prevCamPos.z);
+			else
+				prevCamPos = m_Camera->GetPosition();
 	   }
 	   if ( m_Input->keyPressed(DIK_S) ){ //Camera Pull Back
-		  m_World->updatePlayer(m_Camera->GetPosition().x, m_Camera->GetPosition().z);
 		  m_Camera->MoveBackward();
+		  if(!(m_World->updatePlayer(m_Camera->GetPosition().x, m_Camera->GetPosition().z)))
+				m_Camera->SetPosition(prevCamPos.x, prevCamPos.y, prevCamPos.z);
+			else
+				prevCamPos = m_Camera->GetPosition();
 	   }
 	   if ( m_Input->keyPressed(DIK_E) )
 	   {

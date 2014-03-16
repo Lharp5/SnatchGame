@@ -23,7 +23,7 @@ public:
 	*	Purpose:	to check location of the player and determine if that floor is lit up.
 	**********/
 	bool checkLight();
-	void updatePlayer(float, float);
+	bool updatePlayer(float, float);
 
 	ArrayList<GameModel> getModels(); //models to be sent back to the system for rendering.
 

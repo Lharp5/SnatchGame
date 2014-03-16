@@ -53,19 +53,23 @@ void WorldClass::Shutdown()
 }
 
 
-void WorldClass::updatePlayer(float x, float z)
+bool WorldClass::updatePlayer(float x, float z)
 {
-	wchar_t v[32];
-	wsprintf(v, L" Number: %.00f, %.00f \n", x, z);
-	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), v, wcslen(v), NULL, NULL);
 	int mapX = convertToInt(x/10);
 	int mapZ = convertToInt(z/10);
 
 	wchar_t s[32];
-	wsprintf(s, L"Converted Number: %d, %d\n", mapX, mapZ);
+	wsprintf(s, L"New Position: %d, %d\n", mapX, mapZ);
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), s, wcslen(s), NULL, NULL);
 
+	switch(level->checkMap(mapX, mapZ)){
+		case C_WALL:
+		case C_DOOR:
+		case C_LIGHT:
+		case C_LOCK:	return false; break;
+	}
 	player->setPosition(mapX, mapZ);
+	return true;
 
 }
 ArrayList<GameModel> WorldClass::getModels()

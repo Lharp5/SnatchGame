@@ -14,4 +14,5 @@ bool DoorObject::doAction()
 {
 	isOpen = !isOpen;
 	return true;
+	//change
 }
