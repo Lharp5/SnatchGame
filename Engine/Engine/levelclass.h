@@ -29,6 +29,10 @@ class LevelClass
 		int getSizeX();
 		int getSizeY();
 
+		int getPlayerStartX();
+		int getPlayerStartZ();
+
+
 		void toggleFloor();
 
 	private:
@@ -39,6 +43,10 @@ class LevelClass
 
 		int sizeX;
 		int sizeY;
+
+		//player starting positions as set in levelLoader.
+		int playerStartX;
+		int playerStartZ;
 		
 		//functions
 

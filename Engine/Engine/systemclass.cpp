@@ -356,7 +356,7 @@ bool SystemClass::checkControls()
 	if(m_Input->keyPressed(DIK_SPACE)){
 		//QuadTexturedModel * myModel = new QuadTexturedModel(2,2, L"../Engine/textures/die6.dds");
 		//myModel->worldTranslate(m_Camera->GetPosition().x,m_Camera->GetPosition().y, m_Camera->GetPosition().z);
-		m_World->toggleFloor();
+		//m_World->toggleFloor();
 	}
 	if ( m_Input->keyPressed(DIK_LSHIFT)){   
 		if ( m_Input->keyPressed(DIK_LEFT))
@@ -387,18 +387,21 @@ bool SystemClass::checkControls()
 		  m_Camera->ZoomOut();	
 	}
 	else{
-	   if ( m_Input->keyPressed(DIK_A) ) //Move Camera Left
+	   if ( m_Input->keyPressed(DIK_A) ){ //Move Camera Left
+		   m_World->updatePlayer(m_Camera->GetPosition().x, m_Camera->GetPosition().z);
 	      m_Camera->StrafeLeft();
+	   }
 
-	   if ( m_Input->keyPressed(DIK_D) ) //Move Camera Right
+	   if ( m_Input->keyPressed(DIK_D) ){ //Move Camera Right
 	      m_Camera->StrafeRight();
+	   }
 
-	   if ( m_Input->keyPressed(DIK_W) ) //Camera Move Forward
+	   if ( m_Input->keyPressed(DIK_W) ){ //Camera Move Forward
 		  m_Camera->MoveForward();
-
-	   if ( m_Input->keyPressed(DIK_S) ) //Camera Pull Back
+	   }
+	   if ( m_Input->keyPressed(DIK_S) ){ //Camera Pull Back
 		  m_Camera->MoveBackward();
-
+	   }
 	   if ( m_Input->keyPressed(DIK_E) )
 	   {
 		   if (!keyPressedE)

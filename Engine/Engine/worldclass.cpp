@@ -26,6 +26,7 @@ void WorldClass::initalizeWorld()
 	level->loadLevel(0);
 
 	player = new PlayerClass();
+	player->setPosition(getPlayerStartX(), getPlayerStartZ());
 	
 	//NEEDS TO FINISH THIS CLASS
 
@@ -51,6 +52,15 @@ void WorldClass::Shutdown()
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 }
 
+
+void WorldClass::updatePlayer(float x, float z)
+{
+	int mapX = convertToInt(x);
+	int mapZ = convertToInt(z);
+
+	player->setPosition(mapX, mapZ);
+
+}
 ArrayList<GameModel> WorldClass::getModels()
 {
 	wchar_t* outstring = L"Adding models Uh OH!!!";
@@ -61,7 +71,7 @@ ArrayList<GameModel> WorldClass::getModels()
 // returning the player start position functions
 float WorldClass::getPlayerStartX()
 {
-	return 50.0f;
+	return level->getPlayerStartX()*10.0f;
 }
 
 float WorldClass::getPlayerStartY()
@@ -71,7 +81,7 @@ float WorldClass::getPlayerStartY()
 
 float WorldClass::getPlayerStartZ()
 {
-	return 50.0f;
+	return level->getPlayerStartZ()*10.0f;
 }
 
 void WorldClass::runGame()
@@ -80,4 +90,16 @@ void WorldClass::runGame()
 void WorldClass::toggleFloor()
 {
 	//level->toggleFloor();
+}
+
+int WorldClass::convertToInt(float number)
+{
+	int intNum = number;
+	float rem = fmodf(number, intNum);
+
+	if(rem<=0.05f)
+		return intNum+1;
+	else
+		return intNum;
+
 }

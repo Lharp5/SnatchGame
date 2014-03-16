@@ -9,11 +9,17 @@ PlayerClass::~PlayerClass()
 {
 }
 
+
+void PlayerClass::setPosition(int x, int y)
+{
+	xLocation =x;
+	yLocation =y;
+}
 int PlayerClass::getXLocation()
 {
-	return 0;
+	return xLocation;
 }
 int PlayerClass::getYLocation()
 {
-	return 0;
+	return yLocation;
 }

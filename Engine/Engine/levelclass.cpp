@@ -124,6 +124,9 @@ void LevelClass::level0()
 	map[3][6] = C_ENEMY;
 	loadObjects();
 
+	playerStartX = 5;
+	playerStartZ = 5;
+
 
 	wchar_t* outstring = L"Level 0: Loaded\n";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
@@ -263,6 +266,15 @@ ArrayList<GameModel> LevelClass::getGameModels()
 	return gameModels;
 }
 
+int LevelClass::getPlayerStartX()
+{
+	return playerStartX;
+}
+
+int LevelClass::getPlayerStartZ()
+{
+	return playerStartZ;
+}
 /*void LevelClass::toggleFloor()
 {
 	for(int i=0; i<sizeX; i++){

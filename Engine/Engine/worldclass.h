@@ -6,6 +6,7 @@
 #include "levelclass.h"
 #include "PlayerClass.h"
 #include "enemyobject.h"
+#include <math.h>
 
 class WorldClass
 {
@@ -14,6 +15,7 @@ public:
 	~WorldClass();
 	void runGame();
 	void toggleFloor();
+	void updatePlayer(float, float);
 
 	ArrayList<GameModel> getModels(); //models to be sent back to the system for rendering.
 
@@ -48,7 +50,6 @@ private:
 
 	PlayerClass* player;
 
-	//int worldSize;
 
 	//functions
 
@@ -56,6 +57,14 @@ private:
 	void initalizeWorld();
 	void initalizeRoof();
 	void initalizeFloor();
+
+	/************	
+	*	Function:	ConvertToInt
+	*	in:			number as a float
+	*	out:		number as an int
+	*	Purpose:	To convert a number from float to int
+	************/
+	int convertToInt(float);
 
 	//removing the world
 	void Shutdown();
