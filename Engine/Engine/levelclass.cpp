@@ -224,7 +224,7 @@ void LevelClass::buildLock(int x, int y)
 
 void LevelClass::buildEnemy(int x, int y)
 {
-	EnemyObject* newEnemy = new EnemyObject(x+0.0f, -1.85f, y+0.0f, 5.0f);
+	EnemyObject* newEnemy = new EnemyObject(10.0f*x, -1.85f, 10.0f*y, 5.0f);
 	gamePieces.add(newEnemy);
 }
 
