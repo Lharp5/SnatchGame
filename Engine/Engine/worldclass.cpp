@@ -56,7 +56,7 @@ bool WorldClass::isWall(int x, int y)
 {
 	switch(level->checkMap(x, y)){
 		case C_WALL:
-		case C_DOOR_1: case C_DOOR_2:
+		case C_DOOR_1: case C_DOOR_2: return !(level->getLocation(x,y)->getStatus()); break;
 		case C_LIGHT_1: case C_LIGHT_2: case C_LIGHT_3: case C_LIGHT_4: 
 		case C_LOCK_1: case C_LOCK_2: case C_LOCK_3: case C_LOCK_4:
 			return true;
@@ -110,7 +110,7 @@ void WorldClass::runGame()
 		for(int j=0; j<level->getSizeY(); j++){
 			if(level->checkMap(i,j) == C_DOOR_1 || level->checkMap(i,j) == C_DOOR_2){
 				if(level->getLocation(i,j)->getStatus())
-					level->getLocation(i,j)->getModel()->worldTranslate(0,1.0f,0.0f);
+					level->getLocation(i,j)->getModel()->orientTranslate(0,1.0f,0.0f);
 
 				//wchar_t* outstring = L"Found Door\n";
 				//WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
