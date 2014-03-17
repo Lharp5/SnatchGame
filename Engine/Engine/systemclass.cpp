@@ -427,7 +427,7 @@ bool SystemClass::checkControls()
 	   }
 	   else
 	   {
-			keyPressedE = false;
+		   keyPressedE = false;
 	   }
 	   
 	   if ( m_Input->keyPressed(DIK_LEFT) ) //Pan Camera Left

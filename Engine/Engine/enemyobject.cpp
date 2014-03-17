@@ -68,5 +68,4 @@ void EnemyObject::setRenderValue(bool b)
 	{
 		list.elementAt(i)->setRenderVal(b);
 	}
-	renderVal = b;
 }
