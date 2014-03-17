@@ -15,9 +15,8 @@ bool DoorObject::doAction()
 	wchar_t* outstring = L"Opened Door\n";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 	isOpen = true;
-	GameObject::getModel()->setRenderVal(false);
+	getModel()->setRenderVal(false);
 	return true;
-	//change
 }
 
 bool DoorObject::getStatus()

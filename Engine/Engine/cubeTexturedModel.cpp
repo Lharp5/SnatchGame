@@ -296,7 +296,7 @@ ID3D11ShaderResourceView* CubeTexturedModel::GetTexture(int i){
 
 
 bool CubeTexturedModel::Render(ID3D11DeviceContext* deviceContext,  XMFLOAT4X4 viewMatrix, XMFLOAT4X4 projectionMatrix, ColorShaderClass* colorShader, TextureShaderClass* textureShader){
-	
+	if(render){
 	if(!textureShader) return false; //we were not provided with a shader
 
 
@@ -318,7 +318,8 @@ bool CubeTexturedModel::Render(ID3D11DeviceContext* deviceContext,  XMFLOAT4X4 v
 	
 	}
 	return true;
-
+	}
+	return true;
 }
 
 

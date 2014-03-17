@@ -70,8 +70,8 @@ void WorldClass::updatePlayer(float x, float z)
 	int mapZ = convertToInt(z/10);
 
 	wchar_t s[32];
-	wsprintf(s, L"New Position: %d, %d\n", mapX, mapZ);
-	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), s, wcslen(s), NULL, NULL);
+	//wsprintf(s, L"New Position: %d, %d\n", mapX, mapZ);
+	//WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), s, wcslen(s), NULL, NULL);
 
 	player->setPosition(mapX, mapZ);
 
@@ -112,8 +112,8 @@ void WorldClass::runGame()
 				if(level->getLocation(i,j)->getStatus())
 					level->getLocation(i,j)->getModel()->worldTranslate(0,1.0f,0.0f);
 
-				wchar_t* outstring = L"Found Door\n";
-				WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
+				//wchar_t* outstring = L"Found Door\n";
+				//WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 			}
 		}
 	}
