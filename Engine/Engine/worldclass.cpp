@@ -64,9 +64,10 @@ bool WorldClass::updatePlayer(float x, float z)
 
 	switch(level->checkMap(mapX, mapZ)){
 		case C_WALL:
-		case C_DOOR:
-		case C_LIGHT:
-		case C_LOCK:	return false; break;
+		case C_DOOR_1: case C_DOOR_2:
+		case C_LIGHT_1: case C_LIGHT_2: case C_LIGHT_3: case C_LIGHT_4: 
+		case C_LOCK_1: case C_LOCK_2: case C_LOCK_3: case C_LOCK_4:
+			return false; break;
 	}
 	player->setPosition(mapX, mapZ);
 	return true;
@@ -99,7 +100,7 @@ void WorldClass::runGame()
 {
 	for(int i=0; i<level->getSizeX(); i++){
 		for(int j=0; j<level->getSizeY(); j++){
-			if(level->checkMap(i,j) == C_DOOR){
+			if(level->checkMap(i,j) == C_DOOR_1 || level->checkMap(i,j) == C_DOOR_2){
 				if(level->getLocation(i,j)->getStatus())
 					level->getLocation(i,j)->getModel()->worldTranslate(0,1.0f,0.0f);
 
