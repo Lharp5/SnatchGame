@@ -16,6 +16,7 @@ public:
 	void runGame();
 	void toggleFloor();
 	void doAction();
+	bool isWall(int, int);
 	
 	/*********
 	*	Function:	checkLight
@@ -23,7 +24,7 @@ public:
 	*	Purpose:	to check location of the player and determine if that floor is lit up.
 	**********/
 	bool checkLight();
-	bool updatePlayer(float, float);
+	void updatePlayer(float, float);
 
 	ArrayList<GameModel> getModels(); //models to be sent back to the system for rendering.
 

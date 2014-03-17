@@ -13,6 +13,7 @@ SystemClass::SystemClass()
 	m_GameModels = new ArrayList<GameModel>();
 	keyPressedE = false;
 	prevEPressedState = false;
+	velocityVector = XMFLOAT3(0.0f, 0.0f, 0.0f);
 }
 
 
@@ -305,12 +306,8 @@ bool SystemClass::Frame()
 	which will render the graphics for that frame. 
 	As the application grows we'll place more code here. 
 	*/
-	
-	/*
-	Apply transformations to the game objects
-	*/
 
-	//Rotate the object a bit around some axis
+	velocityVector = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	
 	m_World->runGame();
 
@@ -326,13 +323,45 @@ bool SystemClass::Frame()
 	if(!result)
 		return false;
 
-	
-	// Check if the user pressed escape and wants to exit the application.
 	if(!checkControls())
 		return false;
 	
-	//Move camera or models based on input
-	
+	//checking player collision
+	if (m_World->isWall(m_World->getPlayer()->getXLocation() + 1, m_World->getPlayer()->getYLocation())
+		&& velocityVector.x > 0)
+	{
+		if (m_Camera->GetPosition().x / 10.0f > m_World->getPlayer()->getXLocation() + 0.25f)
+		{
+			velocityVector.x = 0;
+		}
+	}
+	if (m_World->isWall(m_World->getPlayer()->getXLocation() - 1, m_World->getPlayer()->getYLocation())
+		&& velocityVector.x < 0)
+	{
+		if (m_Camera->GetPosition().x / 10.0f < m_World->getPlayer()->getXLocation() - 0.25f)
+		{
+			velocityVector.x = 0;
+		}
+	}
+	if (m_World->isWall(m_World->getPlayer()->getXLocation(), m_World->getPlayer()->getYLocation() + 1)
+		&& velocityVector.z > 0)
+	{
+		if (m_Camera->GetPosition().z / 10.0f > m_World->getPlayer()->getYLocation() +0.25f)
+		{
+			velocityVector.z = 0;
+		}
+	}
+	if (m_World->isWall(m_World->getPlayer()->getXLocation(), m_World->getPlayer()->getYLocation() - 1)
+		&& velocityVector.z < 0)
+	{
+		if (m_Camera->GetPosition().z / 10.0f < m_World->getPlayer()->getYLocation() - 0.25f)
+		{
+			velocityVector.z = 0;
+		}
+	}
+	m_Camera->Move(velocityVector);
+	m_World->updatePlayer(m_Camera->GetPosition().x, m_Camera->GetPosition().z);
+
 	m_lightMask->frame(m_Camera->GetPosition());
 
 	// Do the frame processing for the graphics object.
@@ -389,35 +418,35 @@ bool SystemClass::checkControls()
 		  m_Camera->ZoomOut();	
 	}
 	else{
-	   if ( m_Input->keyPressed(DIK_A) ){ //Move Camera Left			
-			m_Camera->StrafeLeft();
-			if(!(m_World->updatePlayer(m_Camera->GetPosition().x, m_Camera->GetPosition().z)))
-				m_Camera->SetPosition(prevCamPos.x, prevCamPos.y, prevCamPos.z);
-			else
-				prevCamPos = m_Camera->GetPosition();
+	   if ( m_Input->keyPressed(DIK_A) ){ //Move Camera Left	
+
+			XMFLOAT3 v = m_Camera->StrafeLeft();
+			velocityVector.x += v.x;
+			velocityVector.y += v.y;
+			velocityVector.z += v.z;
 	   }
 
 	   if ( m_Input->keyPressed(DIK_D) ){ //Move Camera Right
-			m_Camera->StrafeRight();
-			if(!(m_World->updatePlayer(m_Camera->GetPosition().x, m_Camera->GetPosition().z)))
-				m_Camera->SetPosition(prevCamPos.x, prevCamPos.y, prevCamPos.z);
-			else
-				prevCamPos = m_Camera->GetPosition();
+
+			XMFLOAT3 v = m_Camera->StrafeRight();
+			velocityVector.x += v.x;
+			velocityVector.y += v.y;
+			velocityVector.z += v.z;
 	   }
 
 	   if ( m_Input->keyPressed(DIK_W) ){ //Camera Move Forward
-		  m_Camera->MoveForward();
-		  if(!(m_World->updatePlayer(m_Camera->GetPosition().x, m_Camera->GetPosition().z)))
-				m_Camera->SetPosition(prevCamPos.x, prevCamPos.y, prevCamPos.z);
-			else
-				prevCamPos = m_Camera->GetPosition();
+
+			XMFLOAT3 v = m_Camera->MoveForward();
+			velocityVector.x += v.x;
+			velocityVector.y += v.y;
+			velocityVector.z += v.z;
 	   }
 	   if ( m_Input->keyPressed(DIK_S) ){ //Camera Pull Back
-		  m_Camera->MoveBackward();
-		  if(!(m_World->updatePlayer(m_Camera->GetPosition().x, m_Camera->GetPosition().z)))
-				m_Camera->SetPosition(prevCamPos.x, prevCamPos.y, prevCamPos.z);
-			else
-				prevCamPos = m_Camera->GetPosition();
+
+			XMFLOAT3 v = m_Camera->MoveBackward();
+			velocityVector.x += v.x;
+			velocityVector.y += v.y;
+			velocityVector.z += v.z;
 	   }
 	   if ( m_Input->keyPressed(DIK_E) )
 	   {

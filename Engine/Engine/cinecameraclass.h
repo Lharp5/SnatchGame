@@ -54,10 +54,12 @@ public:
 	void SetDirection(float, float, float);
 	void SetUpDirection(float, float, float);
 
-	void MoveForward(); //translate forward along camera direction vector
-	void MoveBackward(); //translate backwards along camera direction vector
-	void StrafeLeft(); //translate left along camera sideways vector
-	void StrafeRight(); //translate right along camera sideways vector
+	XMFLOAT3 MoveForward(); //translate forward along camera direction vector
+	XMFLOAT3 MoveBackward(); //translate backwards along camera direction vector
+	XMFLOAT3 StrafeLeft(); //translate left along camera sideways vector
+	XMFLOAT3 StrafeRight(); //translate right along camera sideways vector
+	void Move(XMFLOAT3);
+
 	void CraneUp(); //translate up along camera up vector
 	void CraneDown(); //translate down along camera up vector
 	void TiltUp(); //rotate lens, or view, upwards around camera sideways vector

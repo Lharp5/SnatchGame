@@ -52,8 +52,19 @@ void WorldClass::Shutdown()
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 }
 
+bool WorldClass::isWall(int x, int y)
+{
+	switch(level->checkMap(x, y)){
+		case C_WALL:
+		case C_DOOR_1: case C_DOOR_2:
+		case C_LIGHT_1: case C_LIGHT_2: case C_LIGHT_3: case C_LIGHT_4: 
+		case C_LOCK_1: case C_LOCK_2: case C_LOCK_3: case C_LOCK_4:
+			return true;
+	}
+	return false;
+}
 
-bool WorldClass::updatePlayer(float x, float z)
+void WorldClass::updatePlayer(float x, float z)
 {
 	int mapX = convertToInt(x/10);
 	int mapZ = convertToInt(z/10);
@@ -62,15 +73,7 @@ bool WorldClass::updatePlayer(float x, float z)
 	wsprintf(s, L"New Position: %d, %d\n", mapX, mapZ);
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), s, wcslen(s), NULL, NULL);
 
-	switch(level->checkMap(mapX, mapZ)){
-		case C_WALL:
-		case C_DOOR_1: case C_DOOR_2:
-		case C_LIGHT_1: case C_LIGHT_2: case C_LIGHT_3: case C_LIGHT_4: 
-		case C_LOCK_1: case C_LOCK_2: case C_LOCK_3: case C_LOCK_4:
-			return false; break;
-	}
 	player->setPosition(mapX, mapZ);
-	return true;
 
 }
 ArrayList<GameModel> WorldClass::getModels()
@@ -78,6 +81,11 @@ ArrayList<GameModel> WorldClass::getModels()
 	wchar_t* outstring = L"Adding models\n";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 	return renderModels;
+}
+
+PlayerClass* WorldClass::getPlayer()
+{
+	return player;
 }
 
 // returning the player start position functions

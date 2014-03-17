@@ -89,6 +89,8 @@ private:
 	bool keyPressedE;
 	bool prevEPressedState;
 
+	XMFLOAT3 velocityVector;
+
 	//move movement?
 
 
