@@ -422,7 +422,10 @@ bool SystemClass::checkControls()
 	   if ( m_Input->keyPressed(DIK_E) )
 	   {
 		   if (!keyPressedE)
-		       LightMask::lightState = LightMask::lightState == LightState::OFF ? LightState::ON : LightState::OFF;
+		   {
+			   //place test toggle code here
+
+		   }
 		   keyPressedE = true;
 	   }
 	   else
