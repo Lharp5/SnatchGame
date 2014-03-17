@@ -97,21 +97,23 @@ float WorldClass::getPlayerStartZ()
 
 void WorldClass::runGame()
 {
+	for(int i=0; i<level->getSizeX(); i++){
+		for(int j=0; j<level->getSizeY(); j++){
+			if(level->checkMap(i,j) == C_DOOR){
+				if(level->getLocation(i,j)->getStatus())
+					level->getLocation(i,j)->getModel()->worldTranslate(0,1.0f,0.0f);
 
+				wchar_t* outstring = L"Found Door\n";
+				WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
+			}
+		}
+	}
 }
 
 void WorldClass::doAction()
 {
 	int playerX = player->getXLocation();
 	int playerY = player->getYLocation();
-
-	/*switch(level->checkMap(playerX, playerY)){
-		case C_WALL:
-		case C_FLOOR:	break;
-		case C_LIGHT:	
-		case C_DOOR:	
-		case C_LOCK:	scan(playerX, playerY);	break;
-	}*/
 
 	scan(playerX, playerY);
 	

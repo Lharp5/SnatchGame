@@ -226,7 +226,7 @@ ID3D11ShaderResourceView* PrismTexturedModel::GetTexture(int i){
 
 
 bool PrismTexturedModel::Render(ID3D11DeviceContext* deviceContext,  XMFLOAT4X4 viewMatrix, XMFLOAT4X4 projectionMatrix, ColorShaderClass* colorShader, TextureShaderClass* textureShader){
-	
+	if(GameModel::getRenderVal()){
 	if(!textureShader) return false; //we were not provided with a shader
 
 	const int NUMBER_OF_TEXTURES = 3; //one for the sides and one each for top and bottom
@@ -247,6 +247,8 @@ bool PrismTexturedModel::Render(ID3D11DeviceContext* deviceContext,  XMFLOAT4X4 
 
 	 if(!result) return false;
 	
+	}
+	return true;
 	}
 	return true;
 

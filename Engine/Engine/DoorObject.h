@@ -23,7 +23,7 @@ public:
 	*	Additionally:	Will  turn light on/off
 	*************/
 	bool doAction();
-
+	bool getStatus();
 private:
 	bool isOpen;
 

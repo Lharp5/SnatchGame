@@ -12,7 +12,15 @@ DoorObject::DoorObject(int xL, int yL, float x, float z, WCHAR* textures[]): loc
 
 bool DoorObject::doAction()
 {
-	isOpen = !isOpen;
+	wchar_t* outstring = L"Opened Door\n";
+	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
+	isOpen = true;
+	GameObject::getModel()->setRenderVal(false);
 	return true;
 	//change
+}
+
+bool DoorObject::getStatus()
+{
+	return isOpen;
 }

@@ -75,7 +75,6 @@ void QuadTexturedModel::InitializeModel(float lengthX, float lengthY, WCHAR* aTe
 bool QuadTexturedModel::InitializeVertexModels(ID3D11Device* d3dDevice){
 	
 	//initialize vertices and textures for rendering to d3dDevice
-
 	bool result = m_VertexModel->Initialize(d3dDevice);
 
 	if(!result) return false;
@@ -114,7 +113,7 @@ ID3D11ShaderResourceView* QuadTexturedModel::GetTexture(){
 
 
 bool QuadTexturedModel::Render(ID3D11DeviceContext* deviceContext,  XMFLOAT4X4 viewMatrix, XMFLOAT4X4 projectionMatrix, ColorShaderClass* colorShader, TextureShaderClass* textureShader){
-	
+	if(GameModel::getRenderVal()){
 	if(!textureShader) return false; //we were not provided with a shader
 	//m_D3D->TurnOnAlphaBlending();
 	// Put the game model vertex and index buffers on the graphics pipeline to prepare them for drawing.
@@ -132,7 +131,8 @@ bool QuadTexturedModel::Render(ID3D11DeviceContext* deviceContext,  XMFLOAT4X4 v
 	 
 	// m_D3D->TurnOffAlphaBlending();
 	return result; 
-
+	}
+	return true;
 }
 
 
