@@ -118,10 +118,10 @@ void LevelClass::level0()
 		map[b][sizeY-1] = C_WALL;
 	}
 	
-	map[sizeX-1][sizeY/2] = C_LIGHT;
-	map[0][sizeY/2] = C_LOCK;
-	map[sizeX/2][0] = C_DOOR;
-	map[3][6] = C_ENEMY;
+	map[sizeX-1][sizeY/2] = C_LIGHT_4;
+	map[0][sizeY/2] = C_LOCK_2;
+	map[sizeX/2][0] = C_DOOR_1;
+	map[3][6] = C_ENEMY_3;
 	loadObjects();
 
 	playerStartX = 5;
@@ -137,11 +137,11 @@ void LevelClass::loadObjects()
 	for(int i=0; i<sizeX; i++)
 		for(int j=0; j<sizeY; j++){
 			switch(map[i][j]){
-			case C_WALL:	buildWall(i,j);			break;
-			case C_DOOR:	buildDoor(i,j);			break;
-			case C_LIGHT:	buildLight(i,j);		break;
-			case C_LOCK:	buildLock(i,j);			break;
-			case C_ENEMY:	buildEnemy(i,j);		break;
+			case C_ENEMY_1: case C_ENEMY_2: case C_ENEMY_3: case C_ENEMY_4:	buildEnemy(i,j);	break;
+			case C_DOOR_1: case C_DOOR_2:									buildDoor(i,j);		break;
+			case C_LOCK_1: case C_LOCK_2: case C_LOCK_3: case C_LOCK_4:		buildLock(i,j);		break;
+			case C_LIGHT_1: case C_LIGHT_2: case C_LIGHT_3: case C_LIGHT_4:	buildLight(i,j);	break;
+			case C_WALL:													buildWall(i,j);		break;
 			}
 			buildFloor(i,j);
 			buildCeiling(i, j);
@@ -166,13 +166,14 @@ void LevelClass::buildDoor(int x, int y)
 {
 	WCHAR* doorTextures[] = { L"../Engine/textures/doortexture.dds",
 								L"../Engine/textures/doortexture.dds",
-								L"../Engine/textures/toblerone.dds",
-								L"../Engine/textures/toblerone.dds",
-								L"../Engine/textures/toblerone.dds",
-								L"../Engine/textures/toblerone.dds",
+								L"../Engine/textures/doortexture.dds",
+								L"../Engine/textures/doortexture.dds",
+								L"../Engine/textures/doortexture.dds",
+								L"../Engine/textures/doortexture.dds",
 							};
 
 	DoorObject* newDoor = new DoorObject(-1,-1,x+0.0f,y+0.0f,doorTextures);
+	if (map[x][y] == C_DOOR_2) newDoor->getModel()->worldRotateY(XM_PIDIV2);
 	gamePieces.add(newDoor);
 }
 
@@ -190,7 +191,7 @@ void LevelClass::buildCeiling(int x, int y)
 	WCHAR * ceilingTexture = L"../Engine/textures/concretetexture.dds";
 
 	FloorObject * newCeiling = new FloorObject(x+0.0f, y+0.0f, ceilingTexture);
-	newCeiling->getModel()->orientRotateX(XM_PI);
+	newCeiling->getModel()->worldRotateX(XM_PI);
 	newCeiling->getModel()->worldTranslate(0.0f, 15.0f, 0.0f);
 	gamePieces.add(newCeiling);
 }
@@ -206,6 +207,9 @@ void LevelClass::buildLight(int x, int y)
 							};
 
 	LightObject* newLight = new LightObject(x+0.0f,y+0.0f, lightTextures);
+	if (map[x][y] == C_LIGHT_2) newLight->getModel()->worldRotateY(XM_PIDIV2);
+	if (map[x][y] == C_LIGHT_3) newLight->getModel()->worldRotateY(XM_PI);
+	if (map[x][y] == C_LIGHT_4) newLight->getModel()->worldRotateY(XM_PI + XM_PIDIV2);
 	gamePieces.add(newLight);
 }
 
@@ -220,12 +224,20 @@ void LevelClass::buildLock(int x, int y)
 							};
 
 	LockObject* newLock = new LockObject(x+0.0f,y+0.0f, lockTextures);
+	if (map[x][y] == C_LOCK_2) newLock->getModel()->worldRotateY(XM_PIDIV2);
+	if (map[x][y] == C_LOCK_3) newLock->getModel()->worldRotateY(XM_PI);
+	if (map[x][y] == C_LOCK_4) newLock->getModel()->worldRotateY(XM_PI + XM_PIDIV2);
 	gamePieces.add(newLock);
 }
 
 void LevelClass::buildEnemy(int x, int y)
 {
 	EnemyObject* newEnemy = new EnemyObject(10.0f*x, -1.85f, 10.0f*y, 5.0f);
+	
+	if (map[x][y] == C_ENEMY_2) newEnemy->Turn(XM_PIDIV2);
+	if (map[x][y] == C_ENEMY_3) newEnemy->Turn(XM_PI);
+	if (map[x][y] == C_ENEMY_4) newEnemy->Turn(XM_PI + XM_PIDIV2);
+
 	gamePieces.add(newEnemy);
 }
 
