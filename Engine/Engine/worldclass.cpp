@@ -30,7 +30,7 @@ void WorldClass::initalizeWorld()
 	
 	//NEEDS TO FINISH THIS CLASS
 
-	renderModels.addAll(level->getGameModels());
+	//renderModels.addAll(level->getGameModels());
 	
 	
 	wchar_t* outstring = L"Models added..";
@@ -81,7 +81,8 @@ ArrayList<GameModel> WorldClass::getModels()
 	//wchar_t* outstring = L"Adding models\n";
 	//WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 	
-	return renderModels;
+	return level->getGameModels();
+	//return renderModels;
 }
 
 PlayerClass* WorldClass::getPlayer()
