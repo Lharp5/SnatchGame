@@ -79,42 +79,7 @@ bool SystemClass::Initialize()
 
 	//Create the game objects for our game
 
-	//Set up some colors that are variations of each other
-	//e.g. various shades of brown
-
-	XMFLOAT4 quadColor = XMFLOAT4(0.0f, 76.0f/255, 153.0f/255, 1.0f);  //for use with QuadModel
-	//make a background textured quad
-
-	WCHAR * backdropTextureFileName = L"../Engine/textures/cloudy_backdrop.dds";
-
-	float backdropWidthX = 100.0f;
-	float backdropHeightY = 80.0f;
-
-	//make a background textured quad
-	m_backDrop = new QuadTexturedModel(
-		                     backdropWidthX,  //length in X direction
-							 backdropHeightY,  //length in Y direction
-							 backdropTextureFileName  //path name of .dds texture file
-							 );
-
-    float distanceBackZ = 100;
-	m_backDrop->worldTranslate(0.0f, 0.0f, distanceBackZ); //move to location in the world
-
-	WCHAR * groundCoverTextureFileName = L"../Engine/textures/graph_paper.dds";
-
-	float groundCoverWidthX = 100.0f;
-	float groundCoverHeightY = 100.0f;
-
-	//make a ground cover textured quad
-	m_groundCover = new QuadTexturedModel(
-		                     groundCoverWidthX,  //length in X direction
-							 groundCoverHeightY,  //length in Y direction
-							 groundCoverTextureFileName  //path name of texture .dds texture file
-							 );
-
-	m_groundCover->orientRotateX(XM_PIDIV2); //rotate 90 degrees around X so it is parallel to XZ ground plane
-	m_groundCover->worldTranslate(0.0f, -backdropHeightY/2, groundCoverHeightY/2); //move to location in the world
-	
+		
 	m_enemy = new EnemyObject(15.0f, -1.85f, 60.0f, 5.0f);
 
 	m_World = new WorldClass();
@@ -124,8 +89,7 @@ bool SystemClass::Initialize()
 	//Add the  gameModel objects to the GameModels collection
 	//that will be rendered by the graphics system
 
-	m_GameModels->add(m_backDrop);
-	m_GameModels->add(m_groundCover);
+
 	m_GameModels->addAll(m_enemy->GetGameModels());
 
 	m_GameModels->addAll(m_World->getModels());
@@ -166,20 +130,6 @@ void SystemClass::Shutdown()
 	{
 		delete m_World;
 		m_World = 0;
-	}
-
-	if(m_backDrop)
-	{
-		m_backDrop->Shutdown();
-		delete m_backDrop;
-		m_backDrop = 0;
-	}
-
-	if(m_groundCover)
-	{
-		m_groundCover->Shutdown();
-		delete m_groundCover;
-		m_groundCover = 0;
 	}
 
 	if(m_enemy)

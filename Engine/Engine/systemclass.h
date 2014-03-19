@@ -74,9 +74,6 @@ private:
 
 	//Game World Items
 
-	//QuadModel * m_blueQuad; //a simple colored quad
-	QuadTexturedModel* m_backDrop; //a background quad object
-	QuadTexturedModel* m_groundCover; //a ground quad object
 	EnemyObject* m_enemy;
 	ArrayList<GameModel>* m_GameModels; //container to hold all our game world models
 	WorldClass* m_World;
