@@ -5,11 +5,19 @@
 =					=
 =========================================
 
-Current Work
+Things to still be done (in order of presedence)
+=====
+- AI (with detection and pathing)
 
-- Creating Game World, Controls.(Luke)
+- Level Completiton
 
-- Collision (Nick)
+- GUI (text?)
+
+- Audio (soundFX and ambience)
+
+- Level Changes
+
+- Main menu, end game Screen
 
 NOTE: Be sure to have the DirectXTK
 keep it in the same directory that this FOLDER is in
