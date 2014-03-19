@@ -10,6 +10,7 @@
 WorldClass::WorldClass()
 {
 	//renderModels =0;
+	winGame = false;
 	initalizeWorld();
 	
 }
@@ -30,8 +31,6 @@ void WorldClass::initalizeWorld()
 	
 	//NEEDS TO FINISH THIS CLASS
 
-	//renderModels.addAll(level->getGameModels());
-	
 	
 	wchar_t* outstring = L"Models added..";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);

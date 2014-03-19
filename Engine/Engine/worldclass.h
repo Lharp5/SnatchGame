@@ -53,12 +53,13 @@ public:
 private:
 	//objects
 	LevelClass* level;
-	//ArrayList<GameModel> renderModels; //Lists of models that can be stored so they can be rendered.
 	GameModel* floor[100][100];
 	GameModel* roof[100][100];
 
 	PlayerClass* player;
 
+	//world variables
+	bool winGame;
 
 	//functions
 
