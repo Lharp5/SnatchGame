@@ -14,7 +14,7 @@
 #include "quadTexturedModel.h"
 #include "cubeTexturedModel.h"
 
-class WallObject: public  GameObject
+class WallObject: public GameObject
 {
 public:
 	WallObject();

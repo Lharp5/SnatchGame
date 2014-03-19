@@ -10,6 +10,11 @@ WallObject::WallObject(float x, float z, WCHAR* textures[], float width, float h
 {
 }
 
+WallObject::~WallObject()
+{
+	shutdown();
+}
+
 bool WallObject::doAction()
 {
 	return false;

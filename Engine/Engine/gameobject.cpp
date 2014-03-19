@@ -39,10 +39,10 @@ bool GameObject::isLit()
 
 void GameObject::shutdown()
 {
-	/*if(myModel){
+	if(myModel){
 		delete myModel;
 		myModel = 0;
-	}*/
+	}
 }
 
 GameModel* GameObject::getModel()

@@ -26,7 +26,7 @@ void WorldClass::initalizeWorld()
 	level->loadLevel(0);
 
 	player = new PlayerClass();
-	player->setPosition(getPlayerStartX(), getPlayerStartZ());
+	player->setPosition((int)getPlayerStartX(), (int)getPlayerStartZ());
 	
 	//NEEDS TO FINISH THIS CLASS
 
@@ -69,7 +69,7 @@ void WorldClass::updatePlayer(float x, float z)
 	int mapX = convertToInt(x/10);
 	int mapZ = convertToInt(z/10);
 
-	wchar_t s[32];
+	//wchar_t s[32];
 	//wsprintf(s, L"New Position: %d, %d\n", mapX, mapZ);
 	//WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), s, wcslen(s), NULL, NULL);
 
@@ -78,8 +78,9 @@ void WorldClass::updatePlayer(float x, float z)
 }
 ArrayList<GameModel> WorldClass::getModels()
 {
-	wchar_t* outstring = L"Adding models\n";
-	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
+	//wchar_t* outstring = L"Adding models\n";
+	//WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
+	
 	return renderModels;
 }
 
@@ -110,7 +111,7 @@ void WorldClass::runGame()
 		for(int j=0; j<level->getSizeY(); j++){
 			if(level->checkMap(i,j) == C_DOOR_1 || level->checkMap(i,j) == C_DOOR_2){
 				if(level->getLocation(i,j)->getStatus())
-					level->getLocation(i,j)->getModel()->orientTranslate(0,1.0f,0.0f);
+					level->getLocation(i,j)->getModel()->worldTranslate(0.0f,1.0f,0.0f);
 
 				//wchar_t* outstring = L"Found Door\n";
 				//WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
@@ -125,7 +126,6 @@ void WorldClass::doAction()
 	int playerY = player->getYLocation();
 
 	scan(playerX, playerY);
-	
 }
 
 void WorldClass::scan(int x, int y)
@@ -182,7 +182,7 @@ int WorldClass::convertToInt(float num)
 	num+=0.5f;
 	num = floorf(num);
 
-	int newNum = num;
+	int newNum = (int)num;
 
 	return newNum;
 

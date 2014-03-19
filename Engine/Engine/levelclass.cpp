@@ -14,7 +14,6 @@ using namespace std;
 LevelClass::LevelClass()
 {
 	initialize();
-	loadLevel(0);
 	wchar_t* outstring = L"...Levels Loaded\n";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 }
@@ -106,7 +105,7 @@ void LevelClass::level0()
 			map[i][j] = C_FLOOR;
 		}
 	}
-
+	
 	//creates the wall images. adjusting their location side walls
 	for(int a=0; a<sizeY; a++){
 		map[0][a] = C_WALL;
@@ -267,7 +266,7 @@ int LevelClass::getSizeY()
 ArrayList<GameModel> LevelClass::getGameModels()
 {
 	ArrayList<GameModel> gameModels;
-
+	
 	for(int i=0; i<gamePieces.size(); i++)
 		gameModels.addAll(gamePieces.elementAt(i)->GetGameModels());
 

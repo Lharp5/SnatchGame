@@ -363,6 +363,7 @@ bool SystemClass::Frame()
 	m_World->updatePlayer(m_Camera->GetPosition().x, m_Camera->GetPosition().z);
 
 	m_lightMask->frame(m_Camera->GetPosition());
+	
 
 	// Do the frame processing for the graphics object.
 	result = m_Graphics->Frame();
@@ -452,7 +453,6 @@ bool SystemClass::checkControls()
 	   {
 		   if (!keyPressedE)
 		   {
-			   //place test toggle code here
 
 		   }
 		   keyPressedE = true;

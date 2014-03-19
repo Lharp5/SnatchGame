@@ -28,6 +28,7 @@
 #include "arraylist.h"
 #include "cinecameraclass.h"
 #include "enemyobject.h"
+#include "DoorObject.h"
 #include "enemymodel.h"
 #include "levelclass.h"
 #include "lightmask.h"

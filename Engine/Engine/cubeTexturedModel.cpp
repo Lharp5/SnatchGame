@@ -296,28 +296,25 @@ ID3D11ShaderResourceView* CubeTexturedModel::GetTexture(int i){
 
 
 bool CubeTexturedModel::Render(ID3D11DeviceContext* deviceContext,  XMFLOAT4X4 viewMatrix, XMFLOAT4X4 projectionMatrix, ColorShaderClass* colorShader, TextureShaderClass* textureShader){
-	if(render){
 	if(!textureShader) return false; //we were not provided with a shader
 
+	for(int i=0; i<NUMBER_OF_CUBE_FACES; i++)
+	{
+		// Put the game model vertex and index buffers on the graphics pipeline to prepare them for drawing.
+		m_VertexModelArray[i]->Render(deviceContext);
 
-	for(int i=0; i<NUMBER_OF_CUBE_FACES; i++){
-	// Put the game model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	 m_VertexModelArray[i]->Render(deviceContext);
+		//render the game model
+		//render the game model
+		bool result = textureShader->Render(deviceContext, 
+											m_VertexModelArray[i]->GetIndexCount(), 
+											GetWorldMatrix(), 
+											viewMatrix, 
+											projectionMatrix,
+											GetTexture(i), //get the texture to render
+											1.0f); 
 
-	 //render the game model
-	 //render the game model
-	 bool result = textureShader->Render(deviceContext, 
-		                                  m_VertexModelArray[i]->GetIndexCount(), 
-								          GetWorldMatrix(), 
-								          viewMatrix, 
-								          projectionMatrix,
-										  GetTexture(i), //get the texture to render
-										  1.0f); 
-
-	 if(!result) return false;
+		if(!result) return false;
 	
-	}
-	return true;
 	}
 	return true;
 }

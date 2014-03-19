@@ -10,13 +10,19 @@ DoorObject::DoorObject(int xL, int yL, float x, float z, WCHAR* textures[]): loc
 {
 }
 
+DoorObject::~DoorObject()
+{
+	shutdown();
+}
+
 bool DoorObject::doAction()
 {
-	wchar_t outstring[32];
-	wsprintf(outstring, L"Opened Door: %d, %d\n", (int)xLocation, (int)zLocation);
+	wchar_t* outstring = L"Opened Door";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
+
 	isOpen = true;
-	getModel()->setRenderVal(false);
+	//setRenderValue(false);
+	
 	return true;
 }
 
