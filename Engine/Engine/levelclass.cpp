@@ -99,7 +99,7 @@ void LevelClass::level0()
 {
 	sizeX = 10;
 	sizeY = 10;
-	
+
 	for(int i=0; i<sizeX; i++){
 		for(int j=0; j<sizeY; j++){
 			map[i][j] = C_FLOOR;
@@ -120,7 +120,7 @@ void LevelClass::level0()
 	map[sizeX-1][sizeY/2] = C_LIGHT_4;
 	map[0][sizeY/2] = C_LOCK_2;
 	map[sizeX/2][0] = C_DOOR_1;
-	map[3][6] = C_ENEMY_3;
+	map[3][6] = C_LOCK_3;
 	loadObjects();
 
 	playerStartX = 5;
@@ -197,35 +197,35 @@ void LevelClass::buildCeiling(int x, int y)
 
 void LevelClass::buildLight(int x, int y)
 {
-	WCHAR* lightTextures[] = { L"../Engine/textures/coca_cola.dds",
-								L"../Engine/textures/coca_cola.dds",
-								L"../Engine/textures/coca_cola.dds",
-								L"../Engine/textures/coca_cola.dds",
-								L"../Engine/textures/coca_cola.dds",
-								L"../Engine/textures/coca_cola.dds",
+	WCHAR* lightTextures[] = { L"../Engine/textures/brickwalltexture2.dds",
+								L"../Engine/textures/brickwalltexture2.dds",
+								L"../Engine/textures/brickwalltexture2.dds",
+								L"../Engine/textures/brickwalltexture2.dds",
+								L"../Engine/textures/brickwalltexture2.dds",
+								L"../Engine/textures/brickwalltexture2.dds",
 							};
 
 	LightObject* newLight = new LightObject(x+0.0f,y+0.0f, lightTextures);
-	if (map[x][y] == C_LIGHT_2) newLight->getModel()->worldRotateY(XM_PIDIV2);
-	if (map[x][y] == C_LIGHT_3) newLight->getModel()->worldRotateY(XM_PI);
-	if (map[x][y] == C_LIGHT_4) newLight->getModel()->worldRotateY(XM_PI + XM_PIDIV2);
+	if (map[x][y] == C_LIGHT_2) newLight->rotate(XM_PIDIV2);
+	if (map[x][y] == C_LIGHT_3) newLight->rotate(XM_PI);
+	if (map[x][y] == C_LIGHT_4) newLight->rotate(XM_PI + XM_PIDIV2);
 	gamePieces.add(newLight);
 }
 
 void LevelClass::buildLock(int x, int y)
 {
-	WCHAR* lockTextures[] = { L"../Engine/textures/penciltexture.dds",
-								L"../Engine/textures/penciltexture.dds",
-								L"../Engine/textures/penciltexture.dds",
-								L"../Engine/textures/penciltexture.dds",
-								L"../Engine/textures/penciltexture.dds",
-								L"../Engine/textures/penciltexture.dds",
+	WCHAR* lockTextures[] = { L"../Engine/textures/brickwalltexture2.dds",
+								L"../Engine/textures/brickwalltexture2.dds",
+								L"../Engine/textures/brickwalltexture2.dds",
+								L"../Engine/textures/brickwalltexture2.dds",
+								L"../Engine/textures/brickwalltexture2.dds",
+								L"../Engine/textures/brickwalltexture2.dds",
 							};
 
 	LockObject* newLock = new LockObject(x+0.0f,y+0.0f, lockTextures);
-	if (map[x][y] == C_LOCK_2) newLock->getModel()->worldRotateY(XM_PIDIV2);
-	if (map[x][y] == C_LOCK_3) newLock->getModel()->worldRotateY(XM_PI);
-	if (map[x][y] == C_LOCK_4) newLock->getModel()->worldRotateY(XM_PI + XM_PIDIV2);
+	if (map[x][y] == C_LOCK_2) newLock->rotate(XM_PIDIV2);
+	if (map[x][y] == C_LOCK_3) newLock->rotate(XM_PI);
+	if (map[x][y] == C_LOCK_4) newLock->rotate(XM_PI + XM_PIDIV2);
 	gamePieces.add(newLock);
 }
 

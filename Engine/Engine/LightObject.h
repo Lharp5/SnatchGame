@@ -9,6 +9,7 @@
 #define LIGHTOBJECT_H
 
 #include "WallObject.h"
+#include "cubemodel.h"
 
 class LightObject: public WallObject
 {
@@ -30,7 +31,21 @@ public:
 	***********/
 	bool getStatus();
 
+	virtual ArrayList<GameModel> GetGameModels();
+
+	/***********
+	*	Function:	rotate
+	*	Purpose:	To rotate this object about the Y axis
+	*	Note:		Only works once, as the purpose is for placement of object in world.
+					Results will be odd if used more than once.
+	************/
+	virtual void rotate(float);
+
 private:
+	CubeTexturedModel* wall;
+	CubeModel* base;
+	CubeModel* flickSwitch;
+	ArrayList<GameModel> gameModels;
 	bool lightOn;
 };
 
