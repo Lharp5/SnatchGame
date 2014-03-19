@@ -111,7 +111,12 @@ void WorldClass::runGame()
 		for(int j=0; j<level->getSizeY(); j++){
 			if(level->checkMap(i,j) == C_DOOR_1 || level->checkMap(i,j) == C_DOOR_2){
 				if(level->getLocation(i,j)->getStatus())
-					level->getLocation(i,j)->getModel()->worldTranslate(0.0f,0.3f,0.0f);
+				{
+					level->getLocation(i,j)->translate(0.0f, 0.3f, 0.0f);
+					float height = level->getLocation(i,j)->getLocationY();
+					if (height > 20.0f)
+						level->getLocation(i,j)->setRenderValue(false);
+				}
 
 				//wchar_t* outstring = L"Found Door\n";
 				//WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);

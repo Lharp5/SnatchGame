@@ -18,8 +18,12 @@ class GameObject
 		virtual void setRenderValue(bool);
 		virtual int getSourceX();
 		virtual int getSourceY();
+		virtual float getLocationX();
+		virtual float getLocationY();
+		virtual float getLocationZ();
 		virtual bool getStatus();
 		virtual void toggleLight(bool);
+		virtual void translate(float, float, float);
 		/************
 		*	Function:	getLocation
 		*	in:			x and z locations

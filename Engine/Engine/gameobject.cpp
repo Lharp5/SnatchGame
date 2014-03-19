@@ -94,6 +94,21 @@ int GameObject::getSourceY()
 	return 0;
 }
 
+float GameObject::getLocationX()
+{
+	return xLocation;
+}
+
+float GameObject::getLocationY()
+{
+	return yLocation;
+}
+
+float GameObject::getLocationZ()
+{
+	return zLocation;
+}
+
 bool GameObject::getStatus()
 {
 	return false;
@@ -101,5 +116,17 @@ bool GameObject::getStatus()
 
 void GameObject::toggleLight(bool Light)
 {
+}
+
+void GameObject::translate(float x, float y, float z)
+{
+	xLocation += x;
+	yLocation += y;
+	zLocation += z;
+	ArrayList<GameModel> list = GetGameModels();
+	for (int i = 0; i < list.size(); i++)
+	{
+		list.elementAt(i)->worldTranslate(0.0f,0.3f,0.0f);
+	}
 }
 
