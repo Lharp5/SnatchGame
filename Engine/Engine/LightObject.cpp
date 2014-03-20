@@ -11,18 +11,18 @@ LightObject::LightObject(float x, float z, WCHAR* textures[]): lightOn(true), Wa
 	wall->worldTranslate(x*10.0f, 2.0f, z*10.0f);
 	XMFLOAT4 baseColor[] = { XMFLOAT4(0.95f, 0.95f, 0.95f, 1.0f),
 							XMFLOAT4(0.95f, 0.95f, 0.95f, 1.0f),
+							XMFLOAT4(0.90f, 0.90f, 0.90f, 1.0f),
+							XMFLOAT4(0.90f, 0.90f, 0.90f, 1.0f),
 							XMFLOAT4(0.95f, 0.95f, 0.95f, 1.0f),
-							XMFLOAT4(0.95f, 0.95f, 0.95f, 1.0f),
-							XMFLOAT4(0.95f, 0.95f, 0.95f, 1.0f),
-							XMFLOAT4(0.95f, 0.95f, 0.95f, 1.0f)};
+							XMFLOAT4(0.85f, 0.85f, 0.85f, 1.0f)};
 	base = new CubeModel(2.0f, 2.5f, 0.5f, baseColor);
 	base->worldTranslate(x*10.0f, 2.0f, z*10.0f + 5.0f);
 	XMFLOAT4 switchColor[] = { XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f),
 								XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f),
+								XMFLOAT4(0.95f, 0.95f, 0.95f, 1.0f),
+								XMFLOAT4(0.95f, 0.95f, 0.95f, 1.0f),
 								XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f),
-								XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f),
-								XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f),
-								XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f) };
+								XMFLOAT4(0.9f, 0.9f, 0.9f, 1.0f) };
 	flickSwitch = new CubeModel(0.5f, 0.5f, 1.0f, switchColor);
 	flickSwitch->worldTranslate(x*10.0f, 2.0f, z*10.0f + 5.0f);
 }
