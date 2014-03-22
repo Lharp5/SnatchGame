@@ -309,6 +309,42 @@ bool SystemClass::Frame()
 			velocityVector.z = 0;
 		}
 	}
+	if (m_World->isWall(m_World->getPlayer()->getXLocation() + 1, m_World->getPlayer()->getYLocation() + 1))
+	{
+		if ((velocityVector.x > 0 && m_Camera->GetPosition().x / 10.0f > m_World->getPlayer()->getXLocation() + 0.25f) &&
+			(velocityVector.z > 0 && m_Camera->GetPosition().z / 10.0f > m_World->getPlayer()->getYLocation() + 0.25f))
+		{
+			velocityVector.x = 0;
+			velocityVector.z = 0;
+		}
+	}
+	if (m_World->isWall(m_World->getPlayer()->getXLocation() + 1, m_World->getPlayer()->getYLocation() - 1))
+	{
+		if ((velocityVector.x > 0 && m_Camera->GetPosition().x / 10.0f > m_World->getPlayer()->getXLocation() + 0.25f) &&
+			(velocityVector.z < 0 && m_Camera->GetPosition().z / 10.0f < m_World->getPlayer()->getYLocation() - 0.25f))
+		{
+			velocityVector.x = 0;
+			velocityVector.z= 0;
+		}
+	}
+	if (m_World->isWall(m_World->getPlayer()->getXLocation() - 1, m_World->getPlayer()->getYLocation() - 1))
+	{
+		if ((velocityVector.x < 0 && m_Camera->GetPosition().x / 10.0f < m_World->getPlayer()->getXLocation() - 0.25f) &&
+			(velocityVector.z < 0 && m_Camera->GetPosition().z / 10.0f < m_World->getPlayer()->getYLocation() - 0.25f))
+		{
+			velocityVector.x = 0;
+			velocityVector.z= 0;
+		}
+	}
+	if (m_World->isWall(m_World->getPlayer()->getXLocation() - 1, m_World->getPlayer()->getYLocation() + 1))
+	{
+		if ((velocityVector.x < 0 && m_Camera->GetPosition().x / 10.0f < m_World->getPlayer()->getXLocation() - 0.25f) &&
+			(velocityVector.z > 0 && m_Camera->GetPosition().z / 10.0f > m_World->getPlayer()->getYLocation() + 0.25f))
+		{
+			velocityVector.x = 0;
+			velocityVector.z= 0;
+		}
+	}
 	m_Camera->Move(velocityVector);
 	m_World->updatePlayer(m_Camera->GetPosition().x, m_Camera->GetPosition().z);
 
