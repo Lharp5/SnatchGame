@@ -112,6 +112,7 @@
     <ClCompile Include="prismTexturedModel.cpp" />
     <ClCompile Include="quadModel.cpp" />
     <ClCompile Include="quadTexturedModel.cpp" />
+    <ClCompile Include="soundClass.cpp" />
     <ClCompile Include="systemclass.cpp" />
     <ClCompile Include="textureclass.cpp" />
     <ClCompile Include="textureshaderclass.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="quadModel.h" />
     <ClInclude Include="quadTexturedModel.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="soundclass.h" />
     <ClInclude Include="systemclass.h" />
     <ClInclude Include="textureclass.h" />
     <ClInclude Include="textureshaderclass.h" />

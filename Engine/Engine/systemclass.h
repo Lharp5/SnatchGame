@@ -32,6 +32,7 @@
 #include "enemymodel.h"
 #include "levelclass.h"
 #include "lightmask.h"
+#include "soundclass.h"
 #include "worldclass.h"
 
 

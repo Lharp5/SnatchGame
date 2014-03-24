@@ -120,6 +120,7 @@ void LevelClass::level0()
 	map[sizeX-1][sizeY/2] = C_LIGHT_4;
 	map[0][sizeY/2] = C_LOCK_2;
 	map[sizeX/2][0] = C_DOOR_1;
+
 	loadObjects();
 
 	playerStartX = 5;

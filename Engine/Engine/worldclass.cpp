@@ -15,6 +15,26 @@ WorldClass::WorldClass()
 	
 }
 
+bool WorldClass::initializeSound(HWND hwnd)
+{
+	sound = new SoundClass;
+	if(!sound)
+	{
+		return false;
+	}
+ 
+	// Initialize the sound object.
+	bool result = sound->Initialize(hwnd);
+	if(!result)
+	{
+		return false;
+	}
+
+	sound->PlayWaveFile();
+
+	return true;
+}
+
 WorldClass::~WorldClass()
 {
 	Shutdown();

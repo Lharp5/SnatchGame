@@ -6,6 +6,7 @@
 #include "levelclass.h"
 #include "PlayerClass.h"
 #include "enemyobject.h"
+#include "soundclass.h"
 #include <math.h>
 
 class WorldClass
@@ -13,6 +14,7 @@ class WorldClass
 public:
 	WorldClass();
 	~WorldClass();
+	bool initializeSound(HWND);
 	void runGame();
 	void toggleFloor();
 	void doAction();
@@ -57,6 +59,9 @@ private:
 	GameModel* roof[100][100];
 
 	PlayerClass* player;
+
+	//sound
+	SoundClass* sound;
 
 	//world variables
 	bool winGame;
