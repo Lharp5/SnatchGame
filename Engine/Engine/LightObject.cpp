@@ -51,6 +51,14 @@ void LightObject::rotate(float angle)
 
 bool LightObject::doAction()
 {
+	if (lightOn)
+	{
+		sound->PlayDesiredFile(8, false);
+	}
+	else if (!lightOn)
+	{
+		sound->PlayDesiredFile(7, false);
+	}
 	wchar_t* outstring = L"TOGGLING LIGHT";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 	lightOn = !lightOn;
