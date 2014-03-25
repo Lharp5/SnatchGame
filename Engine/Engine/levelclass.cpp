@@ -119,7 +119,7 @@ void LevelClass::level0()
 	
 	map[sizeX-1][sizeY/2] = C_LIGHT_4;
 	map[0][sizeY/2] = C_LOCK_2;
-	map[sizeX/2][0] = C_DOOR_1;
+	map[sizeX/2][sizeY-1] = C_DOOR_1;
 
 	loadObjects();
 
@@ -309,6 +309,7 @@ WALL_TYPE LevelClass::checkMap(int x, int z)
 	//}
 	return map[x][z];
 }
+
 /*void LevelClass::toggleFloor()
 {
 	for(int i=0; i<sizeX; i++){

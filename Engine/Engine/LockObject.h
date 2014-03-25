@@ -39,6 +39,7 @@ private:
 	CubeTexturedModel* wall;
 	CubeModel* base;
 	CubeModel* flickSwitch;
+	float rotateAngle;
 	ArrayList<GameModel> gameModels;
 	bool isLocked;
 };

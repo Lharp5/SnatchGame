@@ -17,6 +17,7 @@ SoundClass::SoundClass()
 	doorOpen = 0;
 	doorOpenSlam = 0;
 	footstep = 0;
+	unlockDoor = 0;
 
 }
 
@@ -68,6 +69,11 @@ bool SoundClass::Initialize(HWND hwnd)
 	{
 		return false;
 	}
+	result = LoadWaveFile ("../Engine/audio/Door/OOT_Door_Boss_Unlock.wav", &unlockDoor);
+	if(!result)
+	{
+		return false;
+	}
 
 	return true;
 }
@@ -81,6 +87,7 @@ void SoundClass::Shutdown()
 	ShutdownWaveFile(&doorOpen);
 	ShutdownWaveFile(&doorOpenSlam);
 	ShutdownWaveFile(&footstep);
+	ShutdownWaveFile(&unlockDoor);
 
 	// Shutdown the Direct Sound API.
 	ShutdownDirectSound();
@@ -396,12 +403,15 @@ void SoundClass::PlayDesiredFile(int choice, bool loop)
 	}
 	else if (choice == 4)
 	{
-		doorOpenSlam->SetVolume(-800);
 		doorOpenSlam->Play(0, 0, l);
 	}
 	else if (choice == 5)
 	{
 		footstep->Play(0, 0, l);
+	}
+	else if (choice == 6)
+	{
+		unlockDoor->Play(0, 0, l);
 	}
 	else
 	{
@@ -430,6 +440,10 @@ void SoundClass::StopDesiredFile(int choice)
 	else if (choice == 5)
 	{
 		footstep->Stop();
+	}
+	else if (choice == 6)
+	{
+		unlockDoor->Stop();
 	}
 	else
 	{

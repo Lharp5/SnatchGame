@@ -73,6 +73,7 @@ private:
 	IDirectSoundBuffer8* doorOpen;
 	IDirectSoundBuffer8* doorOpenSlam;
 	IDirectSoundBuffer8* footstep;
+	IDirectSoundBuffer8* unlockDoor;
 };
  
 #endif
