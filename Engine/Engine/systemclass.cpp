@@ -81,7 +81,7 @@ bool SystemClass::Initialize()
 
 	m_enemy = new EnemyObject(15.0f, -1.85f, 60.0f, 5.0f);
 
-	m_World = new WorldClass();
+	m_World = new WorldClass(m_hwnd);
 
 	m_lightMask = new LightMask(m_Camera->GetPosition());
 	
@@ -107,13 +107,6 @@ bool SystemClass::Initialize()
 	// a chance to initialize
 
 	result = m_Graphics->Initialize(screenWidth, screenHeight, m_hwnd, m_Camera, m_GameModels);
-	
-	// Initialize the sound object.
-	result = m_World->initializeSound(m_hwnd);
-	if(!result)
-	{
-		MessageBox(m_hwnd, L"Could not initialize Direct Sound.", L"Error", MB_OK);
-	}
 	
 	wchar_t* outstring = L"Rendered";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);

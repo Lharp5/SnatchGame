@@ -16,6 +16,7 @@ GameObject::GameObject()
 
 GameObject::GameObject(float x, float y, float z, GameModel* m): xLocation(x), yLocation(y), zLocation(z), myModel(m)
 {
+	sound = 0;
 	if (myModel)
 	{
 		myModel->worldTranslate(xLocation*10.0f, yLocation, zLocation*10.0f);
@@ -27,6 +28,10 @@ GameObject::~GameObject()
 	shutdown();
 }
 
+void GameObject::giveSoundObject(SoundClass* s)
+{
+	sound = s;
+}
 
 void GameObject::initialize()
 {

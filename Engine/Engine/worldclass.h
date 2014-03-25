@@ -12,7 +12,7 @@
 class WorldClass
 {
 public:
-	WorldClass();
+	WorldClass(HWND);
 	~WorldClass();
 	bool initializeSound(HWND);
 	void runGame();

@@ -52,7 +52,8 @@ public:
 	void Shutdown();
  
 	bool PlayWaveFile();
-	void PlayDesiredFile(int);
+	void PlayDesiredFile(int, bool);
+	void StopDesiredFile(int);
 
 private:
 	bool InitializeDirectSound(HWND);
@@ -65,14 +66,13 @@ private:
 private:
 	IDirectSound8* m_DirectSound;
 	IDirectSoundBuffer* m_primaryBuffer;
-	IDirectSoundBuffer8* m_secondaryBuffer1;
+
+	IDirectSoundBuffer8* stealthSong;
 
 	// Sound buffers for play back
-	IDirectSoundBuffer8* m_playBuffer1;
-	IDirectSoundBuffer8* m_playBuffer2;
-	IDirectSoundBuffer8* m_playBuffer3;
-	IDirectSoundBuffer8* m_playBuffer4;
-	IDirectSoundBuffer8* m_playBuffer5;
+	IDirectSoundBuffer8* doorOpen;
+	IDirectSoundBuffer8* doorOpenSlam;
+	IDirectSoundBuffer8* footstep;
 };
  
 #endif

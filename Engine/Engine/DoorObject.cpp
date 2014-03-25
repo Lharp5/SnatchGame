@@ -22,6 +22,8 @@ bool DoorObject::doAction()
 
 	isOpen = true;
 	//setRenderValue(false);
+
+	sound->PlayDesiredFile(2, false);
 	
 	return true;
 }

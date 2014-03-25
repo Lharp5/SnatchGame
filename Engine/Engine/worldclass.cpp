@@ -7,10 +7,18 @@
 
 #include "worldclass.h"
 
-WorldClass::WorldClass()
+WorldClass::WorldClass(HWND hwnd)
 {
 	//renderModels =0;
 	winGame = false;
+	
+	// Initialize the sound object.
+	bool result = initializeSound(hwnd);
+	if(!result)
+	{
+		MessageBox(hwnd, L"Could not initialize Direct Sound.", L"Error", MB_OK);
+	}
+
 	initalizeWorld();
 	
 }
@@ -30,7 +38,7 @@ bool WorldClass::initializeSound(HWND hwnd)
 		return false;
 	}
 
-	sound->PlayWaveFile();
+	sound->PlayDesiredFile(1, true);
 
 	return true;
 }
@@ -42,7 +50,7 @@ WorldClass::~WorldClass()
 
 void WorldClass::initalizeWorld()
 {
-	level = new LevelClass();
+	level = new LevelClass(sound);
 
 	level->loadLevel(0);
 
@@ -135,7 +143,14 @@ void WorldClass::runGame()
 					level->getLocation(i,j)->translate(0.0f, 0.3f, 0.0f);
 					float height = level->getLocation(i,j)->getLocationY();
 					if (height > 20.0f)
+					{
+						if (level->getLocation(i,j)->getRenderValue())
+						{
+							sound->PlayDesiredFile(3, false);
+							sound->StopDesiredFile(2);
+						}
 						level->getLocation(i,j)->setRenderValue(false);
+					}
 				}
 
 				//wchar_t* outstring = L"Found Door\n";

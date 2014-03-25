@@ -10,14 +10,12 @@ SoundClass::SoundClass()
 {
 	m_DirectSound = 0;
 	m_primaryBuffer = 0;
-	m_secondaryBuffer1 = 0;
 
 	// Set the other sounds to be null
-	m_playBuffer1 = 0;
-	m_playBuffer2 = 0;
-	m_playBuffer3 = 0;
-	m_playBuffer4 = 0;
-	m_playBuffer5 = 0;
+	stealthSong = 0;
+	doorOpen = 0;
+	doorOpenSlam = 0;
+	footstep = 0;
 
 }
 
@@ -43,18 +41,27 @@ bool SoundClass::Initialize(HWND hwnd)
 		return false;
 	}
 
-	// Load a wave audio file onto a secondary buffer.
-	result = LoadWaveFile("../Engine/audio/Music/starbomb-its-dangerous-to-go-alone.wav", &m_secondaryBuffer1);
+	// Load wave audio files onto secondary buffers.
+	result = LoadWaveFile("../Engine/audio/Music/starbomb-its-dangerous-to-go-alone.wav", &stealthSong);
 	if(!result)
 	{
 		return false;
 	}
-
-	LoadWaveFile ("../Engine/audio/Door/OOT_Door_Stone_Open.wav", &m_playBuffer1);
-	LoadWaveFile ("../Engine/audio/Door/OOT_Drawbridge_Up_Done.wav", &m_playBuffer2);
-	LoadWaveFile ("../Engine/audio/Footsteps/OOT_Steps_Stone1.wav", &m_playBuffer3);
-	LoadWaveFile ("../Engine/audio/Footsteps/OOT_Steps_Stone2.wav", &m_playBuffer4);
-	LoadWaveFile ("../Engine/audio/Footsteps/OOT_Steps_Stone3.wav", &m_playBuffer5);
+	result = LoadWaveFile ("../Engine/audio/Door/OOT_DoorOfTime.wav", &doorOpen);
+	if(!result)
+	{
+		return false;
+	}
+	result = LoadWaveFile ("../Engine/audio/Door/OOT_Drawbridge_Up_Done.wav", &doorOpenSlam);
+	if(!result)
+	{
+		return false;
+	}
+	result = LoadWaveFile ("../Engine/audio/Footsteps/OOT_Steps_Stone1.wav", &footstep);
+	if(!result)
+	{
+		return false;
+	}
 
 	return true;
 }
@@ -63,14 +70,12 @@ bool SoundClass::Initialize(HWND hwnd)
 void SoundClass::Shutdown()
 {
 	// Release the secondary buffer.
-	ShutdownWaveFile(&m_secondaryBuffer1);
+	ShutdownWaveFile(&stealthSong);
 
 	// Play buffers
-	ShutdownWaveFile(&m_playBuffer1);
-	ShutdownWaveFile(&m_playBuffer2);
-	ShutdownWaveFile(&m_playBuffer3);
-	ShutdownWaveFile(&m_playBuffer4);
-	ShutdownWaveFile(&m_playBuffer5);
+	ShutdownWaveFile(&doorOpen);
+	ShutdownWaveFile(&doorOpenSlam);
+	ShutdownWaveFile(&footstep);
 
 	// Shutdown the Direct Sound API.
 	ShutdownDirectSound();
@@ -348,14 +353,14 @@ bool SoundClass::PlayWaveFile()
 
 	// Set volume of the buffer to 100%.
 	// Maximum Volume is defaulted to 0, and the lower the value the quieter the sound
-	result = m_secondaryBuffer1->SetVolume(-800);
+	result = stealthSong->SetVolume(-800);
 	if(FAILED(result))
 	{
 		return false;
 	}
 
 	// Play the contents of the secondary sound buffer.
-	result = m_secondaryBuffer1->Play(0, 0, 1);
+	result = stealthSong->Play(0, 0, 1);
 	if(FAILED(result))
 	{
 		return false;
@@ -365,19 +370,53 @@ bool SoundClass::PlayWaveFile()
 }
 
 // Function will take in an integer value and play the particular sound file assoicated with the number
-void SoundClass::PlayDesiredFile(int choice)
+void SoundClass::PlayDesiredFile(int choice, bool loop)
 {
-
+	int l = loop ? 1 : 0;
 	if (choice == 1)
-		m_playBuffer1->Play (0, 0, 0);
+	{
+		stealthSong->SetVolume(-3000);
+		stealthSong->Play(0, 0, l);
+	}
 	else if (choice == 2)
-		m_playBuffer2->Play (0, 0, 0);
+	{
+		doorOpen->SetVolume(-1000);
+		doorOpen->Play(0, 0, l);
+	}
 	else if (choice == 3)
-		m_playBuffer3->Play (0, 0, 0);
+	{
+		doorOpenSlam->Play(0, 0, l);
+	}
 	else if (choice == 4)
-		m_playBuffer4->Play (0, 0, 0);
-	else if (choice == 5)
-		m_playBuffer5->Play (0, 0, 0);
+	{
+		footstep->Play(0, 0, l);
+	}
 	else
+	{
 		return;
+	}
+}
+
+void SoundClass::StopDesiredFile(int choice)
+{
+	if (choice == 1)
+	{
+		stealthSong->Stop();
+	}
+	else if (choice == 2)
+	{
+		doorOpen->Stop();
+	}
+	else if (choice == 3)
+	{
+		doorOpenSlam->Stop();
+	}
+	else if (choice == 4)
+	{
+		footstep->Stop();
+	}
+	else
+	{
+		return;
+	}
 }

@@ -14,13 +14,14 @@
 #include "DoorObject.h"
 #include "enemyobject.h"
 #include "arraylist.h"
+#include "soundclass.h"
 
 #include <windows.h> //needed to create and destroy windows and call Win32 functions
 
 class LevelClass
 {
 	public:
-		LevelClass();
+		LevelClass(SoundClass* s);
 		~LevelClass();
 		
 		ArrayList<GameModel> getGameModels();
@@ -46,6 +47,8 @@ class LevelClass
 		void toggleFloor();
 
 	private:
+		//level sound
+		SoundClass* sound;
 		//the map of the objects
 		WALL_TYPE map[100][100];
 		ArrayList <GameObject> gamePieces; 

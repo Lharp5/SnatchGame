@@ -3,6 +3,7 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
+#include "soundclass.h"
 #include "gamemodel.h"
 #include "arraylist.h"
 
@@ -12,6 +13,7 @@ class GameObject
 		GameObject();
 		GameObject(float, float, float, GameModel* m=0);
 		~GameObject();
+		virtual void giveSoundObject(SoundClass*);
 		virtual bool isLit();
 		virtual bool doAction();
 		virtual bool getRenderValue();
@@ -36,6 +38,8 @@ class GameObject
 	protected:
 		void initialize();
 		void shutdown();
+
+		SoundClass* sound;
 
 		GameModel* myModel;
 		float xLocation;

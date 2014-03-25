@@ -11,7 +11,7 @@
 using namespace std;
 
 //creating a base level THE TEMP LEVEL
-LevelClass::LevelClass()
+LevelClass::LevelClass(SoundClass* s) : sound(s)
 {
 	initialize();
 	wchar_t* outstring = L"...Levels Loaded\n";
@@ -172,6 +172,7 @@ void LevelClass::buildDoor(int x, int y)
 							};
 
 	DoorObject* newDoor = new DoorObject(-1,-1,x+0.0f,y+0.0f,doorTextures);
+	newDoor->giveSoundObject(sound);
 	if (map[x][y] == C_DOOR_2) newDoor->getModel()->worldRotateY(XM_PIDIV2);
 	gamePieces.add(newDoor);
 }
@@ -206,6 +207,7 @@ void LevelClass::buildLight(int x, int y)
 							};
 
 	LightObject* newLight = new LightObject(x+0.0f,y+0.0f, lightTextures);
+	newLight->giveSoundObject(sound);
 	if (map[x][y] == C_LIGHT_2) newLight->rotate(XM_PIDIV2);
 	if (map[x][y] == C_LIGHT_3) newLight->rotate(XM_PI);
 	if (map[x][y] == C_LIGHT_4) newLight->rotate(XM_PI + XM_PIDIV2);
@@ -223,6 +225,7 @@ void LevelClass::buildLock(int x, int y)
 							};
 
 	LockObject* newLock = new LockObject(x+0.0f,y+0.0f, lockTextures);
+	newLock->giveSoundObject(sound);
 	if (map[x][y] == C_LOCK_2) newLock->rotate(XM_PIDIV2);
 	if (map[x][y] == C_LOCK_3) newLock->rotate(XM_PI);
 	if (map[x][y] == C_LOCK_4) newLock->rotate(XM_PI + XM_PIDIV2);
@@ -232,6 +235,7 @@ void LevelClass::buildLock(int x, int y)
 void LevelClass::buildEnemy(int x, int y)
 {
 	EnemyObject* newEnemy = new EnemyObject(10.0f*x, -1.85f, 10.0f*y, 5.0f);
+	newEnemy->giveSoundObject(sound);
 	
 	if (map[x][y] == C_ENEMY_2) newEnemy->Turn(XM_PIDIV2);
 	if (map[x][y] == C_ENEMY_3) newEnemy->Turn(XM_PI);
