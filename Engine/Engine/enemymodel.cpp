@@ -228,6 +228,31 @@ void EnemyModel::Turn(float rotationRadianAngle)
 	m_RightLeg->worldRotateY(rotationRadianAngle);
 }
 
+void EnemyModel::ResetPose()
+{
+	if (leftRotationAngle != -XM_PIDIV2 && rightRotationAngle != -XM_PIDIV2)
+	{
+		float rotationRadianAngle = -abs(leftRotationAngle) + XM_PIDIV2;
+	
+		m_LeftArm->orientTranslate(0.0f, 0.0f, -cos(leftRotationAngle) * (m_scale * ((torsoLength * 0.9f) / 2.0f)));
+		m_RightArm->orientTranslate(0.0f, 0.0f, -cos(rightRotationAngle) * (m_scale * ((torsoLength * 0.9f) / 2.0f)));
+		m_LeftLeg->orientTranslate(0.0f, 0.0f, -cos(rightRotationAngle) * (m_scale * ((torsoLength * 0.9f) / 2.0f)));
+		m_RightLeg->orientTranslate(0.0f, 0.0f, -cos(leftRotationAngle) * (m_scale * ((torsoLength * 0.9f) / 2.0f)));
+
+		m_LeftArm->orientRotateX(rotationRadianAngle);
+		m_RightArm->orientRotateX(-rotationRadianAngle);
+		m_LeftLeg->orientRotateX(-rotationRadianAngle);
+		m_RightLeg->orientRotateX(rotationRadianAngle);
+		leftRotationAngle = -XM_PIDIV2;
+		rightRotationAngle = -XM_PIDIV2;
+	
+		m_LeftArm->orientTranslate(0.0f, 0.0f, cos(leftRotationAngle) * (m_scale * ((torsoLength * 0.9f) / 2.0f)));
+		m_RightArm->orientTranslate(0.0f, 0.0f, cos(rightRotationAngle) * (m_scale * ((torsoLength * 0.9f) / 2.0f)));
+		m_LeftLeg->orientTranslate(0.0f, 0.0f, cos(rightRotationAngle) * (m_scale * ((torsoLength * 0.9f) / 2.0f)));
+		m_RightLeg->orientTranslate(0.0f, 0.0f, cos(leftRotationAngle) * (m_scale * ((torsoLength * 0.9f) / 2.0f)));
+	}
+}
+
 void EnemyModel::Shutdown()
 {
 

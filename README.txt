@@ -13,9 +13,11 @@ Things to still be done (in order of presedence)
 
 - GUI (text?)
 
-- Audio (soundFX and ambience)
+- Audio (soundFX and ambience) **IMPLEMENTED - SMALL BITS LEFT**
 
 - Level Changes
+
+- Scoring System
 
 - Main menu, end game Screen
 

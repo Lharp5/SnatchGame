@@ -28,6 +28,7 @@ public:
 	void TurnRight90();
 	void Turn(float rotationRadianAngle);
 	void MoveForward();
+	void Rest();
 
 private:
 	EnemyModel* m_model;

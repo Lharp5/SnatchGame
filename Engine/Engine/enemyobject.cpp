@@ -56,6 +56,11 @@ void EnemyObject::MoveForward()
 	m_model->MoveForward();
 }
 
+void EnemyObject::Rest()
+{
+	m_model->ResetPose();
+}
+
 bool EnemyObject::getRenderValue()
 {
 	return renderVal;

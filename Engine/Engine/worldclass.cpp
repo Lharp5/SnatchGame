@@ -38,7 +38,7 @@ bool WorldClass::initializeSound(HWND hwnd)
 		return false;
 	}
 
-	sound->PlayDesiredFile(2, true);
+	//sound->PlayDesiredFile(2, true);
 
 	return true;
 }

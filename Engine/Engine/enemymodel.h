@@ -27,6 +27,7 @@ public:
 	void Turn(float rotationRadianAngle);
 	void MoveForward();
 	void WalkAnimation();
+	void ResetPose();
 
 protected:
 	virtual void InitializeModel(); //construct the airplane from component parts

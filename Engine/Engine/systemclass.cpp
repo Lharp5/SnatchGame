@@ -438,7 +438,7 @@ bool SystemClass::checkControls()
 	   {
 		   if (!keyPressedE)
 		   {
-
+			   m_enemy->Rest();
 		   }
 		   keyPressedE = true;
 	   }
