@@ -13,6 +13,7 @@ SoundClass::SoundClass()
 
 	// Set the other sounds to be null
 	stealthSong = 0;
+	chaseSong = 0;
 	doorOpen = 0;
 	doorOpenSlam = 0;
 	footstep = 0;
@@ -47,6 +48,11 @@ bool SoundClass::Initialize(HWND hwnd)
 	{
 		return false;
 	}
+	result = LoadWaveFile("../Engine/audio/Music/Hegemony_Of_The_Food_Chain.wav", &chaseSong);
+	if(!result)
+	{
+		return false;
+	}
 	result = LoadWaveFile ("../Engine/audio/Door/OOT_DoorOfTime.wav", &doorOpen);
 	if(!result)
 	{
@@ -71,8 +77,7 @@ void SoundClass::Shutdown()
 {
 	// Release the secondary buffer.
 	ShutdownWaveFile(&stealthSong);
-
-	// Play buffers
+	ShutdownWaveFile(&chaseSong);
 	ShutdownWaveFile(&doorOpen);
 	ShutdownWaveFile(&doorOpenSlam);
 	ShutdownWaveFile(&footstep);
@@ -375,19 +380,26 @@ void SoundClass::PlayDesiredFile(int choice, bool loop)
 	int l = loop ? 1 : 0;
 	if (choice == 1)
 	{
-		stealthSong->SetVolume(-3000);
+		stealthSong->SetVolume(-2000);
 		stealthSong->Play(0, 0, l);
 	}
 	else if (choice == 2)
 	{
-		doorOpen->SetVolume(-1000);
-		doorOpen->Play(0, 0, l);
+		chaseSong->SetCurrentPosition(175000 * 40);
+		chaseSong->SetVolume(-1500);
+		chaseSong->Play(0, 0, l);
 	}
 	else if (choice == 3)
 	{
-		doorOpenSlam->Play(0, 0, l);
+		doorOpen->SetVolume(-800);
+		doorOpen->Play(0, 0, l);
 	}
 	else if (choice == 4)
+	{
+		doorOpenSlam->SetVolume(-800);
+		doorOpenSlam->Play(0, 0, l);
+	}
+	else if (choice == 5)
 	{
 		footstep->Play(0, 0, l);
 	}
@@ -405,13 +417,17 @@ void SoundClass::StopDesiredFile(int choice)
 	}
 	else if (choice == 2)
 	{
-		doorOpen->Stop();
+		chaseSong->Stop();
 	}
 	else if (choice == 3)
 	{
-		doorOpenSlam->Stop();
+		doorOpen->Stop();
 	}
 	else if (choice == 4)
+	{
+		doorOpenSlam->Stop();
+	}
+	else if (choice == 5)
 	{
 		footstep->Stop();
 	}

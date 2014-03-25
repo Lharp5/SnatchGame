@@ -23,7 +23,7 @@ bool DoorObject::doAction()
 	isOpen = true;
 	//setRenderValue(false);
 
-	sound->PlayDesiredFile(2, false);
+	sound->PlayDesiredFile(3, false);
 	
 	return true;
 }

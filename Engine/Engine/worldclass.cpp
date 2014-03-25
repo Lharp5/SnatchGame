@@ -38,7 +38,7 @@ bool WorldClass::initializeSound(HWND hwnd)
 		return false;
 	}
 
-	sound->PlayDesiredFile(1, true);
+	sound->PlayDesiredFile(2, true);
 
 	return true;
 }
@@ -146,8 +146,8 @@ void WorldClass::runGame()
 					{
 						if (level->getLocation(i,j)->getRenderValue())
 						{
-							sound->PlayDesiredFile(3, false);
-							sound->StopDesiredFile(2);
+							sound->PlayDesiredFile(4, false);
+							sound->StopDesiredFile(3);
 						}
 						level->getLocation(i,j)->setRenderValue(false);
 					}

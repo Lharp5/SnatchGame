@@ -67,9 +67,9 @@ private:
 	IDirectSound8* m_DirectSound;
 	IDirectSoundBuffer* m_primaryBuffer;
 
-	IDirectSoundBuffer8* stealthSong;
-
 	// Sound buffers for play back
+	IDirectSoundBuffer8* stealthSong;
+	IDirectSoundBuffer8* chaseSong;
 	IDirectSoundBuffer8* doorOpen;
 	IDirectSoundBuffer8* doorOpenSlam;
 	IDirectSoundBuffer8* footstep;
