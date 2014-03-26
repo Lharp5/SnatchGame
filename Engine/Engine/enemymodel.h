@@ -26,6 +26,7 @@ public:
 	void TurnRight90();
 	void Turn(float rotationRadianAngle);
 	void MoveForward();
+	void MoveForwardDelta(float);
 	void WalkAnimation();
 	void ResetPose();
 

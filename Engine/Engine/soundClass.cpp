@@ -20,6 +20,7 @@ SoundClass::SoundClass()
 	unlockDoor = 0;
 	lightsOn = 0;
 	lightsOff = 0;
+	menuSong = 0;
 }
 
 
@@ -45,7 +46,7 @@ bool SoundClass::Initialize(HWND hwnd)
 	}
 
 	// Load wave audio files onto secondary buffers.
-	result = LoadWaveFile("../Engine/audio/Music/starbomb-its-dangerous-to-go-alone.wav", &stealthSong);
+	result = LoadWaveFile("../Engine/audio/Music/Memories.wav", &stealthSong);
 	if(!result)
 	{
 		return false;
@@ -85,6 +86,11 @@ bool SoundClass::Initialize(HWND hwnd)
 	{
 		return false;
 	}
+	result = LoadWaveFile ("../Engine/audio/Music/Cashman_VGM.wav", &menuSong);
+	if(!result)
+	{
+		return false;
+	}
 
 	return true;
 }
@@ -101,6 +107,7 @@ void SoundClass::Shutdown()
 	ShutdownWaveFile(&unlockDoor);
 	ShutdownWaveFile(&lightsOn);
 	ShutdownWaveFile(&lightsOff);
+	ShutdownWaveFile(&menuSong);
 
 	// Shutdown the Direct Sound API.
 	ShutdownDirectSound();
@@ -434,6 +441,10 @@ void SoundClass::PlayDesiredFile(int choice, bool loop)
 	{
 		lightsOff->Play(0, 0, l);
 	}
+	else if (choice = 9)
+	{
+		menuSong->Play(0, 0, l);
+	}
 	else
 	{
 		return;
@@ -473,6 +484,10 @@ void SoundClass::StopDesiredFile(int choice)
 	else if (choice = 8)
 	{
 		lightsOff->Stop();
+	}
+	else if (choice = 9)
+	{
+		menuSong->Stop();
 	}
 	else
 	{

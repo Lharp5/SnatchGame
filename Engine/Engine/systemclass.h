@@ -75,7 +75,6 @@ private:
 
 	//Game World Items
 
-	EnemyObject* m_enemy;
 	ArrayList<GameModel>* m_GameModels; //container to hold all our game world models
 	WorldClass* m_World;
 	LightMask* m_lightMask;

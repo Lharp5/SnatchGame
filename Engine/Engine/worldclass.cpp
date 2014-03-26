@@ -38,7 +38,7 @@ bool WorldClass::initializeSound(HWND hwnd)
 		return false;
 	}
 
-	//sound->PlayDesiredFile(2, true);
+	sound->PlayDesiredFile(1, true);
 
 	return true;
 }
@@ -53,6 +53,10 @@ void WorldClass::initalizeWorld()
 	level = new LevelClass(sound);
 
 	level->loadLevel(0);
+
+	int path[] = {7, 1, 1, 7, 1, 1, 7, 1, 1, 7, 1, 1};
+	enemies.add(new EnemyObject(path, sound, 10.0f, -1.85f, 80.0f, 5.0f));
+	enemies.elementAt(0)->TurnRight90();
 
 	player = new PlayerClass();
 	player->setPosition((int)getPlayerStartX(), (int)getPlayerStartZ());
@@ -108,7 +112,14 @@ ArrayList<GameModel> WorldClass::getModels()
 	//wchar_t* outstring = L"Adding models\n";
 	//WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 	
-	return level->getGameModels();
+	ArrayList<GameModel> list;
+	list.addAll(level->getGameModels());
+	for (int i = 0; i < enemies.size(); i++)
+	{
+		list.addAll(enemies.elementAt(i)->GetGameModels());
+	}
+
+	return list;
 	//return renderModels;
 }
 
@@ -140,23 +151,65 @@ void WorldClass::runGame()
 			if(level->checkMap(i,j) == C_DOOR_1 || level->checkMap(i,j) == C_DOOR_2){
 				if(level->getLocation(i,j)->getStatus())
 				{
-					level->getLocation(i,j)->translate(0.0f, 0.3f, 0.0f);
 					float height = level->getLocation(i,j)->getLocationY();
-					if (height > 20.0f)
+					if (height < 15.0f)
 					{
-						if (level->getLocation(i,j)->getRenderValue())
+						level->getLocation(i,j)->translate(0.0f, 0.3f, 0.0f);
+					}
+					else
+					{
+						if (!dynamic_cast<DoorObject*>(level->getLocation(i,j))->finishedOpening)
 						{
 							sound->PlayDesiredFile(4, false);
 							sound->StopDesiredFile(3);
+							dynamic_cast<DoorObject*>(level->getLocation(i,j))->finishedOpening = true;
 						}
-						level->getLocation(i,j)->setRenderValue(false);
 					}
 				}
-
-				//wchar_t* outstring = L"Found Door\n";
-				//WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 			}
 		}
+	}
+	for (int i = 0; i < enemies.size(); i++)
+	{
+		EnemyObject* e = enemies.elementAt(i);
+		if (e->currentPathAction == 0 || e->currentPathAction == 3 ||
+			e->currentPathAction == 6 || e->currentPathAction == 9 || e->currentPathAction == 12)
+		{
+			if (e->currentPathAction == 12)
+			{
+				e->currentPathAction = 0;
+			}
+			if (e->actionComplete)
+			{
+				e->actionComplete = false;
+				e->MoveForward(e->getPath()[e->currentPathAction]);
+				e->currentPathAction++;
+			}
+		}
+		else if (e->currentPathAction == 1 || e->currentPathAction == 4 ||
+			e->currentPathAction == 7 || e->currentPathAction == 10)
+		{
+			if (e->actionComplete)
+			{
+				e->Rest();
+				e->currentPathAction++;
+				e->actionComplete = true;
+			}
+		}
+		else if (e->currentPathAction == 2 || e->currentPathAction == 5 ||
+			e->currentPathAction == 8 || e->currentPathAction == 11)
+		{
+			if (e->actionComplete)
+			{
+				for (int j = 0; j < e->getPath()[e->currentPathAction]; j++)
+				{
+					e->TurnRight90();
+				}
+				e->currentPathAction++;
+				e->actionComplete = true;
+			}
+		}
+		enemies.elementAt(i)->Frame();
 	}
 }
 

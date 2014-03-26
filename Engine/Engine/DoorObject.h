@@ -24,6 +24,7 @@ public:
 	*************/
 	bool doAction();
 	bool getStatus();
+	bool finishedOpening;
 private:
 	bool isOpen;
 

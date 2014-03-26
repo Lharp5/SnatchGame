@@ -77,7 +77,6 @@ class LevelClass
 		void buildLight(int, int);
 		void buildDoor(int, int);
 		void buildLock(int, int);
-		void buildEnemy(int, int);
 };
 
 

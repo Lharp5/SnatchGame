@@ -79,17 +79,12 @@ bool SystemClass::Initialize()
 
 	//Create the game objects for our game
 
-	m_enemy = new EnemyObject(15.0f, -1.85f, 60.0f, 5.0f);
-
 	m_World = new WorldClass(m_hwnd);
 
 	m_lightMask = new LightMask(m_Camera->GetPosition());
 	
 	//Add the  gameModel objects to the GameModels collection
 	//that will be rendered by the graphics system
-
-
-	m_GameModels->addAll(m_enemy->GetGameModels());
 
 	m_GameModels->addAll(m_World->getModels());
 
@@ -129,13 +124,6 @@ void SystemClass::Shutdown()
 	{
 		delete m_World;
 		m_World = 0;
-	}
-
-	if(m_enemy)
-	{
-		m_enemy->shutdown();
-		delete m_enemy;
-		m_enemy = 0;
 	}
 
 	// Release the Light Mask object's memory.
@@ -375,15 +363,7 @@ bool SystemClass::checkControls()
 	else{
 		spacePressed = false;
 	}
-	if ( m_Input->keyPressed(DIK_LSHIFT)){   
-		if ( m_Input->keyPressed(DIK_LEFT))
-		   m_enemy->TurnLeft();
-	   if ( m_Input->keyPressed(DIK_RIGHT))
-		   m_enemy->TurnRight();
-	   if ( m_Input->keyPressed(DIK_UP))
-		   m_enemy->MoveForward();
-	}
-	 else if ( m_Input->keyPressed(DIK_C)){
+	if ( m_Input->keyPressed(DIK_C)){
 	   if ( m_Input->keyPressed(DIK_UP) ) //Crane Up
 		  m_Camera->CraneUp();
 	   if ( m_Input->keyPressed(DIK_DOWN) ) //Crane Down
@@ -438,7 +418,7 @@ bool SystemClass::checkControls()
 	   {
 		   if (!keyPressedE)
 		   {
-			   m_enemy->Rest();
+
 		   }
 		   keyPressedE = true;
 	   }

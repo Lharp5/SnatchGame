@@ -76,6 +76,7 @@ private:
 	IDirectSoundBuffer8* unlockDoor;
 	IDirectSoundBuffer8* lightsOn;
 	IDirectSoundBuffer8* lightsOff;
+	IDirectSoundBuffer8* menuSong;
 };
  
 #endif

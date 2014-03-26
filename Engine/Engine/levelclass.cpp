@@ -136,7 +136,6 @@ void LevelClass::loadObjects()
 	for(int i=0; i<sizeX; i++)
 		for(int j=0; j<sizeY; j++){
 			switch(map[i][j]){
-			case C_ENEMY_1: case C_ENEMY_2: case C_ENEMY_3: case C_ENEMY_4:	buildEnemy(i,j);	break;
 			case C_DOOR_1: case C_DOOR_2:									buildDoor(i,j);		break;
 			case C_LOCK_1: case C_LOCK_2: case C_LOCK_3: case C_LOCK_4:		buildLock(i,j);		break;
 			case C_LIGHT_1: case C_LIGHT_2: case C_LIGHT_3: case C_LIGHT_4:	buildLight(i,j);	break;
@@ -230,18 +229,6 @@ void LevelClass::buildLock(int x, int y)
 	if (map[x][y] == C_LOCK_3) newLock->rotate(XM_PI);
 	if (map[x][y] == C_LOCK_4) newLock->rotate(XM_PI + XM_PIDIV2);
 	gamePieces.add(newLock);
-}
-
-void LevelClass::buildEnemy(int x, int y)
-{
-	EnemyObject* newEnemy = new EnemyObject(10.0f*x, -1.85f, 10.0f*y, 5.0f);
-	newEnemy->giveSoundObject(sound);
-	
-	if (map[x][y] == C_ENEMY_2) newEnemy->Turn(XM_PIDIV2);
-	if (map[x][y] == C_ENEMY_3) newEnemy->Turn(XM_PI);
-	if (map[x][y] == C_ENEMY_4) newEnemy->Turn(XM_PI + XM_PIDIV2);
-
-	gamePieces.add(newEnemy);
 }
 
 /* Function:	Shutdown

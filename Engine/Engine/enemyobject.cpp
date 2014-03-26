@@ -1,9 +1,18 @@
 #include "enemyobject.h"
 
-EnemyObject::EnemyObject(float x, float y, float z, float s) : GameObject(x, y, z)
+EnemyObject::EnemyObject(int* p, SoundClass* snd, float x, float y, float z, float s) : GameObject(x, y, z)
 {
 	m_model = new EnemyModel(x, y, z, s);
 	renderVal = true;
+	destination = XMINT2((int)x, (int)z);
+	direction = NORTH;
+	actionComplete = true;
+	currentPathAction = 12;
+	for (int i = 0; i < 12; i++)
+	{
+		path[i] = p[i];
+	}
+	giveSoundObject(snd);
 }
 
 EnemyObject::~EnemyObject(void)
@@ -36,13 +45,61 @@ void EnemyObject::TurnRight()
 	m_model->TurnRight();
 }
 
+void EnemyObject::Frame()
+{
+	if ((int)xLocation != destination.x || (int)zLocation != destination.y)
+	{
+		if (direction == NORTH)
+		{
+			zLocation += ADVANCE_SPEED*0.9f;
+		}
+		else if (direction == EAST)
+		{
+			xLocation += ADVANCE_SPEED*0.9f;
+		}
+		else if (direction == SOUTH)
+		{
+			zLocation -= ADVANCE_SPEED*0.9f;
+		}
+		else if (direction == WEST)
+		{
+			xLocation -= ADVANCE_SPEED*0.9f;
+		}
+		m_model->MoveForward();
+	}
+	else
+	{
+		m_model->MoveForwardDelta(xLocation - (float)destination.x);
+		m_model->MoveForwardDelta(zLocation - (float)destination.y);
+		xLocation -= xLocation - (float)destination.x;
+		zLocation -= zLocation - (float)destination.y;
+		actionComplete = true;
+	}
+}
+
 void EnemyObject::TurnLeft90()
 {
+	if (direction == NORTH)
+	{
+		direction = WEST;
+	}
+	else
+	{
+		direction = (Direction)((int)direction - 1);
+	}
 	m_model->TurnLeft90();
 }
 
 void EnemyObject::TurnRight90()
 {
+	if (direction == WEST)
+	{
+		direction = NORTH;
+	}
+	else
+	{
+		direction = (Direction)((int)direction + 1);
+	}
 	m_model->TurnRight90();
 }
 
@@ -51,14 +108,31 @@ void EnemyObject::Turn(float rotationRadianAngle)
 	m_model->Turn(rotationRadianAngle);
 }
 
-void EnemyObject::MoveForward()
+void EnemyObject::MoveForward(int spaces)
 {
-	m_model->MoveForward();
+	if (direction == NORTH)
+	{
+		destination = XMINT2((int)xLocation, (int)zLocation + spaces * 10);
+	}
+	else if (direction == EAST)
+	{
+		destination = XMINT2((int)xLocation + spaces * 10, (int)zLocation);
+	}
+	else if (direction == SOUTH)
+	{
+		destination = XMINT2((int)xLocation, (int)zLocation - spaces * 10);
+	}
+	else if (direction == WEST)
+	{
+		destination = XMINT2((int)xLocation - spaces * 10, (int)zLocation);
+	}
+	actionComplete = false;
 }
 
 void EnemyObject::Rest()
 {
 	m_model->ResetPose();
+	actionComplete = false;
 }
 
 bool EnemyObject::getRenderValue()
@@ -74,4 +148,9 @@ void EnemyObject::setRenderValue(bool b)
 		list.elementAt(i)->setRenderVal(b);
 	}
 	renderVal = b;
+}
+
+int* EnemyObject::getPath()
+{
+	return path;
 }
