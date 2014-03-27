@@ -97,15 +97,71 @@ void LevelClass::loadLevel(int level)
 */
 void LevelClass::level0()
 {
-	sizeX = 10;
-	sizeY = 10;
+	sizeX = 12;
+	sizeY = 12;
 
-	for(int i=0; i<sizeX; i++){
-		for(int j=0; j<sizeY; j++){
+	for (int i = 0; i < sizeX; i++)
+	{
+		for (int j = 0; j < sizeY; j++)
+		{
 			map[i][j] = C_FLOOR;
 		}
 	}
+	for (int i = 0; i < sizeX; i++)
+	{
+		map[i][0] = C_WALL;
+		map[i][sizeY - 1] = C_WALL;
+	}
+	for (int i = 0; i < sizeY; i++)
+	{
+		map[0][i] = C_WALL;
+		map[sizeX - 1][i] = C_WALL;
+	}
 	
+	map[6][0] = C_LOCK_1;
+	map[9][0] = C_LOCK_1;
+	map[3][1] = C_WALL;
+	map[5][1] = C_WALL;
+	map[7][1] = C_WALL;
+	map[8][1] = C_WALL;
+	map[10][1] = C_WALL;
+	map[3][2] = C_WALL;
+	map[7][2] = C_WALL;
+	map[5][3] = C_WALL;
+	map[7][3] = C_WALL;
+	map[8][3] = C_WALL;
+	map[10][3] = C_WALL;
+	map[7][4] = C_DOOR_2;
+	map[sizeX - 1][4] = C_LIGHT_4;
+	for (int i = 2; i < 11; i++) map[i][5] = C_WALL;
+	map[8][5] = C_DOOR_1;
+	map[2][6] = C_LIGHT_4;
+	map[3][6] = C_WALL;
+	map[7][6] = C_WALL;
+	map[1][7] = C_WALL;
+	map[2][7] = C_WALL;
+	map[3][7] = C_WALL;
+	map[5][7] = C_WALL;
+	map[7][7] = C_WALL;
+	map[9][7] = C_WALL;
+	map[10][7] = C_WALL;
+	map[5][8] = C_WALL;
+	map[7][8] = C_WALL;
+	map[11][8] = C_LIGHT_4;
+	map[2][9] = C_WALL;
+	map[3][9] = C_WALL;
+	map[5][9] = C_WALL;
+	map[7][9] = C_WALL;
+	map[9][9] = C_WALL;
+	map[10][9] = C_WALL;
+	map[0][10] = C_LOCK_2;
+	map[5][10] = C_WALL;
+	map[9][10] = C_DOOR_2;
+	map[11][10] = C_FLOOR;
+	
+	playerStartX = 1;
+	playerStartZ = 1;
+	/*
 	//creates the wall images. adjusting their location side walls
 	for(int a=0; a<sizeY; a++){
 		map[0][a] = C_WALL;
@@ -120,12 +176,9 @@ void LevelClass::level0()
 	map[sizeX-1][sizeY/2] = C_LIGHT_4;
 	map[0][sizeY/2] = C_LOCK_2;
 	map[sizeX/2][sizeY-1] = C_DOOR_1;
+	*/
 
 	loadObjects();
-
-	playerStartX = 5;
-	playerStartZ = 5;
-
 
 	wchar_t* outstring = L"Level 0: Loaded\n";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);

@@ -1,4 +1,5 @@
 #include "enemyobject.h"
+#include <ctime>
 
 EnemyObject::EnemyObject(int* p, SoundClass* snd, float x, float y, float z, float s) : GameObject(x, y, z)
 {
@@ -13,6 +14,7 @@ EnemyObject::EnemyObject(int* p, SoundClass* snd, float x, float y, float z, flo
 		path[i] = p[i];
 	}
 	giveSoundObject(snd);
+	enemyState = PATROLLING;
 }
 
 EnemyObject::~EnemyObject(void)
@@ -47,33 +49,47 @@ void EnemyObject::TurnRight()
 
 void EnemyObject::Frame()
 {
-	if ((int)xLocation != destination.x || (int)zLocation != destination.y)
-	{
-		if (direction == NORTH)
+	if (currentPathAction % 3 == 1)
 		{
-			zLocation += ADVANCE_SPEED*0.9f;
-		}
-		else if (direction == EAST)
+		if ((int)xLocation != destination.x || (int)zLocation != destination.y)
 		{
-			xLocation += ADVANCE_SPEED*0.9f;
+			if (direction == NORTH)
+			{
+				zLocation += ADVANCE_SPEED*0.9f;
+			}
+			else if (direction == EAST)
+			{
+				xLocation += ADVANCE_SPEED*0.9f;
+			}
+			else if (direction == SOUTH)
+			{
+				zLocation -= ADVANCE_SPEED*0.9f;
+			}
+			else if (direction == WEST)
+			{
+				xLocation -= ADVANCE_SPEED*0.9f;
+			}
+			m_model->MoveForward();
 		}
-		else if (direction == SOUTH)
+		else
 		{
-			zLocation -= ADVANCE_SPEED*0.9f;
+			m_model->MoveForwardDelta(xLocation - (float)destination.x);
+			m_model->MoveForwardDelta(zLocation - (float)destination.y);
+			xLocation -= xLocation - (float)destination.x;
+			zLocation -= zLocation - (float)destination.y;
+			actionComplete = true;
 		}
-		else if (direction == WEST)
+		}
+	else if (currentPathAction % 3 == 2)
 		{
-			xLocation -= ADVANCE_SPEED*0.9f;
+		if (time(0) < timeN)
+		{
+			m_model->ResetPose();
 		}
-		m_model->MoveForward();
-	}
-	else
-	{
-		m_model->MoveForwardDelta(xLocation - (float)destination.x);
-		m_model->MoveForwardDelta(zLocation - (float)destination.y);
-		xLocation -= xLocation - (float)destination.x;
-		zLocation -= zLocation - (float)destination.y;
-		actionComplete = true;
+		else
+		{
+			actionComplete = true;
+		}
 	}
 }
 
@@ -129,10 +145,9 @@ void EnemyObject::MoveForward(int spaces)
 	actionComplete = false;
 }
 
-void EnemyObject::Rest()
+void EnemyObject::Rest(int t)
 {
-	m_model->ResetPose();
-	actionComplete = false;
+	timeN = time(0) + t;
 }
 
 bool EnemyObject::getRenderValue()

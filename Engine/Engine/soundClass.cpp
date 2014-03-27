@@ -21,6 +21,7 @@ SoundClass::SoundClass()
 	lightsOn = 0;
 	lightsOff = 0;
 	menuSong = 0;
+	gameOverSong = 0;
 }
 
 
@@ -46,7 +47,7 @@ bool SoundClass::Initialize(HWND hwnd)
 	}
 
 	// Load wave audio files onto secondary buffers.
-	result = LoadWaveFile("../Engine/audio/Music/Memories.wav", &stealthSong);
+	result = LoadWaveFile("../Engine/audio/Music/Scariness.wav", &stealthSong);
 	if(!result)
 	{
 		return false;
@@ -91,6 +92,7 @@ bool SoundClass::Initialize(HWND hwnd)
 	{
 		return false;
 	}
+	result = LoadWaveFile ("../Engine/audio/Music/Ginpatsu no Shounen.wav", &gameOverSong);
 
 	return true;
 }
@@ -108,6 +110,7 @@ void SoundClass::Shutdown()
 	ShutdownWaveFile(&lightsOn);
 	ShutdownWaveFile(&lightsOff);
 	ShutdownWaveFile(&menuSong);
+	ShutdownWaveFile(&gameOverSong);
 
 	// Shutdown the Direct Sound API.
 	ShutdownDirectSound();
@@ -431,19 +434,28 @@ void SoundClass::PlayDesiredFile(int choice, bool loop)
 	}
 	else if (choice == 6)
 	{
+		unlockDoor->SetVolume(-800);
 		unlockDoor->Play(0, 0, l);
 	}
 	else if (choice == 7)
 	{
+		lightsOn->SetVolume(-800);
 		lightsOn->Play(0, 0, l);
 	}
 	else if (choice = 8)
 	{
+		lightsOff->SetVolume(-800);
 		lightsOff->Play(0, 0, l);
 	}
 	else if (choice = 9)
 	{
+		menuSong->SetVolume(-1500);
 		menuSong->Play(0, 0, l);
+	}
+	else if (choice = 10)
+	{
+		gameOverSong->SetVolume(-1500);
+		gameOverSong->Play(0, 0, l);
 	}
 	else
 	{
@@ -488,6 +500,10 @@ void SoundClass::StopDesiredFile(int choice)
 	else if (choice = 9)
 	{
 		menuSong->Stop();
+	}
+	else if (choice = 10)
+	{
+		gameOverSong->Stop();
 	}
 	else
 	{

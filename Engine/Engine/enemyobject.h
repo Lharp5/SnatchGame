@@ -33,7 +33,7 @@ public:
 	void TurnRight90();
 	void Turn(float rotationRadianAngle);
 	void MoveForward(int);
-	void Rest();
+	void Rest(int);
 
 	void Frame();
 
@@ -42,7 +42,10 @@ private:
 	bool renderVal;
 	XMINT2 destination;
 	Direction direction;
+	time_t timeN;
 	int path[12];
+
+	EnemyState enemyState;
 };
 
 #endif

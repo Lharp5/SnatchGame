@@ -77,6 +77,7 @@ private:
 	IDirectSoundBuffer8* lightsOn;
 	IDirectSoundBuffer8* lightsOff;
 	IDirectSoundBuffer8* menuSong;
+	IDirectSoundBuffer8* gameOverSong;
 };
  
 #endif

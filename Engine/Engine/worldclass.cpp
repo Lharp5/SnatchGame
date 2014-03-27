@@ -54,9 +54,18 @@ void WorldClass::initalizeWorld()
 
 	level->loadLevel(0);
 
-	int path[] = {7, 1, 1, 7, 1, 1, 7, 1, 1, 7, 1, 1};
-	enemies.add(new EnemyObject(path, sound, 10.0f, -1.85f, 80.0f, 5.0f));
-	enemies.elementAt(0)->TurnRight90();
+	int path1[] = {2, 2, 1, 3, 2, 1, 2, 2, 1, 3, 2, 1};
+	enemies.add(new EnemyObject(path1, sound, 10.0f, -1.85f, 80.0f, 5.0f));
+	int path2[] = {2, 2, 1, 2, 2, 1, 2, 2, 1, 2, 2, 1};
+	enemies.add(new EnemyObject(path2, sound, 40.0f, -1.85f, 40.0f, 5.0f));
+	enemies.elementAt(1)->TurnRight90();
+	int path3[] = {2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2};
+	enemies.add(new EnemyObject(path3, sound, 80.0f, -1.85f, 20.0f, 5.0f));
+	enemies.elementAt(2)->TurnRight90();
+	int path4[] = {2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2};
+	enemies.add(new EnemyObject(path4, sound, 60.0f, -1.85f, 90.0f, 5.0f));
+	enemies.elementAt(3)->TurnRight90();
+	enemies.elementAt(3)->TurnRight90();
 
 	player = new PlayerClass();
 	player->setPosition((int)getPlayerStartX(), (int)getPlayerStartZ());
@@ -172,8 +181,7 @@ void WorldClass::runGame()
 	for (int i = 0; i < enemies.size(); i++)
 	{
 		EnemyObject* e = enemies.elementAt(i);
-		if (e->currentPathAction == 0 || e->currentPathAction == 3 ||
-			e->currentPathAction == 6 || e->currentPathAction == 9 || e->currentPathAction == 12)
+		if (e->currentPathAction % 3 == 0)
 		{
 			if (e->currentPathAction == 12)
 			{
@@ -186,18 +194,16 @@ void WorldClass::runGame()
 				e->currentPathAction++;
 			}
 		}
-		else if (e->currentPathAction == 1 || e->currentPathAction == 4 ||
-			e->currentPathAction == 7 || e->currentPathAction == 10)
+		else if (e->currentPathAction % 3 == 1)
 		{
 			if (e->actionComplete)
 			{
-				e->Rest();
+				e->actionComplete = false;
+				e->Rest(e->getPath()[e->currentPathAction]);
 				e->currentPathAction++;
-				e->actionComplete = true;
 			}
 		}
-		else if (e->currentPathAction == 2 || e->currentPathAction == 5 ||
-			e->currentPathAction == 8 || e->currentPathAction == 11)
+		else if (e->currentPathAction % 3 == 2)
 		{
 			if (e->actionComplete)
 			{
