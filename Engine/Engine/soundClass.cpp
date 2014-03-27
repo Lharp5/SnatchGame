@@ -410,6 +410,7 @@ void SoundClass::PlayDesiredFile(int choice, bool loop)
 	int l = loop ? 1 : 0;
 	if (choice == 1)
 	{
+		stealthSong->SetCurrentPosition(175000 * 0);
 		stealthSong->SetVolume(-1500);
 		stealthSong->Play(0, 0, l);
 		currentSong = choice;
@@ -423,40 +424,48 @@ void SoundClass::PlayDesiredFile(int choice, bool loop)
 	}
 	else if (choice == 3)
 	{
+		doorOpen->SetCurrentPosition(175000 * 0);
 		doorOpen->SetVolume(-800);
 		doorOpen->Play(0, 0, l);
 	}
 	else if (choice == 4)
 	{
+		doorOpenSlam->SetCurrentPosition(175000 * 0);
 		doorOpenSlam->Play(0, 0, l);
 	}
 	else if (choice == 5)
 	{
+		footstep->SetCurrentPosition(175000 * 0);
 		footstep->Play(0, 0, l);
 	}
 	else if (choice == 6)
 	{
+		unlockDoor->SetCurrentPosition(175000 * 0);
 		unlockDoor->SetVolume(-800);
 		unlockDoor->Play(0, 0, l);
 	}
 	else if (choice == 7)
 	{
+		lightsOn->SetCurrentPosition(175000 * 0);
 		lightsOn->SetVolume(-800);
 		lightsOn->Play(0, 0, l);
 	}
 	else if (choice = 8)
 	{
+		lightsOff->SetCurrentPosition(175000 * 0);
 		lightsOff->SetVolume(-800);
 		lightsOff->Play(0, 0, l);
 	}
 	else if (choice = 9)
 	{
+		menuSong->SetCurrentPosition(175000 * 0);
 		menuSong->SetVolume(-1500);
 		menuSong->Play(0, 0, l);
 		currentSong = choice;
 	}
 	else if (choice = 10)
 	{
+		gameOverSong->SetCurrentPosition(175000 * 0);
 		gameOverSong->SetVolume(-1500);
 		gameOverSong->Play(0, 0, l);
 		currentSong = choice;

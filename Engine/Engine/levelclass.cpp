@@ -157,17 +157,18 @@ void LevelClass::level1()
 
 void LevelClass::loadObjects()
 {
-	for(int i=0; i<sizeX; i++)
+	for(int i=0; i<sizeX; i++){
 		for(int j=0; j<sizeY; j++){
 			switch(map[i][j]){
-			case C_DOOR_1: case C_DOOR_2:									buildDoor(i,j);		break;
+			case C_DOOR_1: case C_DOOR_2:									
+										buildDoor(i,j); buildFloor(i,j); buildCeiling(i,j);		break;
 			case C_LOCK_1: case C_LOCK_2: case C_LOCK_3: case C_LOCK_4:		buildLock(i,j);		break;
 			case C_LIGHT_1: case C_LIGHT_2: case C_LIGHT_3: case C_LIGHT_4:	buildLight(i,j);	break;
 			case C_WALL:													buildWall(i,j);		break;
+			case C_FLOOR:								buildFloor(i,j); buildCeiling(i, j);	break;
 			}
-			buildFloor(i,j);
-			buildCeiling(i, j);
 		}
+	}
 }
 
 void LevelClass::buildWall(int x, int y)
@@ -215,7 +216,7 @@ void LevelClass::buildCeiling(int x, int y)
 
 	FloorObject * newCeiling = new FloorObject(x+0.0f, y+0.0f, ceilingTexture);
 	newCeiling->getModel()->worldRotateX(XM_PI);
-	newCeiling->getModel()->worldTranslate(0.0f, 15.0f, 0.0f);
+	newCeiling->getModel()->worldTranslate(0.0f, 14.5f, 0.0f);
 	gamePieces.add(newCeiling);
 }
 
