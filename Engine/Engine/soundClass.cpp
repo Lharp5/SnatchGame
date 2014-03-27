@@ -410,14 +410,16 @@ void SoundClass::PlayDesiredFile(int choice, bool loop)
 	int l = loop ? 1 : 0;
 	if (choice == 1)
 	{
-		stealthSong->SetVolume(-2000);
+		stealthSong->SetVolume(-1500);
 		stealthSong->Play(0, 0, l);
+		currentSong = choice;
 	}
 	else if (choice == 2)
 	{
 		chaseSong->SetCurrentPosition(175000 * 40);
 		chaseSong->SetVolume(-1500);
 		chaseSong->Play(0, 0, l);
+		currentSong = choice;
 	}
 	else if (choice == 3)
 	{
@@ -451,11 +453,13 @@ void SoundClass::PlayDesiredFile(int choice, bool loop)
 	{
 		menuSong->SetVolume(-1500);
 		menuSong->Play(0, 0, l);
+		currentSong = choice;
 	}
 	else if (choice = 10)
 	{
 		gameOverSong->SetVolume(-1500);
 		gameOverSong->Play(0, 0, l);
+		currentSong = choice;
 	}
 	else
 	{
@@ -509,4 +513,9 @@ void SoundClass::StopDesiredFile(int choice)
 	{
 		return;
 	}
+}
+
+const int SoundClass::GetCurrentSong()
+{
+	return currentSong;
 }

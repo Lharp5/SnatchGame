@@ -66,6 +66,7 @@ class LevelClass
 		void Shutdown();
 		void initialize();
 		void level0();
+		void level1();
 
 		void loadObjects();
 

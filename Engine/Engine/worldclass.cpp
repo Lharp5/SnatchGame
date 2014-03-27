@@ -59,10 +59,10 @@ void WorldClass::initalizeWorld()
 	int path2[] = {2, 2, 1, 2, 2, 1, 2, 2, 1, 2, 2, 1};
 	enemies.add(new EnemyObject(path2, sound, 40.0f, -1.85f, 40.0f, 5.0f));
 	enemies.elementAt(1)->TurnRight90();
-	int path3[] = {2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2};
+	int path3[] = {2, 0, 2, 2, 0, 2, 2, 0, 2, 2, 0, 2};
 	enemies.add(new EnemyObject(path3, sound, 80.0f, -1.85f, 20.0f, 5.0f));
 	enemies.elementAt(2)->TurnRight90();
-	int path4[] = {2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2};
+	int path4[] = {2, 1, 2, 2, 1, 2, 2, 1, 2, 2, 1, 2};
 	enemies.add(new EnemyObject(path4, sound, 60.0f, -1.85f, 90.0f, 5.0f));
 	enemies.elementAt(3)->TurnRight90();
 	enemies.elementAt(3)->TurnRight90();
@@ -181,6 +181,15 @@ void WorldClass::runGame()
 	for (int i = 0; i < enemies.size(); i++)
 	{
 		EnemyObject* e = enemies.elementAt(i);
+		if ((int)e->getLocationX() / 10 == player->getXLocation() && (int)e->getLocationZ() / 10 == player->getYLocation())
+		{
+			if (sound->GetCurrentSong() != 2)
+			{
+				sound->StopDesiredFile(sound->GetCurrentSong());
+				sound->PlayDesiredFile(2, true);
+			}
+			e->enemyState = CHASING;
+		}
 		if (e->currentPathAction % 3 == 0)
 		{
 			if (e->currentPathAction == 12)

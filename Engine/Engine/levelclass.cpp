@@ -47,41 +47,7 @@ void LevelClass::initialize()
  * in:			the level wishing to be assigned as an int.
 */
 void LevelClass::loadLevel(int level)
-{
-	/*
-	string level1[] = {"W W W W W",
-						"W 0 0 0 W",
-						"W 0 0 0 W",
-						"W 0 0 0 W",
-						"W W W W W", };
-	WCHAR* wallTextures[] = { L"../Engine/textures/wood_texture.dds",
-								L"../Engine/textures/wood_texture.dds",
-								L"../Engine/textures/wood_texture.dds",
-								L"../Engine/textures/wood_texture.dds",
-								L"../Engine/textures/wood_texture.dds",
-								L"../Engine/textures/wood_texture.dds", };
-	for (int i = 0; i < 5; i++)
-	{
-		int j = 0;
-		stringstream ss(level1[i]);
-		string s;
-		while (getline(ss, s, ' '))
-		{
-			if (s == "W")
-			{
-				map[i][j] = new WallObject(wall, 10.0f*i, 10.0f*j, wallTextures);
-				//map[0][a]->getModel()->worldRotateY(-XM_PIDIV2);
-			}
-			else if (s == "0")
-			{
-				map[i][j] = new FloorObject(10.0f*i,10.0f*j);
-			}
-			map[i][j]->getModel()->worldTranslate(-50.0f,0.0f,0.0f);
-			j++;
-		}
-	}
-	*/
-	
+{	
 	switch(level){
 	case 1:		break;
 	case 2:		break;
@@ -182,6 +148,11 @@ void LevelClass::level0()
 
 	wchar_t* outstring = L"Level 0: Loaded\n";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
+}
+
+void LevelClass::level1()
+{
+
 }
 
 void LevelClass::loadObjects()

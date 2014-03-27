@@ -37,6 +37,8 @@ public:
 
 	void Frame();
 
+	EnemyState enemyState;
+
 private:
 	EnemyModel* m_model;
 	bool renderVal;
@@ -44,8 +46,6 @@ private:
 	Direction direction;
 	time_t timeN;
 	int path[12];
-
-	EnemyState enemyState;
 };
 
 #endif

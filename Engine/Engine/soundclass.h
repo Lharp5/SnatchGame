@@ -55,6 +55,8 @@ public:
 	void PlayDesiredFile(int, bool);
 	void StopDesiredFile(int);
 
+	const int GetCurrentSong();
+
 private:
 	bool InitializeDirectSound(HWND);
 	void ShutdownDirectSound();
@@ -78,6 +80,7 @@ private:
 	IDirectSoundBuffer8* lightsOff;
 	IDirectSoundBuffer8* menuSong;
 	IDirectSoundBuffer8* gameOverSong;
+	int currentSong;
 };
  
 #endif
