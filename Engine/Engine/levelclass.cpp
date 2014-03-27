@@ -98,7 +98,7 @@ void LevelClass::level0()
 	map[8][3] = C_WALL;
 	map[10][3] = C_WALL;
 	map[7][4] = C_DOOR_2;
-	map[sizeX - 1][4] = C_LIGHT_4;
+	map[11][4] = C_LIGHT_4;
 	for (int i = 2; i < 11; i++) map[i][5] = C_WALL;
 	map[8][5] = C_DOOR_1;
 	map[2][6] = C_LIGHT_4;
@@ -145,6 +145,48 @@ void LevelClass::level0()
 	*/
 
 	loadObjects();
+
+	for (int i = 1; i < 7; i++)
+	{
+		for (int j = 1; j < 6; j++)
+		{
+			if (map[i][j] == C_FLOOR)
+			{
+				dynamic_cast<FloorObject*>(getLocation(i, j))->createSource(2, 6);
+			}
+		}
+	}
+	dynamic_cast<FloorObject*>(getLocation(1, 6))->createSource(2, 6);
+	
+	for (int i = 8; i < 10; i++)
+	{
+		for (int j = 1; j < 5; j++)
+		{
+			if (map[i][j] == C_FLOOR)
+			{
+				dynamic_cast<FloorObject*>(getLocation(i, j))->createSource(11, 4);
+			}
+		}
+	}
+	
+	for (int i = 1; i < 10; i++)
+	{
+		for (int j = 7; j < 11; j++)
+		{
+			if (map[i][j] == C_FLOOR)
+			{
+				dynamic_cast<FloorObject*>(getLocation(i, j))->createSource(11, 8);
+			}
+		}
+	}
+	for (int i = 4; i < 11; i++)
+	{
+		if (map[i][6] == C_FLOOR)
+		{
+			dynamic_cast<FloorObject*>(getLocation(i, 6))->createSource(11, 8);
+		}
+	}
+	dynamic_cast<FloorObject*>(getLocation(10, 8))->createSource(11, 8);
 
 	wchar_t* outstring = L"Level 0: Loaded\n";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
@@ -206,7 +248,6 @@ void LevelClass::buildFloor(int x, int y)
 	WCHAR * floorTexture = L"../Engine/textures/tilefloortexture.dds";
 
 	FloorObject * newFloor = new FloorObject(x+0.0f,y+0.0f,floorTexture);
-	newFloor->createSource(9,5);
 	gamePieces.add(newFloor);
 }
 

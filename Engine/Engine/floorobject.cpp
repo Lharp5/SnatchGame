@@ -9,8 +9,8 @@
 
 FloorObject::FloorObject(float x, float z, WCHAR* textures):GameObject(x, -5.0f,z, new QuadTexturedModel(10.0f, 10.0f, textures))
 {
-	sourceX=-5;
-	sourceY=-5;
+	sourceX=0;
+	sourceY=0;
 
 	//turning it to the floor
 	myModel->worldRotateX(XM_PIDIV2);
