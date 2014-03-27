@@ -187,6 +187,10 @@ void LevelClass::level0()
 		}
 	}
 	dynamic_cast<FloorObject*>(getLocation(10, 8))->createSource(11, 8);
+	
+	dynamic_cast<DoorObject*>(getLocation(7, 4))->createLock(dynamic_cast<LockObject*>(getLocation(6, 0)));
+	dynamic_cast<DoorObject*>(getLocation(8, 5))->createLock(dynamic_cast<LockObject*>(getLocation(9, 0)));
+	dynamic_cast<DoorObject*>(getLocation(9, 10))->createLock(dynamic_cast<LockObject*>(getLocation(0, 10)));
 
 	wchar_t* outstring = L"Level 0: Loaded\n";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);

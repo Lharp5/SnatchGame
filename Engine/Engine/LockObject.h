@@ -35,6 +35,8 @@ public:
 	************/
 	virtual void rotate(float);
 
+	virtual bool IsLocked();
+
 private:
 	CubeTexturedModel* wall;
 	CubeModel* base;

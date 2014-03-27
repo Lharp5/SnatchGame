@@ -15,19 +15,31 @@ DoorObject::~DoorObject()
 	shutdown();
 }
 
+void DoorObject::createLock(LockObject* l)
+{
+	lock = l;
+}
+
+LockObject* DoorObject::getLock()
+{
+	return lock;
+}
+
 bool DoorObject::doAction()
 {
 	wchar_t* outstring = L"Opened Door";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 
 	//setRenderValue(false);
-
-	if (!isOpen)
+	if (!lock->IsLocked())
 	{
-		sound->PlayDesiredFile(3, false);
-	}
+		if (!isOpen)
+		{
+			sound->PlayDesiredFile(3, false);
+		}
 
-	isOpen = true;
+		isOpen = true;
+	}
 	
 	return true;
 }

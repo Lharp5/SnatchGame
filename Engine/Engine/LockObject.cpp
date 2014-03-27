@@ -85,7 +85,12 @@ bool LockObject::doAction()
 			flickSwitch->worldTranslate(0.0f, -(float)sqrt(1.25), -(float)sqrt(1.25));
 		}
 		sound->PlayDesiredFile(6, false);
-		isLocked = !isLocked;
+		isLocked = false;
 	}
 	return true;
+}
+
+bool LockObject::IsLocked()
+{
+	return isLocked;
 }

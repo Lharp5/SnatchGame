@@ -9,6 +9,7 @@
 #define DOOROBJECT_H
 
 #include "WallObject.h"
+#include "LockObject.h"
 
 class DoorObject: public WallObject
 {
@@ -16,6 +17,9 @@ public:
 	DoorObject();
 	DoorObject(int, int, float, float, WCHAR**);
 	~DoorObject();
+
+	virtual void createLock(LockObject*);
+	virtual LockObject* getLock();
 
 	/*********** 
 	*	Function:	Do Action
@@ -31,6 +35,7 @@ private:
 	//co-ordinates on map of the door Lock, -1 if no lock.
 	int lockX;
 	int lockY;
+	LockObject* lock;
 };
 
 #endif
