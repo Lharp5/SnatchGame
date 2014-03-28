@@ -80,6 +80,7 @@ private:
 	IDirectSoundBuffer8* lightsOff;
 	IDirectSoundBuffer8* menuSong;
 	IDirectSoundBuffer8* gameOverSong;
+	IDirectSoundBuffer8* creditsSong;
 	int currentSong;
 };
  

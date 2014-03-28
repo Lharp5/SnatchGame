@@ -8,6 +8,7 @@
 #include "enemymodel.h"
 #include "worldDefs.h"
 #include "arraylist.h"
+#include "lightobject.h"
 
 enum EnemyState { PATROLLING, FIXING, CHASING };
 enum Direction { NORTH, EAST, SOUTH, WEST };
@@ -19,6 +20,8 @@ public:
 	virtual ~EnemyObject(void);
 	virtual void shutdown();
 	virtual ArrayList<GameModel> GetGameModels();
+	virtual void setPatrolLight(LightObject*);
+	virtual LightObject* getPatrolLight();
 	
 	virtual bool getRenderValue();
 	virtual void setRenderValue(bool);
@@ -35,6 +38,11 @@ public:
 	void MoveForward(int);
 	void Rest(int);
 
+	XMINT2 getPrevDestination();
+	void setPrevDestination(int, int);
+	bool isOnPath();
+	void toggleOnPath();
+
 	void Frame();
 
 	EnemyState enemyState;
@@ -43,9 +51,12 @@ private:
 	EnemyModel* m_model;
 	bool renderVal;
 	XMINT2 destination;
+	XMINT2 prevDestination;
 	Direction direction;
 	time_t timeN;
 	int path[12];
+	LightObject* patrolLight;
+	bool onPath;
 };
 
 #endif

@@ -263,6 +263,15 @@ bool SystemClass::Frame()
 	if(!checkControls())
 		return false;
 	
+	if (velocityVector.x != 0 || velocityVector.z != 0)
+	{
+		m_World->UpdatePlayerWalk(true);
+	}
+	else
+	{
+		m_World->UpdatePlayerWalk(false);
+	}
+
 	//checking player collision
 	if (m_World->isWall(m_World->getPlayer()->getXLocation() + 1, m_World->getPlayer()->getYLocation())
 		&& velocityVector.x > 0)

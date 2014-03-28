@@ -15,6 +15,7 @@ EnemyObject::EnemyObject(int* p, SoundClass* snd, float x, float y, float z, flo
 	}
 	giveSoundObject(snd);
 	enemyState = PATROLLING;
+	patrolLight = 0;
 }
 
 EnemyObject::~EnemyObject(void)
@@ -35,6 +36,16 @@ void EnemyObject::shutdown()
 ArrayList<GameModel> EnemyObject::GetGameModels()
 {
 	return m_model->GetGameModels();
+}
+
+void EnemyObject::setPatrolLight(LightObject* light)
+{
+	patrolLight = light;
+}
+
+LightObject* EnemyObject::getPatrolLight()
+{
+	return patrolLight;
 }
 
 void EnemyObject::TurnLeft()
@@ -168,4 +179,24 @@ void EnemyObject::setRenderValue(bool b)
 int* EnemyObject::getPath()
 {
 	return path;
+}
+
+XMINT2 EnemyObject::getPrevDestination()
+{
+	return prevDestination;
+}
+
+void EnemyObject::setPrevDestination(int x, int y)
+{
+	prevDestination = XMINT2(x, y);
+}
+
+bool EnemyObject::isOnPath()
+{
+	return onPath;
+}
+
+void EnemyObject::toggleOnPath()
+{
+	onPath = !onPath;
 }

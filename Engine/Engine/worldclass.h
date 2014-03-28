@@ -52,6 +52,8 @@ public:
 	************/
 	float getPlayerStartZ();
 
+	void UpdatePlayerWalk(bool);
+
 private:
 	//objects
 	LevelClass* level;
@@ -92,6 +94,10 @@ private:
 	void endGame();
 	void updateLight(int,int);
 	void scan(int, int);
+
+	void FollowPath(EnemyObject*);
+	void FindPath(int, int, int, int*);	
+	bool playerWalking;
 };
 
 #endif

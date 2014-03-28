@@ -22,6 +22,7 @@ SoundClass::SoundClass()
 	lightsOff = 0;
 	menuSong = 0;
 	gameOverSong = 0;
+	creditsSong = 0;
 }
 
 
@@ -93,6 +94,16 @@ bool SoundClass::Initialize(HWND hwnd)
 		return false;
 	}
 	result = LoadWaveFile ("../Engine/audio/Music/Ginpatsu no Shounen.wav", &gameOverSong);
+	if(!result)
+	{
+		return false;
+	}
+	result = LoadWaveFile ("../Engine/audio/Music/mitch murder - Summer of Heat (feat. Kristine).wav", &creditsSong);
+	if(!result)
+	{
+		return false;
+	}
+
 
 	return true;
 }
@@ -111,6 +122,7 @@ void SoundClass::Shutdown()
 	ShutdownWaveFile(&lightsOff);
 	ShutdownWaveFile(&menuSong);
 	ShutdownWaveFile(&gameOverSong);
+	ShutdownWaveFile(&creditsSong);
 
 	// Shutdown the Direct Sound API.
 	ShutdownDirectSound();
@@ -425,7 +437,7 @@ void SoundClass::PlayDesiredFile(int choice, bool loop)
 	else if (choice == 3)
 	{
 		doorOpen->SetCurrentPosition(175000 * 0);
-		doorOpen->SetVolume(-800);
+		doorOpen->SetVolume(-500);
 		doorOpen->Play(0, 0, l);
 	}
 	else if (choice == 4)
@@ -435,13 +447,14 @@ void SoundClass::PlayDesiredFile(int choice, bool loop)
 	}
 	else if (choice == 5)
 	{
+		footstep->SetVolume(-1000);
 		footstep->SetCurrentPosition(175000 * 0);
 		footstep->Play(0, 0, l);
 	}
 	else if (choice == 6)
 	{
 		unlockDoor->SetCurrentPosition(175000 * 0);
-		unlockDoor->SetVolume(-800);
+		unlockDoor->SetVolume(-1000);
 		unlockDoor->Play(0, 0, l);
 	}
 	else if (choice == 7)
@@ -450,24 +463,31 @@ void SoundClass::PlayDesiredFile(int choice, bool loop)
 		lightsOn->SetVolume(-800);
 		lightsOn->Play(0, 0, l);
 	}
-	else if (choice = 8)
+	else if (choice == 8)
 	{
 		lightsOff->SetCurrentPosition(175000 * 0);
 		lightsOff->SetVolume(-800);
 		lightsOff->Play(0, 0, l);
 	}
-	else if (choice = 9)
+	else if (choice == 9)
 	{
 		menuSong->SetCurrentPosition(175000 * 0);
 		menuSong->SetVolume(-1500);
 		menuSong->Play(0, 0, l);
 		currentSong = choice;
 	}
-	else if (choice = 10)
+	else if (choice == 10)
 	{
 		gameOverSong->SetCurrentPosition(175000 * 0);
 		gameOverSong->SetVolume(-1500);
 		gameOverSong->Play(0, 0, l);
+		currentSong = choice;
+	}
+	else if (choice == 11)
+	{
+		creditsSong->SetCurrentPosition(175000 * 0);
+		creditsSong->SetVolume(-1500);
+		creditsSong->Play(0, 0, l);
 		currentSong = choice;
 	}
 	else
@@ -506,17 +526,21 @@ void SoundClass::StopDesiredFile(int choice)
 	{
 		lightsOn->Stop();
 	}
-	else if (choice = 8)
+	else if (choice == 8)
 	{
 		lightsOff->Stop();
 	}
-	else if (choice = 9)
+	else if (choice == 9)
 	{
 		menuSong->Stop();
 	}
-	else if (choice = 10)
+	else if (choice == 10)
 	{
 		gameOverSong->Stop();
+	}
+	else if (choice == 11)
+	{
+		creditsSong->Stop();
 	}
 	else
 	{

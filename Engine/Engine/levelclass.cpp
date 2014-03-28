@@ -127,22 +127,6 @@ void LevelClass::level0()
 	
 	playerStartX = 1;
 	playerStartZ = 1;
-	/*
-	//creates the wall images. adjusting their location side walls
-	for(int a=0; a<sizeY; a++){
-		map[0][a] = C_WALL;
-		map[sizeX-1][a] = C_WALL;
-	}
-	//back/front walls walls
-	for(int b=0; b<sizeX; b++){
-		map[b][0] = C_WALL;
-		map[b][sizeY-1] = C_WALL;
-	}
-	
-	map[sizeX-1][sizeY/2] = C_LIGHT_4;
-	map[0][sizeY/2] = C_LOCK_2;
-	map[sizeX/2][sizeY-1] = C_DOOR_1;
-	*/
 
 	loadObjects();
 
@@ -158,7 +142,7 @@ void LevelClass::level0()
 	}
 	dynamic_cast<FloorObject*>(getLocation(1, 6))->createSource(2, 6);
 	
-	for (int i = 8; i < 10; i++)
+	for (int i = 8; i < 11; i++)
 	{
 		for (int j = 1; j < 5; j++)
 		{
@@ -191,6 +175,22 @@ void LevelClass::level0()
 	dynamic_cast<DoorObject*>(getLocation(7, 4))->createLock(dynamic_cast<LockObject*>(getLocation(6, 0)));
 	dynamic_cast<DoorObject*>(getLocation(8, 5))->createLock(dynamic_cast<LockObject*>(getLocation(9, 0)));
 	dynamic_cast<DoorObject*>(getLocation(9, 10))->createLock(dynamic_cast<LockObject*>(getLocation(0, 10)));
+
+	int path1[] = {2, 2, 1, 3, 2, 1, 2, 2, 1, 3, 2, 1};
+	enemyList.add(new EnemyObject(path1, sound, 10.0f, -1.85f, 80.0f, 5.0f));
+	int path2[] = {2, 2, 1, 2, 2, 1, 2, 2, 1, 2, 2, 1};
+	enemyList.add(new EnemyObject(path2, sound, 40.0f, -1.85f, 40.0f, 5.0f));
+	enemyList.elementAt(1)->TurnRight90();
+	enemyList.elementAt(1)->setPatrolLight(dynamic_cast<LightObject*>(getLocation(2, 6)));
+	int path3[] = {2, 0, 2, 2, 0, 2, 2, 0, 2, 2, 0, 2};
+	enemyList.add(new EnemyObject(path3, sound, 80.0f, -1.85f, 20.0f, 5.0f));
+	enemyList.elementAt(2)->TurnRight90();
+	enemyList.elementAt(2)->setPatrolLight(dynamic_cast<LightObject*>(getLocation(11, 4)));
+	int path4[] = {2, 1, 2, 2, 1, 2, 2, 1, 2, 2, 1, 2};
+	enemyList.add(new EnemyObject(path4, sound, 60.0f, -1.85f, 90.0f, 5.0f));
+	enemyList.elementAt(3)->TurnRight90();
+	enemyList.elementAt(3)->TurnRight90();
+	enemyList.elementAt(3)->setPatrolLight(dynamic_cast<LightObject*>(getLocation(11, 8)));
 
 	wchar_t* outstring = L"Level 0: Loaded\n";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
@@ -332,6 +332,11 @@ ArrayList<GameModel> LevelClass::getGameModels()
 		gameModels.addAll(gamePieces.elementAt(i)->GetGameModels());
 
 	return gameModels;
+}
+
+ArrayList<EnemyObject> LevelClass::getEnemies()
+{
+	return enemyList;
 }
 
 int LevelClass::getPlayerStartX()

@@ -32,6 +32,8 @@ class LevelClass
 
 		GameObject* getLocation(int, int);
 
+		ArrayList<EnemyObject> getEnemies();
+
 		/**********
 		*	Function:	checkMap
 		*	In:			co-ordinates of desired location
@@ -53,6 +55,7 @@ class LevelClass
 		WALL_TYPE map[100][100];
 		ArrayList <GameObject> gamePieces; 
 		//GameObject* player;
+		ArrayList<EnemyObject> enemyList;
 
 		int sizeX;
 		int sizeY;

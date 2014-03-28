@@ -20,6 +20,7 @@ WorldClass::WorldClass(HWND hwnd)
 	}
 
 	initalizeWorld();
+	playerWalking = false;
 	
 }
 
@@ -54,25 +55,13 @@ void WorldClass::initalizeWorld()
 
 	level->loadLevel(0);
 
-	int path1[] = {2, 2, 1, 3, 2, 1, 2, 2, 1, 3, 2, 1};
-	enemies.add(new EnemyObject(path1, sound, 10.0f, -1.85f, 80.0f, 5.0f));
-	int path2[] = {2, 2, 1, 2, 2, 1, 2, 2, 1, 2, 2, 1};
-	enemies.add(new EnemyObject(path2, sound, 40.0f, -1.85f, 40.0f, 5.0f));
-	enemies.elementAt(1)->TurnRight90();
-	int path3[] = {2, 0, 2, 2, 0, 2, 2, 0, 2, 2, 0, 2};
-	enemies.add(new EnemyObject(path3, sound, 80.0f, -1.85f, 20.0f, 5.0f));
-	enemies.elementAt(2)->TurnRight90();
-	int path4[] = {2, 1, 2, 2, 1, 2, 2, 1, 2, 2, 1, 2};
-	enemies.add(new EnemyObject(path4, sound, 60.0f, -1.85f, 90.0f, 5.0f));
-	enemies.elementAt(3)->TurnRight90();
-	enemies.elementAt(3)->TurnRight90();
+	enemies.addAll(level->getEnemies());
 
 	player = new PlayerClass();
 	player->setPosition((int)getPlayerStartX(), (int)getPlayerStartZ());
 	
 	//NEEDS TO FINISH THIS CLASS
 
-	
 	wchar_t* outstring = L"Models added..";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 }
@@ -181,51 +170,64 @@ void WorldClass::runGame()
 	for (int i = 0; i < enemies.size(); i++)
 	{
 		EnemyObject* e = enemies.elementAt(i);
-		if ((int)e->getLocationX() / 10 == player->getXLocation() && (int)e->getLocationZ() / 10 == player->getYLocation())
+		if (e->getPatrolLight() == 0 || e->getPatrolLight()->getStatus())
 		{
-			if (sound->GetCurrentSong() != 2)
-			{
-				sound->StopDesiredFile(sound->GetCurrentSong());
-				sound->PlayDesiredFile(2, true);
-			}
-			e->enemyState = CHASING;
+			FollowPath(e);
 		}
-		if (e->currentPathAction % 3 == 0)
+	if ((int)e->getLocationX() / 10 == player->getXLocation() && (int)e->getLocationZ() / 10 == player->getYLocation())
+	{
+		if (sound->GetCurrentSong() != 2)
 		{
-			if (e->currentPathAction == 12)
-			{
-				e->currentPathAction = 0;
-			}
-			if (e->actionComplete)
-			{
-				e->actionComplete = false;
-				e->MoveForward(e->getPath()[e->currentPathAction]);
-				e->currentPathAction++;
-			}
+			sound->StopDesiredFile(sound->GetCurrentSong());
+			sound->PlayDesiredFile(2, true);
 		}
-		else if (e->currentPathAction % 3 == 1)
-		{
-			if (e->actionComplete)
-			{
-				e->actionComplete = false;
-				e->Rest(e->getPath()[e->currentPathAction]);
-				e->currentPathAction++;
-			}
-		}
-		else if (e->currentPathAction % 3 == 2)
-		{
-			if (e->actionComplete)
-			{
-				for (int j = 0; j < e->getPath()[e->currentPathAction]; j++)
-				{
-					e->TurnRight90();
-				}
-				e->currentPathAction++;
-				e->actionComplete = true;
-			}
-		}
+		e->enemyState = CHASING;
+	}
 		enemies.elementAt(i)->Frame();
 	}
+}
+
+void WorldClass::FollowPath(EnemyObject* e)
+{
+	if (e->currentPathAction % 3 == 0)
+	{
+		if (e->currentPathAction == 12)
+		{
+			e->currentPathAction = 0;
+		}
+		if (e->actionComplete)
+		{
+			e->actionComplete = false;
+			e->MoveForward(e->getPath()[e->currentPathAction]);
+			e->currentPathAction++;
+		}
+	}
+	else if (e->currentPathAction % 3 == 1)
+	{
+		if (e->actionComplete)
+		{
+			e->actionComplete = false;
+			e->Rest(e->getPath()[e->currentPathAction]);
+			e->currentPathAction++;
+		}
+	}
+	else if (e->currentPathAction % 3 == 2)
+	{
+		if (e->actionComplete)
+		{
+			for (int j = 0; j < e->getPath()[e->currentPathAction]; j++)
+			{
+				e->TurnRight90();
+			}
+			e->currentPathAction++;
+			e->actionComplete = true;
+		}
+	}
+}
+
+void WorldClass::FindPath(int steps, int x, int y, int* lightPath)
+{
+
 }
 
 void WorldClass::doAction()
@@ -302,4 +304,22 @@ void WorldClass::updateLight(int x, int z)
 	int sourceY = level->getLocation(x, z)->getSourceY();
 
 	level->getLocation(x, z)->toggleLight(level->getLocation(sourceX, sourceY)->getStatus());
+}
+
+void WorldClass::UpdatePlayerWalk(bool walking)
+{
+	if (walking && !playerWalking)
+	{
+		sound->PlayDesiredFile(5, true);
+		playerWalking = true;
+	}
+	else if (!walking && playerWalking)
+	{
+		sound->StopDesiredFile(5);
+		playerWalking = false;
+	}
+	else
+	{
+		return;
+	}
 }
