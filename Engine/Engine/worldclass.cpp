@@ -531,32 +531,113 @@ void WorldClass::doAction()
 void WorldClass::scan(int x, int y)
 {
 	if(level->getLocation(x+1, y+1))
+	{
+		if (!checkLight() && (level->checkMap(x+1, y+1) == C_LIGHT_1 ||
+			level->checkMap(x+1, y+1) == C_LIGHT_2 || 
+			level->checkMap(x+1, y+1) == C_LIGHT_3 ||
+			level->checkMap(x+1, y+1) == C_LIGHT_4))
+		{
+			return;
+		}
 		if(level->getLocation(x+1, y+1)->doAction())
 			return;
+	}
 	if(level->getLocation(x, y+1))
+	{
+		if (!checkLight() && (level->checkMap(x, y+1) == C_LIGHT_1 ||
+			level->checkMap(x, y+1) == C_LIGHT_2 || 
+			level->checkMap(x, y+1) == C_LIGHT_3 ||
+			level->checkMap(x, y+1) == C_LIGHT_4))
+		{
+			return;
+		}
 		if(level->getLocation(x, y+1)->doAction())
 			return;
+	}
 	if(level->getLocation(x+1, y))
+	{
+		if (!checkLight() && (level->checkMap(x+1, y) == C_LIGHT_1 ||
+			level->checkMap(x+1, y) == C_LIGHT_2 || 
+			level->checkMap(x+1, y) == C_LIGHT_3 ||
+			level->checkMap(x+1, y) == C_LIGHT_4))
+		{
+			return;
+		}
 		if(level->getLocation(x+1, y)->doAction())
 			return;
+	}
 	if(level->getLocation(x-1, y-1))
+	{
+		if (!checkLight() && (level->checkMap(x-1, y-1) == C_LIGHT_1 ||
+			level->checkMap(x-1, y-1) == C_LIGHT_2 || 
+			level->checkMap(x-1, y-1) == C_LIGHT_3 ||
+			level->checkMap(x-1, y-1) == C_LIGHT_4))
+		{
+			return;
+		}
 		if(level->getLocation(x-1, y-1)->doAction())
 			return;
+	}
 	if(level->getLocation(x-1, y))	
+	{
+		if (!checkLight() && (level->checkMap(x-1, y) == C_LIGHT_1 ||
+			level->checkMap(x-1, y) == C_LIGHT_2 || 
+			level->checkMap(x-1, y) == C_LIGHT_3 ||
+			level->checkMap(x-1, y) == C_LIGHT_4))
+		{
+			return;
+		}
 		if(level->getLocation(x-1, y)->doAction())
 			return;
+	}
 	if(level->getLocation(x, y-1))
+	{
+		if (!checkLight() && (level->checkMap(x, y-1) == C_LIGHT_1 ||
+			level->checkMap(x, y-1) == C_LIGHT_2 || 
+			level->checkMap(x, y-1) == C_LIGHT_3 ||
+			level->checkMap(x, y-1) == C_LIGHT_4))
+		{
+			return;
+		}
 		if(level->getLocation(x, y-1)->doAction())
 			return;
+	}
 	if(level->getLocation(x+1, y-1))
+	{
+		if (!checkLight() && (level->checkMap(x+1, y-1) == C_LIGHT_1 ||
+			level->checkMap(x+1, y-1) == C_LIGHT_2 || 
+			level->checkMap(x+1, y-1) == C_LIGHT_3 ||
+			level->checkMap(x+1, y-1) == C_LIGHT_4))
+		{
+			return;
+		}
 		if(level->getLocation(x+1, y-1)->doAction())
 			return;
+	}
 	if(level->getLocation(x-1, y+1))
+	{
+		if (!checkLight() && (level->checkMap(x-1, y+1) == C_LIGHT_1 ||
+			level->checkMap(x-1, y+1) == C_LIGHT_2 || 
+			level->checkMap(x-1, y+1) == C_LIGHT_3 ||
+			level->checkMap(x-1, y+1) == C_LIGHT_4))
+		{
+			return;
+		}
 		if(level->getLocation(x-1, y+1)->doAction())
 			return;
+	}
 	if(level->getLocation(x, y))
+	{
+		if (!checkLight() && (level->checkMap(x, y) == C_LIGHT_1 ||
+			level->checkMap(x, y) == C_LIGHT_2 || 
+			level->checkMap(x, y) == C_LIGHT_3 ||
+			level->checkMap(x, y) == C_LIGHT_4))
+		{
+			return;
+		}
 		if(level->getLocation(x, y)->doAction())
 			return;
+	}
 }
 bool WorldClass::checkLight()
 {
