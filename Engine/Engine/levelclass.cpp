@@ -176,21 +176,39 @@ void LevelClass::level0()
 	dynamic_cast<DoorObject*>(getLocation(8, 5))->createLock(dynamic_cast<LockObject*>(getLocation(9, 0)));
 	dynamic_cast<DoorObject*>(getLocation(9, 10))->createLock(dynamic_cast<LockObject*>(getLocation(0, 10)));
 
-	int path1[] = {2, 2, 1, 3, 2, 1, 2, 2, 1, 3, 2, 1};
-	enemyList.add(new EnemyObject(path1, sound, 10.0f, -1.85f, 80.0f, 5.0f));
-	int path2[] = {2, 2, 1, 2, 2, 1, 2, 2, 1, 2, 2, 1};
-	enemyList.add(new EnemyObject(path2, sound, 40.0f, -1.85f, 40.0f, 5.0f));
-	enemyList.elementAt(1)->TurnRight90();
+	int path1[] = {2, 2, 1, 3, 2, 1};
+	int path2[] = {2, 2, 1};
+	int path3[] = {2, 0, 2};
+	int path4[] = {2, 1, 2};
+	int test[] = {0,0,0};
+	vector<int> p1;
+	vector<int> p2;
+	vector<int> p3;
+	vector<int> p4;
+	for (int i = 0; i < 6; i++)
+	{
+		p1.push_back(path1[i]);
+		if (i < 3)
+		{
+			p2.push_back(path2[i]);
+			p3.push_back(path3[i]);
+			p4.push_back(path4[i]);
+		}
+	}
+	enemyList.add(new EnemyObject(p1, sound, 10.0f, -1.85f, 80.0f, 5.0f));
+
+	enemyList.add(new EnemyObject(p2, sound, 40.0f, -1.85f, 40.0f, 5.0f));
 	enemyList.elementAt(1)->setPatrolLight(dynamic_cast<LightObject*>(getLocation(2, 6)));
-	int path3[] = {2, 0, 2, 2, 0, 2, 2, 0, 2, 2, 0, 2};
-	enemyList.add(new EnemyObject(path3, sound, 80.0f, -1.85f, 20.0f, 5.0f));
-	enemyList.elementAt(2)->TurnRight90();
+	enemyList.elementAt(1)->TurnRight90();
+
+	enemyList.add(new EnemyObject(p3, sound, 80.0f, -1.85f, 20.0f, 5.0f));
 	enemyList.elementAt(2)->setPatrolLight(dynamic_cast<LightObject*>(getLocation(11, 4)));
-	int path4[] = {2, 1, 2, 2, 1, 2, 2, 1, 2, 2, 1, 2};
-	enemyList.add(new EnemyObject(path4, sound, 60.0f, -1.85f, 90.0f, 5.0f));
-	enemyList.elementAt(3)->TurnRight90();
-	enemyList.elementAt(3)->TurnRight90();
+	enemyList.elementAt(2)->TurnRight90();
+
+	enemyList.add(new EnemyObject(p4, sound, 60.0f, -1.85f, 90.0f, 5.0f));
 	enemyList.elementAt(3)->setPatrolLight(dynamic_cast<LightObject*>(getLocation(11, 8)));
+	enemyList.elementAt(3)->TurnRight90();
+	enemyList.elementAt(3)->TurnRight90();
 
 	wchar_t* outstring = L"Level 0: Loaded\n";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);

@@ -1,7 +1,7 @@
 #include "enemyobject.h"
 #include <ctime>
 
-EnemyObject::EnemyObject(int* p, SoundClass* snd, float x, float y, float z, float s) : GameObject(x, y, z)
+EnemyObject::EnemyObject(vector<int> p, SoundClass* snd, float x, float y, float z, float s) : GameObject(x, y, z)
 {
 	m_model = new EnemyModel(x, y, z, s);
 	renderVal = true;
@@ -9,10 +9,11 @@ EnemyObject::EnemyObject(int* p, SoundClass* snd, float x, float y, float z, flo
 	direction = NORTH;
 	actionComplete = true;
 	currentPathAction = 12;
-	for (int i = 0; i < 12; i++)
+	for (unsigned int i = 0; i < p.size(); i++)
 	{
-		path[i] = p[i];
+		path.push_back(p[i]);
 	}
+	currentPath = path;
 	giveSoundObject(snd);
 	enemyState = PATROLLING;
 	patrolLight = 0;
@@ -176,9 +177,62 @@ void EnemyObject::setRenderValue(bool b)
 	renderVal = b;
 }
 
-int* EnemyObject::getPath()
+vector<int>& EnemyObject::getPath()
 {
 	return path;
+}
+
+vector<int>& EnemyObject::getFixPath()
+{
+	return fixPath;
+}
+
+void EnemyObject::setFixPath(vector<int>& p)
+{
+	resetPath(fixPath);
+	for (unsigned int i = 0; i < p.size(); i++)
+	{
+		fixPath.push_back(p[i]);
+	}
+	setCurrentPath(fixPath);
+}
+
+vector<int>& EnemyObject::getCurrentPath()
+{
+	return currentPath;
+}
+
+void EnemyObject::setCurrentPath(vector<int>& p)
+{
+	currentPath = p;
+}
+
+void EnemyObject::resetPath(vector<int>& p)
+{
+	while (p.size() > 0)
+	{
+		p.pop_back();
+	}
+}
+
+Direction EnemyObject::getDirection()
+{
+	return direction;
+}
+
+Direction EnemyObject::getPrevDirection()
+{
+	return prevDirection;
+}
+
+void EnemyObject::setPrevDirection(Direction d)
+{
+	prevDirection = d;
+}
+
+XMINT2 EnemyObject::getDestination()
+{
+	return destination;
 }
 
 XMINT2 EnemyObject::getPrevDestination()
@@ -189,14 +243,4 @@ XMINT2 EnemyObject::getPrevDestination()
 void EnemyObject::setPrevDestination(int x, int y)
 {
 	prevDestination = XMINT2(x, y);
-}
-
-bool EnemyObject::isOnPath()
-{
-	return onPath;
-}
-
-void EnemyObject::toggleOnPath()
-{
-	onPath = !onPath;
 }

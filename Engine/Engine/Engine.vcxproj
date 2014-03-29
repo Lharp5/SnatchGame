@@ -141,6 +141,7 @@
     <ClInclude Include="graphicsclass.h" />
     <ClInclude Include="cinecameraclass.h" />
     <ClInclude Include="inputclass.h" />
+    <ClInclude Include="integer.h" />
     <ClInclude Include="levelclass.h" />
     <ClInclude Include="lightmask.h" />
     <ClInclude Include="LightObject.h" />

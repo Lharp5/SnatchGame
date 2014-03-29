@@ -170,35 +170,104 @@ void WorldClass::runGame()
 	for (int i = 0; i < enemies.size(); i++)
 	{
 		EnemyObject* e = enemies.elementAt(i);
-		if (e->getPatrolLight() == 0 || e->getPatrolLight()->getStatus())
+		if (e->getPatrolLight() != 0 && !e->getPatrolLight()->getStatus())
 		{
-			FollowPath(e);
+			e->enemyState = FIXING;
 		}
-	if ((int)e->getLocationX() / 10 == player->getXLocation() && (int)e->getLocationZ() / 10 == player->getYLocation())
-	{
-		if (sound->GetCurrentSong() != 2)
+		if (e->enemyState == PATROLLING)
 		{
-			sound->StopDesiredFile(sound->GetCurrentSong());
-			sound->PlayDesiredFile(2, true);
+			FollowPath(e, e->getCurrentPath());
 		}
-		e->enemyState = CHASING;
-	}
+		else if (e->enemyState == FIXING)
+		{
+			if (!e->getPatrolLight()->getStatus())
+			{
+				if (e->actionComplete && e->getFixPath().size() == 0)
+				{
+					e->prevPathAction = e->currentPathAction;
+					e->setPrevDestination(e->getDestination().x, e->getDestination().y);
+					e->setPrevDirection(e->getDirection());
+					vector<int> tempPath;
+					FindPath((int)e->getLocationX() / 10, (int)e->getLocationZ() / 10, (int)e->getPatrolLight()->getLocationX(), 
+						(int)e->getPatrolLight()->getLocationZ(), tempPath, e);
+
+					e->setFixPath(tempPath);
+					e->currentPathAction = 0;
+					e->actionComplete = true;
+				}
+				int diffX = abs((int)e->getLocationX() / 10 - (int)e->getPatrolLight()->getLocationX());
+				int diffY = abs((int)e->getLocationZ() / 10 - (int)e->getPatrolLight()->getLocationZ());
+				if ((diffX == 1 && diffY == 0) || (diffX == 0 && diffY == 1))
+				{
+					e->getPatrolLight()->doAction();
+					e->resetPath(e->getCurrentPath());
+				}
+			}
+			else if (e->getPatrolLight()->getStatus())
+			{
+				if (e->getCurrentPath().size() == 0)
+				{
+					vector<int> tempPath;
+					FindPath((int)e->getLocationX() / 10, (int)e->getLocationZ() / 10, e->getPrevDestination().x / 10,
+						e->getPrevDestination().y / 10, tempPath, e);
+
+					e->setFixPath(tempPath);
+					e->currentPathAction = 0;
+					e->actionComplete = true;
+				}
+				int diffX = abs((int)e->getLocationX() / 10 - e->getPrevDestination().x / 10);
+				int diffY = abs((int)e->getLocationZ() / 10 - e->getPrevDestination().y / 10);
+				if (diffX == 0 && diffY == 0)
+				{
+					e->resetPath(e->getCurrentPath());
+					e->setCurrentPath(e->getPath());
+					e->currentPathAction = e->prevPathAction;
+					int d = (int)e->getPrevDirection() - (int)e->getDirection();
+					if (d < 0)
+					{
+						for (int j = 0; j < abs(d); ++j)
+							e->TurnLeft90();
+					}
+					else
+					{
+						for (int j = 0; j < d; ++j)
+							e->TurnRight90();
+					}
+					e->enemyState = PATROLLING;
+				}
+			}
+			int s = e->getCurrentPath().size();
+			if (s > e->currentPathAction)
+			{
+				FollowPath(e, e->getCurrentPath());
+			}
+		}
+		if ((int)e->getLocationX() / 10 == player->getXLocation() && (int)e->getLocationZ() / 10 == player->getYLocation())
+		{
+			if (sound->GetCurrentSong() != 2)
+			{
+				sound->StopDesiredFile(sound->GetCurrentSong());
+				sound->PlayDesiredFile(2, true);
+			}
+			e->enemyState = CHASING;
+		}
 		enemies.elementAt(i)->Frame();
 	}
 }
 
-void WorldClass::FollowPath(EnemyObject* e)
+void WorldClass::FollowPath(EnemyObject* e, vector<int> path)
 {
 	if (e->currentPathAction % 3 == 0)
 	{
-		if (e->currentPathAction == 12)
+		unsigned int cpa = e->currentPathAction;
+		if (cpa >= path.size() - 1)
 		{
 			e->currentPathAction = 0;
 		}
 		if (e->actionComplete)
 		{
 			e->actionComplete = false;
-			e->MoveForward(e->getPath()[e->currentPathAction]);
+			e->MoveForward(path[e->currentPathAction]);
 			e->currentPathAction++;
 		}
 	}
@@ -207,7 +276,7 @@ void WorldClass::FollowPath(EnemyObject* e)
 		if (e->actionComplete)
 		{
 			e->actionComplete = false;
-			e->Rest(e->getPath()[e->currentPathAction]);
+			e->Rest(path[e->currentPathAction]);
 			e->currentPathAction++;
 		}
 	}
@@ -215,7 +284,7 @@ void WorldClass::FollowPath(EnemyObject* e)
 	{
 		if (e->actionComplete)
 		{
-			for (int j = 0; j < e->getPath()[e->currentPathAction]; j++)
+			for (int j = 0; j < path[e->currentPathAction]; j++)
 			{
 				e->TurnRight90();
 			}
@@ -225,9 +294,230 @@ void WorldClass::FollowPath(EnemyObject* e)
 	}
 }
 
-void WorldClass::FindPath(int steps, int x, int y, int* lightPath)
+void WorldClass::FindPath(int x, int y, int destX, int destY, vector<int>& p, EnemyObject* e)
 {
+	int i, j, k, l;
+	int d[100][100];
+	int visited[100][100];
+	int sizeX = level->getSizeX();
+	int sizeY = level->getSizeY();
+	for (i = 0; i < sizeX; ++i)
+	{
+		for (j = 0; j < sizeY; ++j)
+		{
+			d[i][j] = INFINITE;
+			if (isWall(i,j))
+			{
+				visited[i][j] = 1;
+			}
+			else
+			{
+				visited[i][j] = 0;
+			}
+		}
+	}
+	visited[destX][destY] = 0;
 
+	d[x][y] = 0;
+	k = x;
+	l = y;
+	vector<int> lastMove;
+	vector<int> horOrVert;
+	horOrVert.push_back(-1);
+
+	while (!visited[destX][destY])
+	{
+		visited[k][l] = 1;
+
+		if (d[k][l] + 1 < d[k+1][l] || d[k+1][l] == -1)
+		{
+			d[k+1][l] = d[k][l] + 1;
+		}
+		if (d[k][l] + 1 < d[k-1][l] || d[k-1][l] == -1)
+		{
+			d[k-1][l] = d[k][l] + 1;
+		}
+		if (d[k][l] + 1 < d[k][l+1] || d[k][l+1] == -1)
+		{
+			d[k][l+1] = d[k][l] + 1;
+		}
+		if (d[k][l] + 1 < d[k][l-1] || d[k][l-1] == -1)
+		{
+			d[k][l-1] = d[k][l] + 1;
+		}
+		if (!visited[k+1][l])
+		{
+			k += 1;
+			horOrVert.push_back(1);
+			lastMove.push_back(1);
+			continue;
+		}
+		if (!visited[k-1][l])
+		{
+			k -= 1;
+			horOrVert.push_back(1);
+			lastMove.push_back(-1);
+			continue;
+		}
+		if (!visited[k][l+1])
+		{
+			l += 1;
+			horOrVert.push_back(0);
+			lastMove.push_back(1);
+			continue;
+		}
+		if (!visited[k][l-1])
+		{
+			l -= 1;
+			horOrVert.push_back(0);
+			lastMove.push_back(-1);
+			continue;
+		}
+		if (visited[k+1][l] && visited[k-1][l] && visited[k][l+1] && visited[k][l-1])
+		{
+			if (horOrVert.back() == 1)
+			{
+				k -= lastMove.back();
+				lastMove.pop_back();
+				horOrVert.pop_back();
+			}
+			else if (horOrVert.back() == 0)
+			{
+				l -= lastMove.back();
+				lastMove.pop_back();
+				horOrVert.pop_back();
+			}
+			else if (horOrVert.back() == -1)
+			{
+				break;
+			}
+		}
+	}
+
+	vector<XMINT2> rpath;
+	vector<XMINT2> path;
+	k = destX;
+	l = destY;
+	rpath.push_back(XMINT2(k, l));
+	for (i = 0; i < d[destX][destY]; ++i)
+	{
+		if (d[k+1][l] == d[k][l] - 1 && !isWall(k+1, l))
+		{
+			k += 1;
+		}
+		else if (d[k-1][l] == d[k][l] - 1 && !isWall(k-1, l))
+		{
+			k -= 1;
+		}
+		else if (d[k][l+1] == d[k][l] - 1 && !isWall(k, l+1))
+		{
+			l += 1;
+		}
+		else if (d[k][l-1] == d[k][l] - 1 && !isWall(k, l-1))
+		{
+			l -= 1;
+		}
+		else
+		{
+			break;
+		}
+		rpath.push_back(XMINT2(k,l));
+	}
+	rpath.pop_back();
+	vector<XMINT2> temp = rpath;
+	for (unsigned int n = 0; n < rpath.size(); ++n)
+	{
+		path.push_back(rpath[rpath.size()-1-n]);
+	}
+	if (isWall(destX, destY))
+	{
+		path.pop_back();
+	}
+	p = convertPath(x, y, path, e);
+}
+
+vector<int> WorldClass::convertPath(int x, int y, vector<XMINT2>& path, EnemyObject* e)
+{
+	vector<int> p;
+	p.push_back(0);
+	p.push_back(1);
+	Direction d = NORTH;
+	Direction prevd;
+	if (path[0].x - x > 0) d = EAST;
+	if (path[0].y - y < 0) d = SOUTH;
+	if (path[0].x - x < 0) d = WEST;
+	if (d == NORTH)
+	{
+		if ((int)d - (int)e->getDirection() < 0)
+			p.push_back((int)d - (int)e->getDirection() + 4);
+		else
+			p.push_back((int)d - (int)e->getDirection());
+	}
+	else if (d == EAST)
+	{
+		if ((int)d - (int)e->getDirection() < 0)
+			p.push_back((int)d - (int)e->getDirection() + 4);
+		else
+			p.push_back((int)d - (int)e->getDirection());
+	}
+	else if (d == SOUTH)
+	{
+		if ((int)d - (int)e->getDirection() < 0)
+			p.push_back((int)d - (int)e->getDirection() + 4);
+		else
+			p.push_back((int)d - (int)e->getDirection());
+	}
+	else if (d == WEST)
+	{
+		p.push_back((int)d - (int)e->getDirection());
+	}
+	prevd = d;
+	for (unsigned int i = 0; i < path.size(); ++i)
+	{
+		p.push_back(1);
+		p.push_back(0);
+		XMINT2 point;
+		if (i < path.size() - 1)
+		{
+			point = path[i+1];
+		}
+		else  if (i == path.size() - 1)
+		{
+			p.push_back(2);
+			break;
+		}
+		d = NORTH;
+		if (path[i].x - point.x < 0) d = EAST;
+		if (path[i].y - point.y > 0) d = SOUTH;
+		if (path[i].x - point.x > 0) d = WEST;
+		if (d == NORTH)
+		{
+			if ((int)d - (int)prevd < 0)
+				p.push_back((int)d - (int)prevd + 4);
+			else
+				p.push_back((int)d - (int)prevd);
+		}
+		else if (d == EAST)
+		{
+			if ((int)d - (int)prevd < 0)
+				p.push_back((int)d - (int)prevd + 4);
+			else
+				p.push_back((int)d - (int)prevd);
+		}
+		else if (d == SOUTH)
+		{
+			if ((int)d - (int)prevd < 0)
+				p.push_back((int)d - (int)prevd + 4);
+			else
+				p.push_back((int)d - (int)prevd);
+		}
+		else if (d == WEST)
+		{
+			p.push_back((int)d - (int)prevd);
+		}
+		prevd = d;
+	}
+	return p;
 }
 
 void WorldClass::doAction()

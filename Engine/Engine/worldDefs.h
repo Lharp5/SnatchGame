@@ -4,6 +4,8 @@
 const float STRAFE_SPEED = 0.2f;
 const float ADVANCE_SPEED = 0.25f;
 
+enum Direction { NORTH, EAST, SOUTH, WEST };
+
 //Explanation for the numbers attached to WALL_TYPEs:
 ////representation of which direction the object is facing
 ////1 means facing positive z

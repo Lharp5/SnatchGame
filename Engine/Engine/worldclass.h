@@ -3,11 +3,15 @@
 #ifndef WORLDCLASS_H
 #define WORLDCLASS_H
 
+#include "arraylist.h"
+#include "integer.h"
 #include "levelclass.h"
 #include "PlayerClass.h"
 #include "enemyobject.h"
 #include "soundclass.h"
+#include <iterator>
 #include <math.h>
+#include <vector>
 
 class WorldClass
 {
@@ -95,8 +99,9 @@ private:
 	void updateLight(int,int);
 	void scan(int, int);
 
-	void FollowPath(EnemyObject*);
-	void FindPath(int, int, int, int*);	
+	void FollowPath(EnemyObject*, vector<int>);
+	void FindPath(int, int, int, int, vector<int>&, EnemyObject*);	
+	vector<int> convertPath(int, int, vector<XMINT2>&, EnemyObject*);
 	bool playerWalking;
 };
 

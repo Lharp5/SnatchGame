@@ -9,14 +9,14 @@
 #include "worldDefs.h"
 #include "arraylist.h"
 #include "lightobject.h"
+#include <vector>
 
 enum EnemyState { PATROLLING, FIXING, CHASING };
-enum Direction { NORTH, EAST, SOUTH, WEST };
 
 class EnemyObject: public GameObject
 {
 public:
-	EnemyObject(int*, SoundClass*, float x=0.0f, float y=0.0f, float z=0.0f, float s=1.0f);
+	EnemyObject(vector<int>, SoundClass*, float x=0.0f, float y=0.0f, float z=0.0f, float s=1.0f);
 	virtual ~EnemyObject(void);
 	virtual void shutdown();
 	virtual ArrayList<GameModel> GetGameModels();
@@ -26,8 +26,14 @@ public:
 	virtual bool getRenderValue();
 	virtual void setRenderValue(bool);
 
-	int* getPath();
+	vector<int>& getPath();
+	vector<int>& getFixPath();
+	void setFixPath(vector<int>&);
+	vector<int>& getCurrentPath();
+	void setCurrentPath(vector<int>& p);
+	void resetPath(vector<int>&);
 	int currentPathAction;
+	int prevPathAction;
 	bool actionComplete;
 	
 	void TurnLeft();
@@ -38,6 +44,11 @@ public:
 	void MoveForward(int);
 	void Rest(int);
 
+	Direction getDirection();
+	Direction getPrevDirection();
+	void setPrevDirection(Direction);
+
+	XMINT2 getDestination();
 	XMINT2 getPrevDestination();
 	void setPrevDestination(int, int);
 	bool isOnPath();
@@ -53,10 +64,12 @@ private:
 	XMINT2 destination;
 	XMINT2 prevDestination;
 	Direction direction;
+	Direction prevDirection;
 	time_t timeN;
-	int path[12];
+	vector<int> path;
+	vector<int> fixPath;
+	vector<int> currentPath;
 	LightObject* patrolLight;
-	bool onPath;
 };
 
 #endif
