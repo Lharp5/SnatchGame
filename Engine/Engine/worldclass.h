@@ -106,6 +106,7 @@ private:
 	bool playerWalking;
 
 	time_t startTime;
+	GameState gameState;
 };
 
 #endif

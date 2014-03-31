@@ -10,6 +10,7 @@
 WorldClass::WorldClass(HWND hwnd)
 {
 	//renderModels =0;
+	gameState = MENU;
 	winGame = false;
 	
 	// Initialize the sound object.

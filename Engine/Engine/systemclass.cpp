@@ -354,7 +354,7 @@ bool SystemClass::Frame()
 		return false;
 	}
 	
-	//SetCursorPos(GetSystemMetrics(SM_CXSCREEN)  / 2, GetSystemMetrics(SM_CYSCREEN)  / 2);
+	SetCursorPos(GetSystemMetrics(SM_CXSCREEN)  / 2, GetSystemMetrics(SM_CYSCREEN)  / 2);
 
 	return true;
 }

@@ -178,7 +178,7 @@ void LevelClass::level0()
 	dynamic_cast<DoorObject*>(getLocation(9, 10))->createLock(dynamic_cast<LockObject*>(getLocation(0, 10)));
 
 	int path1[] = {2, 2, 1, 3, 2, 1};
-	int path2[] = {2, 2, 1};
+	int path2[] = {2, 2, 3};
 	int path3[] = {2, 2, 2};
 	int path4[] = {2, 2, 2};
 	int test[] = {0,0,0};
@@ -198,7 +198,7 @@ void LevelClass::level0()
 	}
 	enemyList.add(new EnemyObject(p1, sound, 10.0f, -1.85f, 80.0f, 5.0f));
 
-	enemyList.add(new EnemyObject(p2, sound, 40.0f, -1.85f, 40.0f, 5.0f));
+	enemyList.add(new EnemyObject(p2, sound, 40.0f, -1.85f, 20.0f, 5.0f));
 	enemyList.elementAt(1)->setPatrolLight(dynamic_cast<LightObject*>(getLocation(2, 6)));
 	enemyList.elementAt(1)->TurnRight90();
 
