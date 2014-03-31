@@ -54,7 +54,7 @@ void WorldClass::initalizeWorld()
 {
 	level = new LevelClass(sound);
 
-	level->loadLevel(0);
+	level->loadLevel(1);
 
 	enemies.addAll(level->getEnemies());
 

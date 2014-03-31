@@ -49,7 +49,7 @@ void LevelClass::initialize()
 void LevelClass::loadLevel(int level)
 {	
 	switch(level){
-	case 1:		break;
+	case 1:		level1(); break;
 	case 2:		break;
 	case 3:		break;
 	case 4:		break;
@@ -58,10 +58,15 @@ void LevelClass::loadLevel(int level)
 	
 }
 
+
+void LevelClass::level0()
+{
+
+}
 /* Function:	loadLevel 
  * Purpose:		To assign level 1 to the map
 */
-void LevelClass::level0()
+void LevelClass::level1()
 {
 	sizeX = 12;
 	sizeY = 12;
@@ -215,10 +220,6 @@ void LevelClass::level0()
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 }
 
-void LevelClass::level1()
-{
-
-}
 
 void LevelClass::loadObjects()
 {
