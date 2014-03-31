@@ -29,7 +29,7 @@ private:
 	QuadTexturedModel* starUi;
 
 	XMFLOAT3 position;
-
+	bool firstTime;
 	void setStar4();
 	void setStar3();
 	void setStar2();
