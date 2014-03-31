@@ -13,6 +13,7 @@ SystemClass::SystemClass()
 	m_GameModels = new ArrayList<GameModel>();
 	keyPressedE = false;
 	prevEPressedState = false;
+	enterPressed = false;
 	velocityVector = XMFLOAT3(0.0f, 0.0f, 0.0f);
 }
 
@@ -80,6 +81,12 @@ bool SystemClass::Initialize()
 	//Create the game objects for our game
 
 	m_World = new WorldClass(m_hwnd);
+	
+	m_Menu = new QuadTexturedModel(10.0f, 8.8f, L"../Engine/textures/TitleScreen.dds");
+	m_Menu->worldTranslate(11.0f, 0.0f,18.0f);
+	m_Menu->setRenderVal(true);
+
+	m_GameModels->add(m_Menu);
 
 	m_lightMask = new LightMask(m_Camera->GetPosition());
 	
@@ -90,6 +97,7 @@ bool SystemClass::Initialize()
 
 	m_GameModels->addAll(m_lightMask->GetModels());
 
+	
 	// Create the graphics object.  This object will handle rendering all the graphics for this application.
 	m_Graphics = new GraphicsClass;
 	if(!m_Graphics)
@@ -97,10 +105,10 @@ bool SystemClass::Initialize()
 		return false;
 	}
 
+	
 	// Initialize the graphics object. 	Engine.exe!WinMain(HINSTANCE__ * hInstance, HINSTANCE__ * hPrevInstance, char * pScmdline, int iCmdshow) Line 21	C++
 	// The Graphics::Initialize will also call back into our game objects an initialize their ModelClass objects once the GraphicsClass has had
 	// a chance to initialize
-
 	result = m_Graphics->Initialize(screenWidth, screenHeight, m_hwnd, m_Camera, m_GameModels);
 	
 	wchar_t* outstring = L"Rendered";
@@ -112,6 +120,10 @@ bool SystemClass::Initialize()
 
 	m_Camera->SetPosition(m_World->getPlayerStartX(), m_World->getPlayerStartY(), m_World->getPlayerStartZ());
 	prevCamPos = m_Camera->GetPosition();
+
+	
+
+	
 	return true;
 }
 
@@ -124,6 +136,12 @@ void SystemClass::Shutdown()
 	{
 		delete m_World;
 		m_World = 0;
+	}
+
+	if(m_Menu)
+	{
+		delete m_Menu;
+		m_Menu =0;
 	}
 
 	// Release the Light Mask object's memory.
@@ -247,6 +265,7 @@ bool SystemClass::Frame()
 	velocityVector = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	
 	m_World->runGame();
+	//m_Menu->worldRotateX(XM_PIDIV2);
 
 	if(m_World->checkLight())
 		LightMask::lightState = LightState::ON;
@@ -364,105 +383,117 @@ bool SystemClass::checkControls()
 {	
 	//Move camera or models based on input
 	//We will combinations for a key + arrow keys to control the camera
+	
+	//opening menu
+	if(m_Input->keyPressed(DIK_RETURN)){
+		if(!enterPressed){
+			m_GameModels->remove(m_Menu);
+			delete m_Menu;
+			m_Menu = 0;
+		}
+		enterPressed = true;
+	}
 
-	if (m_World->GamePlaying())
-	{
-		if(m_Input->keyPressed(DIK_SPACE)){
-			if(!spacePressed)
-				m_World->doAction();
-			spacePressed = true;
-		}
-		else{
-			spacePressed = false;
-		}
-		if ( m_Input->keyPressed(DIK_C)){
-			if ( m_Input->keyPressed(DIK_UP) ) //Crane Up
-				m_Camera->CraneUp();
-			if ( m_Input->keyPressed(DIK_DOWN) ) //Crane Down
-				m_Camera->CraneDown();	
-		}
-		else if ( m_Input->keyPressed(DIK_R)){
-
-			if ( m_Input->keyPressed(DIK_LEFT) ) //Roll Left
-				m_Camera->RollLeft();
-			if ( m_Input->keyPressed(DIK_RIGHT) ) //Roll Right
-				m_Camera->RollRight();	
-		}
-		else if ( m_Input->keyPressed(DIK_Z)){
-
-			if ( m_Input->keyPressed(DIK_UP) ) //Zoom In
-				m_Camera->ZoomIn();
-			if ( m_Input->keyPressed(DIK_DOWN) ) //Zoom Out
-				m_Camera->ZoomOut();	
-		}
-		else{
-			if ( m_Input->keyPressed(DIK_A) ){ //Move Camera Left	
-
-				XMFLOAT3 v = m_Camera->StrafeLeft();
-				velocityVector.x += v.x;
-				velocityVector.y += v.y;
-				velocityVector.z += v.z;
+	//regular controls
+	if(enterPressed){
+		if (m_World->GamePlaying())
+		{
+			if(m_Input->keyPressed(DIK_SPACE)){
+				if(!spacePressed)
+					m_World->doAction();
+				spacePressed = true;
 			}
-
-			if ( m_Input->keyPressed(DIK_D) ){ //Move Camera Right
-
-				XMFLOAT3 v = m_Camera->StrafeRight();
-				velocityVector.x += v.x;
-				velocityVector.y += v.y;
-				velocityVector.z += v.z;
+			else{
+				spacePressed = false;
 			}
-
-			if ( m_Input->keyPressed(DIK_W) ){ //Camera Move Forward
-
-				XMFLOAT3 v = m_Camera->MoveForward();
-				velocityVector.x += v.x;
-				velocityVector.y += v.y;
-				velocityVector.z += v.z;
+			if ( m_Input->keyPressed(DIK_C)){
+				if ( m_Input->keyPressed(DIK_UP) ) //Crane Up
+					m_Camera->CraneUp();
+				if ( m_Input->keyPressed(DIK_DOWN) ) //Crane Down
+					m_Camera->CraneDown();	
 			}
-			if ( m_Input->keyPressed(DIK_S) ){ //Camera Pull Back
+			else if ( m_Input->keyPressed(DIK_R)){
 
-				XMFLOAT3 v = m_Camera->MoveBackward();
-				velocityVector.x += v.x;
-				velocityVector.y += v.y;
-				velocityVector.z += v.z;
+				if ( m_Input->keyPressed(DIK_LEFT) ) //Roll Left
+					m_Camera->RollLeft();
+				if ( m_Input->keyPressed(DIK_RIGHT) ) //Roll Right
+					m_Camera->RollRight();	
 			}
-			if ( m_Input->keyPressed(DIK_E) )
-			{
-				if (!keyPressedE)
-				{
+			else if ( m_Input->keyPressed(DIK_Z)){
 
+				if ( m_Input->keyPressed(DIK_UP) ) //Zoom In
+					m_Camera->ZoomIn();
+				if ( m_Input->keyPressed(DIK_DOWN) ) //Zoom Out
+					m_Camera->ZoomOut();	
+			}
+			else{
+				if ( m_Input->keyPressed(DIK_A) ){ //Move Camera Left	
+
+					XMFLOAT3 v = m_Camera->StrafeLeft();
+					velocityVector.x += v.x;
+					velocityVector.y += v.y;
+					velocityVector.z += v.z;
 				}
-				keyPressedE = true;
-			}
-			else
-			{
-				keyPressedE = false;
-			}
-	   
-			if ( m_Input->keyPressed(DIK_LEFT) ) //Pan Camera Left
-				m_Camera->PanLeft();
 
-			if ( m_Input->keyPressed(DIK_RIGHT) ) //Pan Camera Right
-				m_Camera->PanRight();
-	   
-			if ( m_Input->keyPressed(DIK_UP) ) //Tilt Camera Downward
-				m_Camera->TiltUp();
+				if ( m_Input->keyPressed(DIK_D) ){ //Move Camera Right
 
-			if ( m_Input->keyPressed(DIK_DOWN) ) //Tilt Camera Upward
-				m_Camera->TiltDown();	
+					XMFLOAT3 v = m_Camera->StrafeRight();
+					velocityVector.x += v.x;
+					velocityVector.y += v.y;
+					velocityVector.z += v.z;
+				}
+
+				if ( m_Input->keyPressed(DIK_W) ){ //Camera Move Forward
+
+					XMFLOAT3 v = m_Camera->MoveForward();
+					velocityVector.x += v.x;
+					velocityVector.y += v.y;
+					velocityVector.z += v.z;
+				}
+				if ( m_Input->keyPressed(DIK_S) ){ //Camera Pull Back
+
+					XMFLOAT3 v = m_Camera->MoveBackward();
+					velocityVector.x += v.x;
+					velocityVector.y += v.y;
+					velocityVector.z += v.z;
+				}
+				if ( m_Input->keyPressed(DIK_E) )
+				{
+					if (!keyPressedE)
+					{
+
+					}
+					keyPressedE = true;
+				}
+				else
+				{
+					keyPressedE = false;
+				}
 	   
+				if ( m_Input->keyPressed(DIK_LEFT) ) //Pan Camera Left
+					m_Camera->PanLeft();
+
+				if ( m_Input->keyPressed(DIK_RIGHT) ) //Pan Camera Right
+					m_Camera->PanRight();
+	   
+				if ( m_Input->keyPressed(DIK_UP) ) //Tilt Camera Downward
+					m_Camera->TiltUp();
+
+				if ( m_Input->keyPressed(DIK_DOWN) ) //Tilt Camera Upward
+					m_Camera->TiltDown();	
+	   
+			}
+		}
+		int x, y;
+		m_Input->GetMouseDisplacement(x, y);
+		if (abs(x) > 0 || abs(y) > 0)
+		{
+			wchar_t s[32];
+			wsprintf(s, L"Mouse Displacement: %d, %d\n", x, y);
+			WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), s, wcslen(s), NULL, NULL);
+			m_Camera->CameraAim(x, y);
 		}
 	}
-	int x, y;
-	m_Input->GetMouseDisplacement(x, y);
-	if (abs(x) > 0 || abs(y) > 0)
-	{
-		wchar_t s[32];
-		wsprintf(s, L"Mouse Displacement: %d, %d\n", x, y);
-		WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), s, wcslen(s), NULL, NULL);
-		m_Camera->CameraAim(x, y);
-	}
-
 	//user is still playing
 	return true;
 }

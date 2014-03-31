@@ -72,6 +72,8 @@ private:
 	DirectInputClass* m_Input; //out input class object from which to obtain user inputs
 	GraphicsClass* m_Graphics; //our graphics class object that encapsulates the graphics pipeline
 	CineCameraClass * m_Camera; //our encapsulation of where the camera is looking at our world
+	QuadTexturedModel* m_Menu;
+
 
 	//Game World Items
 
@@ -86,6 +88,7 @@ private:
 
 	bool keyPressedE;
 	bool prevEPressedState;
+	bool enterPressed;
 
 	XMFLOAT3 velocityVector;
 
