@@ -83,8 +83,6 @@ bool SystemClass::Initialize()
 	m_World = new WorldClass(m_hwnd);
 	
 	m_Menu = new QuadTexturedModel(10.0f, 8.8f, L"../Engine/textures/TitleScreen.dds");
-	m_Menu->worldTranslate(11.0f, 0.0f,18.0f);
-	m_Menu->setRenderVal(true);
 
 	m_GameModels->add(m_Menu);
 
@@ -122,6 +120,9 @@ bool SystemClass::Initialize()
 	}
 
 	m_Camera->SetPosition(m_World->getPlayerStartX(), m_World->getPlayerStartY(), m_World->getPlayerStartZ());
+	m_Menu->worldTranslate(m_Camera->GetPosition().x, m_Camera->GetPosition().y-0.20f ,m_Camera->GetPosition().z+7.0f);
+	m_Ui->setPosition(m_Camera->GetPosition());
+	m_Ui->getUI()->setRenderVal(false);
 	prevCamPos = m_Camera->GetPosition();
 
 	
@@ -369,9 +370,11 @@ bool SystemClass::Frame()
 	}
 	m_Camera->Move(velocityVector);
 	m_World->updatePlayer(m_Camera->GetPosition().x, m_Camera->GetPosition().z);
-
+	
+	if(enterPressed)
+		m_Ui->frame(m_Camera->GetPosition());
 	m_lightMask->frame(m_Camera->GetPosition());
-	m_Ui->frame(m_Camera->GetPosition());
+	
 
 	// Do the frame processing for the graphics object.
 	result = m_Graphics->Frame();
@@ -397,6 +400,7 @@ bool SystemClass::checkControls()
 			m_GameModels->remove(m_Menu);
 			delete m_Menu;
 			m_Menu = 0;
+			m_Ui->getUI()->setRenderVal(true);
 		}
 		enterPressed = true;
 	}

@@ -15,6 +15,7 @@ public:
 	void rotateX(float);
 	void rotateY(float);
 	void rotateZ(float);
+	void setPosition(XMFLOAT3);
 	QuadTexturedModel* getUI();
 	void changeScore();
 private:
@@ -26,6 +27,8 @@ private:
 	WCHAR * star1;
 	WCHAR * star0;
 	QuadTexturedModel* starUi;
+
+	XMFLOAT3 position;
 
 	void setStar4();
 	void setStar3();
