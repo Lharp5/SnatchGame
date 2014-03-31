@@ -8,7 +8,30 @@
 class UI
 {
 public:
+	UI();
+	UI(XMFLOAT3);
+	~UI();
+	void frame(XMFLOAT3);
+	void rotateX(float);
+	void rotateY(float);
+	void rotateZ(float);
+	QuadTexturedModel* getUI();
+	void changeScore();
 private:
+	XMFLOAT3 cameraPosition;
+	Score goldStar;
+	WCHAR * star4;
+	WCHAR * star3;
+	WCHAR * star2;
+	WCHAR * star1;
+	WCHAR * star0;
+	QuadTexturedModel* starUi;
+
+	void setStar4();
+	void setStar3();
+	void setStar2();
+	void setStar1();
+	void setStar0();
 	
 };
 

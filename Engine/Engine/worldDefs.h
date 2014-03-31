@@ -8,7 +8,7 @@ enum GameState { MENU, PLAYING, WIN, GAMEOVER };
 
 enum Direction { NORTH, EAST, SOUTH, WEST };
 
-enum score {FAIL = 0, OK, GOOD,GREAT, EXCELL};
+enum Score {FAIL = 0, OK, GOOD,GREAT, EXCELL};
 
 //Explanation for the numbers attached to WALL_TYPEs:
 ////representation of which direction the object is facing

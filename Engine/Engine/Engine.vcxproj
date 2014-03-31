@@ -116,6 +116,7 @@
     <ClCompile Include="systemclass.cpp" />
     <ClCompile Include="textureclass.cpp" />
     <ClCompile Include="textureshaderclass.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="wallobject.cpp" />
     <ClCompile Include="worldclass.cpp" />
     <ClCompile Include="XYZaxis.cpp" />
@@ -157,6 +158,7 @@
     <ClInclude Include="systemclass.h" />
     <ClInclude Include="textureclass.h" />
     <ClInclude Include="textureshaderclass.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="vertextype.h" />
     <ClInclude Include="wallobject.h" />
     <ClInclude Include="worldclass.h" />

@@ -34,7 +34,7 @@
 #include "lightmask.h"
 #include "soundclass.h"
 #include "worldclass.h"
-
+#include "UI.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class name: SystemClass
@@ -73,6 +73,8 @@ private:
 	GraphicsClass* m_Graphics; //our graphics class object that encapsulates the graphics pipeline
 	CineCameraClass * m_Camera; //our encapsulation of where the camera is looking at our world
 	QuadTexturedModel* m_Menu;
+	QuadTexturedModel* m_Star;
+	UI* m_Ui;
 
 
 	//Game World Items

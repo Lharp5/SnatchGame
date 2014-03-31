@@ -88,6 +88,9 @@ bool SystemClass::Initialize()
 
 	m_GameModels->add(m_Menu);
 
+	m_Ui = new UI(m_Camera->GetPosition());
+	m_GameModels->add(m_Ui->getUI());
+
 	m_lightMask = new LightMask(m_Camera->GetPosition());
 	
 	//Add the  gameModel objects to the GameModels collection
@@ -131,7 +134,11 @@ bool SystemClass::Initialize()
 void SystemClass::Shutdown()
 {
 	//Shut down our game character objects and release their memory
-
+	if(m_Ui)
+	{
+		delete m_Ui;
+		m_Ui = 0;
+	}
 	if(m_World)
 	{
 		delete m_World;
@@ -364,7 +371,7 @@ bool SystemClass::Frame()
 	m_World->updatePlayer(m_Camera->GetPosition().x, m_Camera->GetPosition().z);
 
 	m_lightMask->frame(m_Camera->GetPosition());
-	
+	m_Ui->frame(m_Camera->GetPosition());
 
 	// Do the frame processing for the graphics object.
 	result = m_Graphics->Frame();
