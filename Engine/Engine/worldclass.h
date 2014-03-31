@@ -59,6 +59,8 @@ public:
 
 	void UpdatePlayerWalk(bool);
 
+	bool GamePlaying();
+
 private:
 	//objects
 	LevelClass* level;

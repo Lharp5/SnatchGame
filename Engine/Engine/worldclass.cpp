@@ -10,7 +10,7 @@
 WorldClass::WorldClass(HWND hwnd)
 {
 	//renderModels =0;
-	gameState = MENU;
+	gameState = PLAYING;
 	winGame = false;
 	
 	// Initialize the sound object.
@@ -150,255 +150,259 @@ float WorldClass::getPlayerStartZ()
 
 void WorldClass::runGame()
 {
-	wchar_t s[32];
-	wsprintf(s, L"%d\n", (int)time(nullptr) - (int)suspicionTime);
-	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), s, wcslen(s), NULL, NULL);
-
-	for(int i=0; i<level->getSizeX(); i++){
-		for(int j=0; j<level->getSizeY(); j++){
-			if(level->checkMap(i,j) == C_DOOR_1 || level->checkMap(i,j) == C_DOOR_2){
-				if(level->getLocation(i,j)->getStatus())
-				{
-					float height = level->getLocation(i,j)->getLocationY();
-					if (height < 15.0f)
+	if (gameState == PLAYING)
+	{
+		for(int i=0; i<level->getSizeX(); i++){
+			for(int j=0; j<level->getSizeY(); j++){
+				if(level->checkMap(i,j) == C_DOOR_1 || level->checkMap(i,j) == C_DOOR_2){
+					if(level->getLocation(i,j)->getStatus())
 					{
-						level->getLocation(i,j)->translate(0.0f, 0.3f, 0.0f);
-					}
-					else
-					{
-						if (!dynamic_cast<DoorObject*>(level->getLocation(i,j))->finishedOpening)
+						float height = level->getLocation(i,j)->getLocationY();
+						if (height < 15.0f)
 						{
-							sound->PlayDesiredFile(4, false);
-							sound->StopDesiredFile(3);
-							dynamic_cast<DoorObject*>(level->getLocation(i,j))->finishedOpening = true;
+							level->getLocation(i,j)->translate(0.0f, 0.3f, 0.0f);
+						}
+						else
+						{
+							if (!dynamic_cast<DoorObject*>(level->getLocation(i,j))->finishedOpening)
+							{
+								sound->PlayDesiredFile(4, false);
+								sound->StopDesiredFile(3);
+								dynamic_cast<DoorObject*>(level->getLocation(i,j))->finishedOpening = true;
+							}
 						}
 					}
 				}
 			}
 		}
-	}
-	for (int i = 0; i < enemies.size(); i++)
-	{
-		EnemyObject* e = enemies.elementAt(i);
-		int enemyX = (int)e->getLocationX() / 10;
-		int enemyY = (int)e->getLocationZ() / 10;
-		int sight;
-		if ((e->getPatrolLight() != 0 && e->getPatrolLight()->getStatus()) || e->getPatrolLight() == 0)
+		for (int i = 0; i < enemies.size(); i++)
 		{
-			if (e->getDirection() == NORTH)
+			EnemyObject* e = enemies.elementAt(i);
+			int enemyX = (int)e->getLocationX() / 10;
+			int enemyY = (int)e->getLocationZ() / 10;
+			int sight;
+			if ((e->getPatrolLight() != 0 && e->getPatrolLight()->getStatus()) || e->getPatrolLight() == 0)
 			{
-				sight = 0;
-				for (int i = enemyY + 1; i < level->getSizeY(); ++i)
+				if (e->getDirection() == NORTH)
 				{
-					if (isWall(enemyX, i) || level->checkMap(enemyX, i) == C_DOOR_1 || level->checkMap(enemyX, i) == C_DOOR_2)
+					sight = 0;
+					for (int i = enemyY + 1; i < level->getSizeY(); ++i)
 					{
-						break;
+						if (isWall(enemyX, i) || level->checkMap(enemyX, i) == C_DOOR_1 || level->checkMap(enemyX, i) == C_DOOR_2)
+						{
+							break;
+						}
+						sight += 1;
 					}
-					sight += 1;
+					if (player->getXLocation() == enemyX && (player->getYLocation() >= enemyY && player->getYLocation() <= enemyY + sight))
+					{
+						if (!playerSeen)
+						{
+							suspicionTime = time(nullptr);
+						}
+						playerSeen = true;
+					}
 				}
-				if (player->getXLocation() == enemyX && (player->getYLocation() >= enemyY && player->getYLocation() <= enemyY + sight))
+				else if (e->getDirection() == EAST)
 				{
-					if (!playerSeen)
+					sight = 0;
+					for (int i = enemyX + 1; i < level->getSizeX(); ++i)
 					{
-						suspicionTime = time(nullptr);
+						if (isWall(i, enemyY) || level->checkMap(i, enemyY) == C_DOOR_1 || level->checkMap(i, enemyY) == C_DOOR_2)
+						{
+							break;
+						}
+						sight += 1;
 					}
-					playerSeen = true;
+					if (player->getYLocation() == enemyY && (player->getXLocation() >= enemyX && player->getXLocation() <= enemyX + sight))
+					{
+						if (!playerSeen)
+						{
+							suspicionTime = time(nullptr);
+						}
+						playerSeen = true;
+					}
+				}
+				else if (e->getDirection() == SOUTH)
+				{
+					sight = 0;
+					for (int i = enemyY - 1; i >= 0; --i)
+					{
+						if (isWall(enemyX, i) || level->checkMap(enemyX, i) == C_DOOR_1 || level->checkMap(enemyX, i) == C_DOOR_2)
+						{
+							break;
+						}
+						sight += 1;
+					}
+					if (player->getXLocation() == enemyX && (player->getYLocation() <= enemyY && player->getYLocation() >= enemyY - sight))
+					{
+						if (!playerSeen)
+						{
+							suspicionTime = time(nullptr);
+						}
+						playerSeen = true;
+					}
+				}
+				else if (e->getDirection() == WEST)
+				{
+					sight = 0;
+					for (int i = enemyY - 1; i >= 0; --i)
+					{
+						if (isWall(i, enemyY) || level->checkMap(i, enemyY) == C_DOOR_1 || level->checkMap(i, enemyY) == C_DOOR_2)
+						{
+							break;
+						}
+						sight += 1;
+					}
+					if (player->getYLocation() == enemyY && (player->getXLocation() <= enemyX && player->getXLocation() >= enemyX - sight))
+					{
+						if (!playerSeen)
+						{
+							suspicionTime = time(nullptr);
+						}
+						playerSeen = true;
+					}
 				}
 			}
-			else if (e->getDirection() == EAST)
+			else if (e->getPatrolLight() != 0 && !e->getPatrolLight()->getStatus())
 			{
-				sight = 0;
-				for (int i = enemyX + 1; i < level->getSizeX(); ++i)
+				if (e->getDirection() == NORTH)
 				{
-					if (isWall(i, enemyY) || level->checkMap(i, enemyY) == C_DOOR_1 || level->checkMap(i, enemyY) == C_DOOR_2)
+					if (player->getXLocation() == enemyX && (player->getYLocation() == enemyY || player->getYLocation() == enemyY + 1))
 					{
-						break;
+						if (!playerSeen)
+						{
+							suspicionTime = time(nullptr);
+						}
+						playerSeen = true;
 					}
-					sight += 1;
 				}
-				if (player->getYLocation() == enemyY && (player->getXLocation() >= enemyX && player->getXLocation() <= enemyX + sight))
+				else if (e->getDirection() == EAST)
 				{
-					if (!playerSeen)
+					if (player->getYLocation() == enemyY && (player->getXLocation() == enemyX || player->getXLocation() == enemyX + 1))
 					{
-						suspicionTime = time(nullptr);
+						if (!playerSeen)
+						{
+							suspicionTime = time(nullptr);
+						}
+						playerSeen = true;
 					}
-					playerSeen = true;
 				}
+				else if (e->getDirection() == SOUTH)
+				{
+					if (player->getXLocation() == enemyX && (player->getYLocation() == enemyY || player->getYLocation() == enemyY - 1))
+					{
+						if (!playerSeen)
+						{
+							suspicionTime = time(nullptr);
+						}
+						playerSeen = true;
+					}
+				}
+				else if (e->getDirection() == WEST)
+				{
+					if (player->getYLocation() == enemyY && (player->getXLocation() == enemyX || player->getXLocation() == enemyX - 1))
+					{
+						if (!playerSeen)
+						{
+							suspicionTime = time(nullptr);
+						}
+						playerSeen = true;
+					}
+				}
+				e->enemyState = FIXING;
 			}
-			else if (e->getDirection() == SOUTH)
-			{
-				sight = 0;
-				for (int i = enemyY - 1; i >= 0; --i)
-				{
-					if (isWall(enemyX, i) || level->checkMap(enemyX, i) == C_DOOR_1 || level->checkMap(enemyX, i) == C_DOOR_2)
-					{
-						break;
-					}
-					sight += 1;
-				}
-				if (player->getXLocation() == enemyX && (player->getYLocation() <= enemyY && player->getYLocation() >= enemyY - sight))
-				{
-					if (!playerSeen)
-					{
-						suspicionTime = time(nullptr);
-					}
-					playerSeen = true;
-				}
-			}
-			else if (e->getDirection() == WEST)
-			{
-				sight = 0;
-				for (int i = enemyY - 1; i >= 0; --i)
-				{
-					if (isWall(i, enemyY) || level->checkMap(i, enemyY) == C_DOOR_1 || level->checkMap(i, enemyY) == C_DOOR_2)
-					{
-						break;
-					}
-					sight += 1;
-				}
-				if (player->getYLocation() == enemyY && (player->getXLocation() <= enemyX && player->getXLocation() >= enemyX - sight))
-				{
-					if (!playerSeen)
-					{
-						suspicionTime = time(nullptr);
-					}
-					playerSeen = true;
-				}
-			}
-		}
-		else if (e->getPatrolLight() != 0 && !e->getPatrolLight()->getStatus())
-		{
-			if (e->getDirection() == NORTH)
-			{
-				if (player->getXLocation() == enemyX && (player->getYLocation() == enemyY || player->getYLocation() == enemyY + 1))
-				{
-					if (!playerSeen)
-					{
-						suspicionTime = time(nullptr);
-					}
-					playerSeen = true;
-				}
-			}
-			else if (e->getDirection() == EAST)
-			{
-				if (player->getYLocation() == enemyY && (player->getXLocation() == enemyX || player->getXLocation() == enemyX + 1))
-				{
-					if (!playerSeen)
-					{
-						suspicionTime = time(nullptr);
-					}
-					playerSeen = true;
-				}
-			}
-			else if (e->getDirection() == SOUTH)
-			{
-				if (player->getXLocation() == enemyX && (player->getYLocation() == enemyY || player->getYLocation() == enemyY - 1))
-				{
-					if (!playerSeen)
-					{
-						suspicionTime = time(nullptr);
-					}
-					playerSeen = true;
-				}
-			}
-			else if (e->getDirection() == WEST)
-			{
-				if (player->getYLocation() == enemyY && (player->getXLocation() == enemyX || player->getXLocation() == enemyX - 1))
-				{
-					if (!playerSeen)
-					{
-						suspicionTime = time(nullptr);
-					}
-					playerSeen = true;
-				}
-			}
-			e->enemyState = FIXING;
-		}
-		if (e->enemyState == PATROLLING)
-		{
-			FollowPath(e, e->getCurrentPath());
-		}
-		else if (e->enemyState == FIXING)
-		{
-			if (!e->getPatrolLight()->getStatus())
-			{
-				if (e->actionComplete && e->getFixPath().size() == 0)
-				{
-					e->prevPathAction = e->currentPathAction;
-					e->setPrevDestination(e->getDestination().x, e->getDestination().y);
-					e->setPrevDirection(e->getDirection());
-					vector<int> tempPath;
-					FindPath((int)e->getLocationX() / 10, (int)e->getLocationZ() / 10, (int)e->getPatrolLight()->getLocationX(), 
-						(int)e->getPatrolLight()->getLocationZ(), tempPath, e);
-
-					e->setFixPath(tempPath);
-					e->currentPathAction = 0;
-					e->actionComplete = true;
-				}
-				int diffX = abs((int)e->getLocationX() / 10 - (int)e->getPatrolLight()->getLocationX());
-				int diffY = abs((int)e->getLocationZ() / 10 - (int)e->getPatrolLight()->getLocationZ());
-				if ((diffX == 1 && diffY == 0) || (diffX == 0 && diffY == 1))
-				{
-					e->getPatrolLight()->doAction();
-					e->resetPath(e->getCurrentPath());
-				}
-			}
-			else if (e->getPatrolLight()->getStatus())
-			{
-				if (e->getCurrentPath().size() == 0)
-				{
-					vector<int> tempPath;
-					FindPath((int)e->getLocationX() / 10, (int)e->getLocationZ() / 10, e->getPrevDestination().x / 10,
-						e->getPrevDestination().y / 10, tempPath, e);
-
-					e->setFixPath(tempPath);
-					e->currentPathAction = 0;
-					e->actionComplete = true;
-				}
-				int diffX = abs((int)e->getLocationX() / 10 - e->getPrevDestination().x / 10);
-				int diffY = abs((int)e->getLocationZ() / 10 - e->getPrevDestination().y / 10);
-				if (diffX == 0 && diffY == 0)
-				{
-					e->resetPath(e->getFixPath());
-					e->setCurrentPath(e->getPath());
-					e->currentPathAction = e->prevPathAction;
-					int d = (int)e->getPrevDirection() - (int)e->getDirection();
-					if (d < 0)
-					{
-						for (int j = 0; j < abs(d); ++j)
-							e->TurnLeft90();
-					}
-					else
-					{
-						for (int j = 0; j < d; ++j)
-							e->TurnRight90();
-					}
-					e->enemyState = PATROLLING;
-				}
-			}
-			int s = e->getCurrentPath().size();
-			if (s > e->currentPathAction)
+			if (e->enemyState == PATROLLING)
 			{
 				FollowPath(e, e->getCurrentPath());
 			}
-		}
-		if (playerSeen)
-		{
-			if (sound->GetCurrentSong() != 2)
+			else if (e->enemyState == FIXING)
 			{
-				sound->StopDesiredFile(sound->GetCurrentSong());
-				sound->PlayDesiredFile(2, true);
+				if (!e->getPatrolLight()->getStatus())
+				{
+					if (e->actionComplete && e->getFixPath().size() == 0)
+					{
+						e->prevPathAction = e->currentPathAction;
+						e->setPrevDestination(e->getDestination().x, e->getDestination().y);
+						e->setPrevDirection(e->getDirection());
+						vector<int> tempPath;
+						FindPath((int)e->getLocationX() / 10, (int)e->getLocationZ() / 10, (int)e->getPatrolLight()->getLocationX(), 
+							(int)e->getPatrolLight()->getLocationZ(), tempPath, e);
+
+						e->setFixPath(tempPath);
+						e->currentPathAction = 0;
+						e->actionComplete = true;
+					}
+					int diffX = abs((int)e->getLocationX() / 10 - (int)e->getPatrolLight()->getLocationX());
+					int diffY = abs((int)e->getLocationZ() / 10 - (int)e->getPatrolLight()->getLocationZ());
+					if ((diffX == 1 && diffY == 0) || (diffX == 0 && diffY == 1))
+					{
+						e->getPatrolLight()->doAction();
+						e->resetPath(e->getCurrentPath());
+					}
+				}
+				else if (e->getPatrolLight()->getStatus())
+				{
+					if (e->getCurrentPath().size() == 0)
+					{
+						vector<int> tempPath;
+						FindPath((int)e->getLocationX() / 10, (int)e->getLocationZ() / 10, e->getPrevDestination().x / 10,
+							e->getPrevDestination().y / 10, tempPath, e);
+
+						e->setFixPath(tempPath);
+						e->currentPathAction = 0;
+						e->actionComplete = true;
+					}
+					int diffX = abs((int)e->getLocationX() / 10 - e->getPrevDestination().x / 10);
+					int diffY = abs((int)e->getLocationZ() / 10 - e->getPrevDestination().y / 10);
+					if (diffX == 0 && diffY == 0)
+					{
+						e->resetPath(e->getFixPath());
+						e->setCurrentPath(e->getPath());
+						e->currentPathAction = e->prevPathAction;
+						int d = (int)e->getPrevDirection() - (int)e->getDirection();
+						if (d < 0)
+						{
+							for (int j = 0; j < abs(d); ++j)
+								e->TurnLeft90();
+						}
+						else
+						{
+							for (int j = 0; j < d; ++j)
+								e->TurnRight90();
+						}
+						e->enemyState = PATROLLING;
+					}
+				}
+				int s = e->getCurrentPath().size();
+				if (s > e->currentPathAction)
+				{
+					FollowPath(e, e->getCurrentPath());
+				}
+			}
+			if (playerSeen)
+			{
+				if (sound->GetCurrentSong() != 2)
+				{
+					sound->StopDesiredFile(sound->GetCurrentSong());
+					sound->PlayDesiredFile(2, true);
+				}
+			}
+			else
+			{
+				if (sound->GetCurrentSong() != 1)
+				{
+					sound->StopDesiredFile(sound->GetCurrentSong());
+					sound->PlayDesiredFile(1, true);
+				}
+				suspicionTime = time(nullptr);
+			}
+			enemies.elementAt(i)->Frame();
+			if (playerSeen && suspicionTime >= 3)
+			{
+				gameState = GAMEOVER;
 			}
 		}
-		else
-		{
-			if (sound->GetCurrentSong() != 1)
-			{
-				sound->StopDesiredFile(sound->GetCurrentSong());
-				sound->PlayDesiredFile(1, true);
-			}
-		}
-		enemies.elementAt(i)->Frame();
 	}
 }
 
@@ -665,6 +669,11 @@ vector<int> WorldClass::convertPath(int x, int y, vector<XMINT2>& path, EnemyObj
 		prevd = d;
 	}
 	return p;
+}
+
+bool WorldClass::GamePlaying()
+{
+	return gameState == PLAYING;
 }
 
 void WorldClass::doAction()

@@ -364,91 +364,94 @@ bool SystemClass::checkControls()
 {	
 	//Move camera or models based on input
 	//We will combinations for a key + arrow keys to control the camera
-	if(m_Input->keyPressed(DIK_SPACE)){
-		if(!spacePressed)
-			m_World->doAction();
-		spacePressed = true;
-	}
-	else{
-		spacePressed = false;
-	}
-	if ( m_Input->keyPressed(DIK_C)){
-	   if ( m_Input->keyPressed(DIK_UP) ) //Crane Up
-		  m_Camera->CraneUp();
-	   if ( m_Input->keyPressed(DIK_DOWN) ) //Crane Down
-		  m_Camera->CraneDown();	
-	}
-	else if ( m_Input->keyPressed(DIK_R)){
 
-	   if ( m_Input->keyPressed(DIK_LEFT) ) //Roll Left
-		  m_Camera->RollLeft();
-	   if ( m_Input->keyPressed(DIK_RIGHT) ) //Roll Right
-		  m_Camera->RollRight();	
-	}
-	else if ( m_Input->keyPressed(DIK_Z)){
+	if (m_World->GamePlaying())
+	{
+		if(m_Input->keyPressed(DIK_SPACE)){
+			if(!spacePressed)
+				m_World->doAction();
+			spacePressed = true;
+		}
+		else{
+			spacePressed = false;
+		}
+		if ( m_Input->keyPressed(DIK_C)){
+			if ( m_Input->keyPressed(DIK_UP) ) //Crane Up
+				m_Camera->CraneUp();
+			if ( m_Input->keyPressed(DIK_DOWN) ) //Crane Down
+				m_Camera->CraneDown();	
+		}
+		else if ( m_Input->keyPressed(DIK_R)){
 
-	   if ( m_Input->keyPressed(DIK_UP) ) //Zoom In
-		  m_Camera->ZoomIn();
-	   if ( m_Input->keyPressed(DIK_DOWN) ) //Zoom Out
-		  m_Camera->ZoomOut();	
-	}
-	else{
-	   if ( m_Input->keyPressed(DIK_A) ){ //Move Camera Left	
+			if ( m_Input->keyPressed(DIK_LEFT) ) //Roll Left
+				m_Camera->RollLeft();
+			if ( m_Input->keyPressed(DIK_RIGHT) ) //Roll Right
+				m_Camera->RollRight();	
+		}
+		else if ( m_Input->keyPressed(DIK_Z)){
 
-			XMFLOAT3 v = m_Camera->StrafeLeft();
-			velocityVector.x += v.x;
-			velocityVector.y += v.y;
-			velocityVector.z += v.z;
-	   }
+			if ( m_Input->keyPressed(DIK_UP) ) //Zoom In
+				m_Camera->ZoomIn();
+			if ( m_Input->keyPressed(DIK_DOWN) ) //Zoom Out
+				m_Camera->ZoomOut();	
+		}
+		else{
+			if ( m_Input->keyPressed(DIK_A) ){ //Move Camera Left	
 
-	   if ( m_Input->keyPressed(DIK_D) ){ //Move Camera Right
+				XMFLOAT3 v = m_Camera->StrafeLeft();
+				velocityVector.x += v.x;
+				velocityVector.y += v.y;
+				velocityVector.z += v.z;
+			}
 
-			XMFLOAT3 v = m_Camera->StrafeRight();
-			velocityVector.x += v.x;
-			velocityVector.y += v.y;
-			velocityVector.z += v.z;
-	   }
+			if ( m_Input->keyPressed(DIK_D) ){ //Move Camera Right
 
-	   if ( m_Input->keyPressed(DIK_W) ){ //Camera Move Forward
+				XMFLOAT3 v = m_Camera->StrafeRight();
+				velocityVector.x += v.x;
+				velocityVector.y += v.y;
+				velocityVector.z += v.z;
+			}
 
-			XMFLOAT3 v = m_Camera->MoveForward();
-			velocityVector.x += v.x;
-			velocityVector.y += v.y;
-			velocityVector.z += v.z;
-	   }
-	   if ( m_Input->keyPressed(DIK_S) ){ //Camera Pull Back
+			if ( m_Input->keyPressed(DIK_W) ){ //Camera Move Forward
 
-			XMFLOAT3 v = m_Camera->MoveBackward();
-			velocityVector.x += v.x;
-			velocityVector.y += v.y;
-			velocityVector.z += v.z;
-	   }
-	   if ( m_Input->keyPressed(DIK_E) )
-	   {
-		   if (!keyPressedE)
-		   {
+				XMFLOAT3 v = m_Camera->MoveForward();
+				velocityVector.x += v.x;
+				velocityVector.y += v.y;
+				velocityVector.z += v.z;
+			}
+			if ( m_Input->keyPressed(DIK_S) ){ //Camera Pull Back
 
-		   }
-		   keyPressedE = true;
-	   }
-	   else
-	   {
-		   keyPressedE = false;
-	   }
+				XMFLOAT3 v = m_Camera->MoveBackward();
+				velocityVector.x += v.x;
+				velocityVector.y += v.y;
+				velocityVector.z += v.z;
+			}
+			if ( m_Input->keyPressed(DIK_E) )
+			{
+				if (!keyPressedE)
+				{
+
+				}
+				keyPressedE = true;
+			}
+			else
+			{
+				keyPressedE = false;
+			}
 	   
-	   if ( m_Input->keyPressed(DIK_LEFT) ) //Pan Camera Left
-	      m_Camera->PanLeft();
+			if ( m_Input->keyPressed(DIK_LEFT) ) //Pan Camera Left
+				m_Camera->PanLeft();
 
-	   if ( m_Input->keyPressed(DIK_RIGHT) ) //Pan Camera Right
-	      m_Camera->PanRight();
+			if ( m_Input->keyPressed(DIK_RIGHT) ) //Pan Camera Right
+				m_Camera->PanRight();
 	   
-	   if ( m_Input->keyPressed(DIK_UP) ) //Tilt Camera Downward
-		  m_Camera->TiltUp();
+			if ( m_Input->keyPressed(DIK_UP) ) //Tilt Camera Downward
+				m_Camera->TiltUp();
 
-	   if ( m_Input->keyPressed(DIK_DOWN) ) //Tilt Camera Upward
-		  m_Camera->TiltDown();	
+			if ( m_Input->keyPressed(DIK_DOWN) ) //Tilt Camera Upward
+				m_Camera->TiltDown();	
 	   
-	   
+		}
 	}
 	int x, y;
 	m_Input->GetMouseDisplacement(x, y);
