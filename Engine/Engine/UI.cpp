@@ -31,7 +31,10 @@ void UI::frame(XMFLOAT3 camPos)
 	float dz = camPos.z - cameraPosition.z;
 	cameraPosition = camPos;
 
+	
+
 	//starUi->orientTranslate(dx-1.0f, dy-1.0f, dz-1.0f);
+	//starUi->orientTranslate(camPos.x, camPos.y, camPos.z);
 }
 
 
