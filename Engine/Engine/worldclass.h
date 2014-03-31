@@ -12,6 +12,7 @@
 #include <iterator>
 #include <math.h>
 #include <vector>
+#include <ctime>
 
 class WorldClass
 {
@@ -103,6 +104,8 @@ private:
 	void FindPath(int, int, int, int, vector<int>&, EnemyObject*);	
 	vector<int> convertPath(int, int, vector<XMINT2>&, EnemyObject*);
 	bool playerWalking;
+
+	time_t startTime;
 };
 
 #endif

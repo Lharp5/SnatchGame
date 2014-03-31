@@ -62,7 +62,7 @@ void EnemyObject::TurnRight()
 void EnemyObject::Frame()
 {
 	if (currentPathAction % 3 == 1)
-		{
+	{
 		if ((int)xLocation != destination.x || (int)zLocation != destination.y)
 		{
 			if (direction == NORTH)
@@ -85,15 +85,18 @@ void EnemyObject::Frame()
 		}
 		else
 		{
+			actionComplete = true;
+		}
+	}
+	else if (currentPathAction % 3 == 2)
+	{
+		if (xLocation != (float)destination.x || zLocation != (float)destination.y)
+		{
 			m_model->MoveForwardDelta(xLocation - (float)destination.x);
 			m_model->MoveForwardDelta(zLocation - (float)destination.y);
 			xLocation -= xLocation - (float)destination.x;
 			zLocation -= zLocation - (float)destination.y;
-			actionComplete = true;
 		}
-		}
-	else if (currentPathAction % 3 == 2)
-		{
 		if (time(0) < timeN)
 		{
 			m_model->ResetPose();

@@ -60,6 +60,8 @@ void WorldClass::initalizeWorld()
 	player = new PlayerClass();
 	player->setPosition((int)getPlayerStartX(), (int)getPlayerStartZ());
 	
+	startTime = time(nullptr);
+
 	//NEEDS TO FINISH THIS CLASS
 
 	wchar_t* outstring = L"Models added..";
@@ -144,6 +146,7 @@ float WorldClass::getPlayerStartZ()
 
 void WorldClass::runGame()
 {
+
 	for(int i=0; i<level->getSizeX(); i++){
 		for(int j=0; j<level->getSizeY(); j++){
 			if(level->checkMap(i,j) == C_DOOR_1 || level->checkMap(i,j) == C_DOOR_2){
@@ -440,7 +443,7 @@ vector<int> WorldClass::convertPath(int x, int y, vector<XMINT2>& path, EnemyObj
 {
 	vector<int> p;
 	p.push_back(0);
-	p.push_back(1);
+	p.push_back(3);
 	Direction d = NORTH;
 	Direction prevd;
 	if (path[0].x - x > 0) d = EAST;

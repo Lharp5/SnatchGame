@@ -85,12 +85,12 @@ void LevelClass::level0()
 	}
 	
 	map[6][0] = C_LOCK_1;
-	map[9][0] = C_LOCK_1;
+	map[10][0] = C_LOCK_1;
 	map[3][1] = C_WALL;
 	map[5][1] = C_WALL;
 	map[7][1] = C_WALL;
 	map[8][1] = C_WALL;
-	map[10][1] = C_WALL;
+	map[9][1] = C_WALL;
 	map[3][2] = C_WALL;
 	map[7][2] = C_WALL;
 	map[5][3] = C_WALL;
@@ -103,7 +103,7 @@ void LevelClass::level0()
 	map[8][5] = C_DOOR_1;
 	map[2][6] = C_LIGHT_4;
 	map[3][6] = C_WALL;
-	map[7][6] = C_WALL;
+	map[7][6] = C_DOOR_2;
 	map[1][7] = C_WALL;
 	map[2][7] = C_WALL;
 	map[3][7] = C_WALL;
@@ -173,13 +173,14 @@ void LevelClass::level0()
 	dynamic_cast<FloorObject*>(getLocation(10, 8))->createSource(11, 8);
 	
 	dynamic_cast<DoorObject*>(getLocation(7, 4))->createLock(dynamic_cast<LockObject*>(getLocation(6, 0)));
-	dynamic_cast<DoorObject*>(getLocation(8, 5))->createLock(dynamic_cast<LockObject*>(getLocation(9, 0)));
+	dynamic_cast<DoorObject*>(getLocation(7, 6))->createLock(dynamic_cast<LockObject*>(getLocation(0, 10)));
+	dynamic_cast<DoorObject*>(getLocation(8, 5))->createLock(dynamic_cast<LockObject*>(getLocation(10, 0)));
 	dynamic_cast<DoorObject*>(getLocation(9, 10))->createLock(dynamic_cast<LockObject*>(getLocation(0, 10)));
 
 	int path1[] = {2, 2, 1, 3, 2, 1};
 	int path2[] = {2, 2, 1};
-	int path3[] = {2, 0, 2};
-	int path4[] = {2, 1, 2};
+	int path3[] = {2, 2, 2};
+	int path4[] = {2, 2, 2};
 	int test[] = {0,0,0};
 	vector<int> p1;
 	vector<int> p2;
