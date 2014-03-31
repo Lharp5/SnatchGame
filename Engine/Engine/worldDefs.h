@@ -4,6 +4,8 @@
 const float STRAFE_SPEED = 0.2f;
 const float ADVANCE_SPEED = 0.25f;
 
+enum GameState { MENU, PLAYING, WIN, GAMEOVER };
+
 enum Direction { NORTH, EAST, SOUTH, WEST };
 
 //Explanation for the numbers attached to WALL_TYPEs:

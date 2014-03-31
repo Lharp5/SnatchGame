@@ -104,8 +104,10 @@ private:
 	void FindPath(int, int, int, int, vector<int>&, EnemyObject*);	
 	vector<int> convertPath(int, int, vector<XMINT2>&, EnemyObject*);
 	bool playerWalking;
+	bool playerSeen;
 
 	time_t startTime;
+	time_t suspicionTime;
 	GameState gameState;
 };
 

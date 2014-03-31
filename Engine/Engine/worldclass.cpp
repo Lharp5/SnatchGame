@@ -61,7 +61,10 @@ void WorldClass::initalizeWorld()
 	player = new PlayerClass();
 	player->setPosition((int)getPlayerStartX(), (int)getPlayerStartZ());
 	
+	playerSeen = false;
+
 	startTime = time(nullptr);
+	suspicionTime = time(nullptr);
 
 	//NEEDS TO FINISH THIS CLASS
 
@@ -147,6 +150,9 @@ float WorldClass::getPlayerStartZ()
 
 void WorldClass::runGame()
 {
+	wchar_t s[32];
+	wsprintf(s, L"%d\n", (int)time(nullptr) - (int)suspicionTime);
+	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), s, wcslen(s), NULL, NULL);
 
 	for(int i=0; i<level->getSizeX(); i++){
 		for(int j=0; j<level->getSizeY(); j++){
@@ -174,8 +180,138 @@ void WorldClass::runGame()
 	for (int i = 0; i < enemies.size(); i++)
 	{
 		EnemyObject* e = enemies.elementAt(i);
-		if (e->getPatrolLight() != 0 && !e->getPatrolLight()->getStatus())
+		int enemyX = (int)e->getLocationX() / 10;
+		int enemyY = (int)e->getLocationZ() / 10;
+		int sight;
+		if ((e->getPatrolLight() != 0 && e->getPatrolLight()->getStatus()) || e->getPatrolLight() == 0)
 		{
+			if (e->getDirection() == NORTH)
+			{
+				sight = 0;
+				for (int i = enemyY + 1; i < level->getSizeY(); ++i)
+				{
+					if (isWall(enemyX, i) || level->checkMap(enemyX, i) == C_DOOR_1 || level->checkMap(enemyX, i) == C_DOOR_2)
+					{
+						break;
+					}
+					sight += 1;
+				}
+				if (player->getXLocation() == enemyX && (player->getYLocation() >= enemyY && player->getYLocation() <= enemyY + sight))
+				{
+					if (!playerSeen)
+					{
+						suspicionTime = time(nullptr);
+					}
+					playerSeen = true;
+				}
+			}
+			else if (e->getDirection() == EAST)
+			{
+				sight = 0;
+				for (int i = enemyX + 1; i < level->getSizeX(); ++i)
+				{
+					if (isWall(i, enemyY) || level->checkMap(i, enemyY) == C_DOOR_1 || level->checkMap(i, enemyY) == C_DOOR_2)
+					{
+						break;
+					}
+					sight += 1;
+				}
+				if (player->getYLocation() == enemyY && (player->getXLocation() >= enemyX && player->getXLocation() <= enemyX + sight))
+				{
+					if (!playerSeen)
+					{
+						suspicionTime = time(nullptr);
+					}
+					playerSeen = true;
+				}
+			}
+			else if (e->getDirection() == SOUTH)
+			{
+				sight = 0;
+				for (int i = enemyY - 1; i >= 0; --i)
+				{
+					if (isWall(enemyX, i) || level->checkMap(enemyX, i) == C_DOOR_1 || level->checkMap(enemyX, i) == C_DOOR_2)
+					{
+						break;
+					}
+					sight += 1;
+				}
+				if (player->getXLocation() == enemyX && (player->getYLocation() <= enemyY && player->getYLocation() >= enemyY - sight))
+				{
+					if (!playerSeen)
+					{
+						suspicionTime = time(nullptr);
+					}
+					playerSeen = true;
+				}
+			}
+			else if (e->getDirection() == WEST)
+			{
+				sight = 0;
+				for (int i = enemyY - 1; i >= 0; --i)
+				{
+					if (isWall(i, enemyY) || level->checkMap(i, enemyY) == C_DOOR_1 || level->checkMap(i, enemyY) == C_DOOR_2)
+					{
+						break;
+					}
+					sight += 1;
+				}
+				if (player->getYLocation() == enemyY && (player->getXLocation() <= enemyX && player->getXLocation() >= enemyX - sight))
+				{
+					if (!playerSeen)
+					{
+						suspicionTime = time(nullptr);
+					}
+					playerSeen = true;
+				}
+			}
+		}
+		else if (e->getPatrolLight() != 0 && !e->getPatrolLight()->getStatus())
+		{
+			if (e->getDirection() == NORTH)
+			{
+				if (player->getXLocation() == enemyX && (player->getYLocation() == enemyY || player->getYLocation() == enemyY + 1))
+				{
+					if (!playerSeen)
+					{
+						suspicionTime = time(nullptr);
+					}
+					playerSeen = true;
+				}
+			}
+			else if (e->getDirection() == EAST)
+			{
+				if (player->getYLocation() == enemyY && (player->getXLocation() == enemyX || player->getXLocation() == enemyX + 1))
+				{
+					if (!playerSeen)
+					{
+						suspicionTime = time(nullptr);
+					}
+					playerSeen = true;
+				}
+			}
+			else if (e->getDirection() == SOUTH)
+			{
+				if (player->getXLocation() == enemyX && (player->getYLocation() == enemyY || player->getYLocation() == enemyY - 1))
+				{
+					if (!playerSeen)
+					{
+						suspicionTime = time(nullptr);
+					}
+					playerSeen = true;
+				}
+			}
+			else if (e->getDirection() == WEST)
+			{
+				if (player->getYLocation() == enemyY && (player->getXLocation() == enemyX || player->getXLocation() == enemyX - 1))
+				{
+					if (!playerSeen)
+					{
+						suspicionTime = time(nullptr);
+					}
+					playerSeen = true;
+				}
+			}
 			e->enemyState = FIXING;
 		}
 		if (e->enemyState == PATROLLING)
@@ -246,14 +382,21 @@ void WorldClass::runGame()
 				FollowPath(e, e->getCurrentPath());
 			}
 		}
-		if ((int)e->getLocationX() / 10 == player->getXLocation() && (int)e->getLocationZ() / 10 == player->getYLocation())
+		if (playerSeen)
 		{
 			if (sound->GetCurrentSong() != 2)
 			{
 				sound->StopDesiredFile(sound->GetCurrentSong());
 				sound->PlayDesiredFile(2, true);
 			}
-			e->enemyState = CHASING;
+		}
+		else
+		{
+			if (sound->GetCurrentSong() != 1)
+			{
+				sound->StopDesiredFile(sound->GetCurrentSong());
+				sound->PlayDesiredFile(1, true);
+			}
 		}
 		enemies.elementAt(i)->Frame();
 	}
