@@ -222,7 +222,7 @@ void WorldClass::runGame()
 				int diffY = abs((int)e->getLocationZ() / 10 - e->getPrevDestination().y / 10);
 				if (diffX == 0 && diffY == 0)
 				{
-					e->resetPath(e->getCurrentPath());
+					e->resetPath(e->getFixPath());
 					e->setCurrentPath(e->getPath());
 					e->currentPathAction = e->prevPathAction;
 					int d = (int)e->getPrevDirection() - (int)e->getDirection();

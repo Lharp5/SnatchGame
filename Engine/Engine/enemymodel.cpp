@@ -184,9 +184,9 @@ void EnemyModel::MoveForward()
 	XMFLOAT4X4 torsoDirectionMatrix = m_Torso->GetWorldRotateMatrix();
     XMStoreFloat3( &effectiveDirectionVector,  XMVector3Transform( XMLoadFloat3(&m_directionVector), XMLoadFloat4x4(&torsoDirectionMatrix) ));
 
-	float deltaX = effectiveDirectionVector.x*ADVANCE_SPEED*0.9f;
-	float deltaY = effectiveDirectionVector.y*ADVANCE_SPEED*0.9f;
-	float deltaZ = effectiveDirectionVector.z*ADVANCE_SPEED*0.9f;
+	float deltaX = effectiveDirectionVector.x*ADVANCE_SPEED;
+	float deltaY = effectiveDirectionVector.y*ADVANCE_SPEED;
+	float deltaZ = effectiveDirectionVector.z*ADVANCE_SPEED;
 	
 	m_Head->worldTranslate(deltaX, deltaY, deltaZ);
 	m_Torso->worldTranslate(deltaX, deltaY, deltaZ);

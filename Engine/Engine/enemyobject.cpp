@@ -67,19 +67,19 @@ void EnemyObject::Frame()
 		{
 			if (direction == NORTH)
 			{
-				zLocation += ADVANCE_SPEED*0.9f;
+				zLocation += ADVANCE_SPEED;
 			}
 			else if (direction == EAST)
 			{
-				xLocation += ADVANCE_SPEED*0.9f;
+				xLocation += ADVANCE_SPEED;
 			}
 			else if (direction == SOUTH)
 			{
-				zLocation -= ADVANCE_SPEED*0.9f;
+				zLocation -= ADVANCE_SPEED;
 			}
 			else if (direction == WEST)
 			{
-				xLocation -= ADVANCE_SPEED*0.9f;
+				xLocation -= ADVANCE_SPEED;
 			}
 			m_model->MoveForward();
 		}
