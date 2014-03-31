@@ -398,7 +398,7 @@ void WorldClass::runGame()
 				suspicionTime = time(nullptr);
 			}
 			enemies.elementAt(i)->Frame();
-			if (playerSeen && suspicionTime >= 3)
+			if (playerSeen && time(nullptr) - suspicionTime >= 3)
 			{
 				gameState = GAMEOVER;
 			}
