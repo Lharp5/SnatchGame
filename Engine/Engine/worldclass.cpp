@@ -51,8 +51,9 @@ WorldClass::~WorldClass()
 void WorldClass::initalizeWorld()
 {
 	level = new LevelClass(sound);
-
-	level->loadLevel(0);
+	currLevel = 1;
+	level->loadLevel(currLevel);
+	
 
 	enemies.addAll(level->getEnemies());
 
@@ -74,13 +75,13 @@ void WorldClass::initalizeWorld()
 
 void WorldClass::Shutdown()
 {
-	/*if(level)
+	if(level)
 		delete level;
 	if(player)
 		delete player;
 
 	level = 0;
-	player = 0;*/
+	player = 0;
 
 	wchar_t* outstring = L"World Shutdown..";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
@@ -108,10 +109,10 @@ void WorldClass::resetLevel(int levelNum)
 	gameState = PLAYING;
 	level->resetLevel(levelNum);
 	player->setPosition(level->getPlayerStartX(), level->getPlayerStartZ());
-	suspicionTime = time(nullptr);
+	/*suspicionTime = time(nullptr);
 	playerSeen = false;
 	for(int i=0; i<enemies.size(); i++)
-		enemies.elementAt(i)->playerSpotted = false;
+		enemies.elementAt(i)->playerSpotted = false;*/
 	
 	
 
