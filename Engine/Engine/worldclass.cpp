@@ -52,7 +52,7 @@ void WorldClass::initalizeWorld()
 {
 	level = new LevelClass(sound);
 
-	level->loadLevel(0);
+	level->loadLevel(1);
 
 	enemies.addAll(level->getEnemies());
 
@@ -489,7 +489,7 @@ void WorldClass::FollowPath(EnemyObject* e, vector<int> path)
 	if (e->currentPathAction % 3 == 0)
 	{
 		unsigned int cpa = e->currentPathAction;
-		if (cpa >= path.size() - 1)
+		if (cpa > path.size() - 1)
 		{
 			e->currentPathAction = 0;
 		}
