@@ -30,16 +30,20 @@ QuadTexturedModel* UI::getUI()
 	return starUi;
 }
 
-void UI::setStar()
+void UI::setStar(float x, float y, float z)
 {
 	delete starUi;
-	switch(goldStar){
-	case EXCELL:	starUi = new QuadTexturedModel(width, height, star0);	break;
-	case GREAT:		starUi = new QuadTexturedModel(width, height, star0);	break;
-	case GOOD:		starUi = new QuadTexturedModel(width, height, star0);	break;
-	case OK:		starUi = new QuadTexturedModel(width, height, star0);	break;
+	/*switch(goldStar){
+	case EXCELL:	starUi = new QuadTexturedModel(width, height, star4);	break;
+	case GREAT:		starUi = new QuadTexturedModel(width, height, star3);	break;
+	case GOOD:		starUi = new QuadTexturedModel(width, height, star2);	break;
+	case OK:		starUi = new QuadTexturedModel(width, height, star1);	break;
 	default:		starUi = new QuadTexturedModel(width, height, star0);	break;
-	}
+	}*/
+	starUi = new QuadTexturedModel(width, height, star3);
+	setPosition(XMFLOAT3(x,y,z));
+	wchar_t* outstring = L"Created New Texture \n";
+		WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 }
 bool UI::changeNeeded()
 {
@@ -87,6 +91,8 @@ void UI::frame(XMFLOAT3 camPos, XMFLOAT2 camRot)
 	float ay = camRot.y - cameraRotation.y;
 	cameraPosition = camPos;
 	cameraRotation = camRot;
+
+	position = XMFLOAT3(position.x+dx, position.y+dy, position.z+dz);
 	
 	starUi->worldTranslate(dx, dy, dz);
 	starUi->worldRotateY(ax);

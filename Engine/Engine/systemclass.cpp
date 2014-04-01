@@ -282,12 +282,21 @@ bool SystemClass::Frame()
 		WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 		scoreChanged = true;
 		if(m_Ui->changeNeeded()){
+			//removing the vector mask so we can change the UI.
+			for(int j =0; j<6; j++)
+				m_GameModels->removeLast();
 			for(int i=0; i<m_GameModels->size(); i++)
 				if(m_GameModels->elementAt(i) == m_Ui->getUI()){
 					m_GameModels->remove(m_Ui->getUI());
-					m_Ui->setStar();
+					m_Ui->setStar(m_Camera->GetPosition().x, m_Camera->GetPosition().y, m_Camera->GetPosition().z);
+					/*QuadTexturedModel* newModel = new QuadTexturedModel(4.0f, 1.0f, L"../Engine/textures/Score/Score4.dds");
+					newModel->worldTranslate(m_Camera->GetPosition().x, m_Camera->GetPosition().y, m_Camera->GetPosition().z);
+					m_Graphics->createModel(newModel);
+					m_GameModels->add(newModel);*/
 					m_Graphics->createModel(m_Ui->getUI());
 					m_GameModels->add(m_Ui->getUI());
+					m_GameModels->addAll(m_lightMask->GetModels());
+					break;
 				}
 		}
 	}
