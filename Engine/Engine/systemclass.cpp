@@ -6,6 +6,7 @@
 SystemClass::SystemClass()
 {
 	nPressed = false;
+	rPressed = false;
 	//set pointers to our objects to null so if initialization of them
 	//fails they will not mistakenly be used to clean up memory
 	m_Input = 0;  
@@ -546,14 +547,17 @@ bool SystemClass::checkControls()
 
 	if (m_World->GameOver())
 	{
-		if (m_Input->keyPressed(DIK_R))
+		if (m_Input->keyPressed(DIK_R) && !rPressed)
 		{
+			rPressed = true;
 			changeLevel(m_World->getCurrLevel());
 		}
 		if (m_Input->keyPressed(DIK_Q))
 		{
 			//quit
 		}
+		else
+			rPressed = false;
 	}
 	//user is still playing
 	return true;
@@ -571,9 +575,10 @@ void SystemClass::changeLevel(int level)
 	m_GameModels->addAll(m_World->getModels());
 	m_GameModels->add(m_Ui->getUI());
 	m_GameModels->addAll(m_lightMask->GetModels());
-
 	for(int i=0; i<m_GameModels->size(); i++)
 		m_Graphics->createModel(m_GameModels->elementAt(i));
+
+	
 }
 LRESULT CALLBACK SystemClass::MessageHandler(HWND hwnd, UINT umsg, WPARAM wparam, LPARAM lparam)
 {

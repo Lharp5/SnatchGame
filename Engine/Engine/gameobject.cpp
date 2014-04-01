@@ -14,7 +14,7 @@ GameObject::GameObject()
 	initialize();
 }
 
-GameObject::GameObject(float x, float y, float z, GameModel* m): xLocation(x), yLocation(y), zLocation(z), myModel(m)
+GameObject::GameObject(float x, float y, float z, GameModel* m): xLocation(x), yLocation(y), zLocation(z), myModel(m), winTile(false)
 {
 	sound = 0;
 	if (myModel)
@@ -31,6 +31,16 @@ GameObject::~GameObject()
 void GameObject::giveSoundObject(SoundClass* s)
 {
 	sound = s;
+}
+
+
+bool GameObject::isWinTile()
+{
+	return winTile;
+}
+void GameObject::setWinTile()
+{
+	winTile = false;
 }
 
 void GameObject::initialize()

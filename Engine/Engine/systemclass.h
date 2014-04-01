@@ -90,6 +90,7 @@ private:
 	XMFLOAT3 prevCamPos;
 
 	bool nPressed;
+	bool rPressed;
 	bool keyPressedE;
 	bool prevEPressedState;
 	bool enterPressed;

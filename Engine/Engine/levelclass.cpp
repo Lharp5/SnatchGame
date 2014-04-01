@@ -54,6 +54,24 @@ void LevelClass::initialize()
 	}
 }
 
+void LevelClass::Shutdown()
+{
+	int pieceSize = gamePieces->size();
+	for(int i=0; i<pieceSize; i++){
+		delete gamePieces->removeLast();
+	}
+
+	int enemySize = enemyList->size();
+	for(int j=0; j<enemySize; j++){
+		delete enemyList->removeLast();
+	}
+
+	
+
+	wchar_t* outstring = L"Levels Shutdown..";
+	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
+}
+
 void LevelClass::resetLevel(int level)
 {
 	Shutdown();
@@ -393,23 +411,6 @@ void LevelClass::buildLock(int x, int y)
 /* Function:	Shutdown
  * Purpose:		To free up any pointers, close any files.
 */
-void LevelClass::Shutdown()
-{
-	int pieceSize = gamePieces->size();
-	for(int i=0; i<pieceSize; i++){
-		delete gamePieces->removeLast();
-	}
-
-	int enemySize = enemyList->size();
-	for(int j=0; j<enemySize; j++){
-		enemyList->removeLast();
-	}
-
-	
-
-	wchar_t* outstring = L"Levels Shutdown..";
-	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
-}
 
 
 int LevelClass::getSizeX()

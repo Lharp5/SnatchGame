@@ -27,6 +27,10 @@ void FloorObject::createSource(int x, int y)
 
 }
 
+void FloorObject::setWinTile()
+{
+	GameObject::winTile = true;
+}
 int FloorObject::getSourceX()
 {
 	return sourceX;

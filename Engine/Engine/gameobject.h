@@ -15,6 +15,8 @@ class GameObject
 		~GameObject();
 		virtual void giveSoundObject(SoundClass*);
 		virtual bool isLit();
+		virtual bool isWinTile();
+		virtual void setWinTile();
 		virtual bool doAction();
 		virtual bool getRenderValue();
 		virtual void setRenderValue(bool);
@@ -38,6 +40,9 @@ class GameObject
 	protected:
 		void initialize();
 		void shutdown();
+
+		//whether or not the end of the level.
+		bool winTile;
 
 		SoundClass* sound;
 

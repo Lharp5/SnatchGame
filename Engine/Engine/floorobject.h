@@ -47,10 +47,18 @@ public:
 	*************/
 	void toggleLight(bool);
 
+	/************
+	*	Function:	 setWinTile
+	*	Purpose: to check whether it is the final tile.
+	*************/
+	void setWinTile();
+
 private:
 
 	//floor lit up or not?
 	bool lit;
+
+	
 
 	//location of the source of lighting (the mechanism to turn off and/or on.)
 	int sourceX;
