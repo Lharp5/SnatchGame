@@ -109,6 +109,14 @@ void EnemyObject::Frame()
 	}
 }
 
+void EnemyObject::fixPosition()
+{
+	m_model->Transform(-xLocation, 0.0f, -zLocation);
+	xLocation = (float)destination.x;
+	zLocation = (float)destination.y;
+	m_model->Transform(xLocation, 0.0f, zLocation);
+}
+
 void EnemyObject::TurnLeft90()
 {
 	if (direction == NORTH)

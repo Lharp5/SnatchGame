@@ -36,6 +36,7 @@ public:
 	int prevPathAction;
 	bool actionComplete;
 	
+	void fixPosition();
 	void TurnLeft();
 	void TurnRight();
 	void TurnLeft90();
