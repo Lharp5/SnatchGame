@@ -40,6 +40,10 @@ bool DoorObject::doAction()
 
 		isOpen = true;
 	}
+	else
+	{
+		sound->PlayDesiredFile(12, false);
+	}
 	
 	return true;
 }

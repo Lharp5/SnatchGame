@@ -183,10 +183,6 @@ void WorldClass::runGame()
 							}
 						}
 					}
-					else
-					{
-						sound->PlayDesiredFile(12, false);
-					}
 				}
 			}
 		}

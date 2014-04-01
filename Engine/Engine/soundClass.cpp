@@ -500,7 +500,7 @@ void SoundClass::PlayDesiredFile(int choice, bool loop)
 	else if (choice == 12)
 	{
 		lockedDoor->SetCurrentPosition(175000 * 0);
-		lockedDoor->SetVolume(-1500);
+		lockedDoor->SetVolume(-500);
 		lockedDoor->Play(0, 0, l);
 	}
 	else
