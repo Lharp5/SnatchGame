@@ -24,6 +24,8 @@ public:
 	void toggleFloor();
 	void doAction();
 	bool isWall(int, int);
+
+	void resetLevel();
 	
 	/*********
 	*	Function:	checkLight
@@ -61,6 +63,7 @@ public:
 
 	bool GameMenu();
 	bool GamePlaying();
+	bool GameOver();
 	void StartGame();
 
 private:

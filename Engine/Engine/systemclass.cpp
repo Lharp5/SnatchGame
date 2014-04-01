@@ -504,6 +504,18 @@ bool SystemClass::checkControls()
 			}
 		}
 	}
+
+	if (m_World->GameOver())
+	{
+		if (m_Input->keyPressed(DIK_R))
+		{
+			m_World->resetLevel();
+		}
+		if (m_Input->keyPressed(DIK_Q))
+		{
+			//quit
+		}
+	}
 	//user is still playing
 	return true;
 }

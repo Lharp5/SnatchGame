@@ -97,6 +97,11 @@ bool WorldClass::isWall(int x, int y)
 	return false;
 }
 
+void WorldClass::resetLevel()
+{
+	/* TODO */
+}
+
 void WorldClass::updatePlayer(float x, float z)
 {
 	int mapX = convertToInt(x/10);
@@ -754,6 +759,11 @@ bool WorldClass::GameMenu()
 bool WorldClass::GamePlaying()
 {
 	return gameState == PLAYING;
+}
+
+bool WorldClass::GameOver()
+{
+	return gameState == GAMEOVER;
 }
 
 void WorldClass::StartGame()
