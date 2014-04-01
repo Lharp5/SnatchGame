@@ -45,6 +45,8 @@ class LevelClass
 		int getPlayerStartX();
 		int getPlayerStartZ();
 
+		/*creates a new level of the desired level*/
+		void resetLevel(int);
 
 		void toggleFloor();
 
@@ -53,9 +55,9 @@ class LevelClass
 		SoundClass* sound;
 		//the map of the objects
 		WALL_TYPE map[100][100];
-		ArrayList <GameObject> gamePieces; 
+		ArrayList <GameObject>* gamePieces; 
 		//GameObject* player;
-		ArrayList<EnemyObject> enemyList;
+		ArrayList<EnemyObject>* enemyList;
 
 		int sizeX;
 		int sizeY;

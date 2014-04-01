@@ -65,6 +65,11 @@ Score UI::getStars()
 {
 	return goldStar;
 }
+
+void UI::resetStars()
+{
+	goldStar = EXCELL;
+}
 void UI::setPosition(XMFLOAT3 camPos)
 {
 	if(firstTimeP){

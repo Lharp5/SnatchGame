@@ -98,8 +98,23 @@ bool WorldClass::isWall(int x, int y)
 	return false;
 }
 
-void WorldClass::resetLevel()
+int WorldClass::getCurrLevel()
 {
+	return currLevel;
+}
+void WorldClass::resetLevel(int levelNum)
+{
+	currLevel = levelNum;
+	gameState = PLAYING;
+	level->resetLevel(levelNum);
+	player->setPosition(level->getPlayerStartX(), level->getPlayerStartZ());
+	suspicionTime = time(nullptr);
+	playerSeen = false;
+	for(int i=0; i<enemies.size(); i++)
+		enemies.elementAt(i)->playerSpotted = false;
+	
+	
+
 	/* TODO */
 }
 

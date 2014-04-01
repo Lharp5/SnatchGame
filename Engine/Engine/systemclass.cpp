@@ -5,6 +5,7 @@
 # include <iostream>
 SystemClass::SystemClass()
 {
+	nPressed = false;
 	//set pointers to our objects to null so if initialization of them
 	//fails they will not mistakenly be used to clean up memory
 	m_Input = 0;  
@@ -425,6 +426,14 @@ bool SystemClass::checkControls()
 	//We will combinations for a key + arrow keys to control the camera
 	
 	//opening menu
+
+	if(m_Input->keyPressed(DIK_N) && !nPressed){
+		int level = m_World->getCurrLevel();
+		changeLevel(level++);
+		nPressed = true;
+	}
+	else
+		nPressed = false;
 	if(m_Input->keyPressed(DIK_RETURN)){
 		if(!enterPressed){
 			m_World->setStartTime();
@@ -539,7 +548,7 @@ bool SystemClass::checkControls()
 	{
 		if (m_Input->keyPressed(DIK_R))
 		{
-			m_World->resetLevel();
+			changeLevel(m_World->getCurrLevel());
 		}
 		if (m_Input->keyPressed(DIK_Q))
 		{
@@ -550,6 +559,22 @@ bool SystemClass::checkControls()
 	return true;
 }
 
+void SystemClass::changeLevel(int level)
+{
+	int modelSize = m_GameModels->size();
+	for(int i=0; i<modelSize; i++){
+		m_GameModels->removeLast();
+	}
+
+	m_World->resetLevel(level);
+
+	m_GameModels->addAll(m_World->getModels());
+	m_GameModels->add(m_Ui->getUI());
+	m_GameModels->addAll(m_lightMask->GetModels());
+
+	for(int i=0; i<m_GameModels->size(); i++)
+		m_Graphics->createModel(m_GameModels->elementAt(i));
+}
 LRESULT CALLBACK SystemClass::MessageHandler(HWND hwnd, UINT umsg, WPARAM wparam, LPARAM lparam)
 {
 	//removed all the jargan quote "Direct Input handles all of this for now"

@@ -25,7 +25,7 @@ public:
 	void doAction();
 	bool isWall(int, int);
 
-	void resetLevel();
+	void resetLevel(int);
 	
 	/*********
 	*	Function:	checkLight
@@ -69,6 +69,8 @@ public:
 	bool GamePlaying();
 	bool GameOver();
 	void StartGame();
+
+	int getCurrLevel();
 
 private:
 	//objects
@@ -116,6 +118,8 @@ private:
 	vector<int> convertPath(int, int, vector<XMINT2>&, EnemyObject*);
 	bool playerWalking;
 	bool playerSeen;
+
+	int currLevel;
 
 	//variable for score (time)
 

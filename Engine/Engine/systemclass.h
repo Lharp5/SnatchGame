@@ -61,6 +61,7 @@ private:
 	void InitializeWindows(int&, int&);
 	void ShutdownWindows();
 	bool checkControls();
+	void changeLevel(int);
 
 private:
 
@@ -88,6 +89,7 @@ private:
 
 	XMFLOAT3 prevCamPos;
 
+	bool nPressed;
 	bool keyPressedE;
 	bool prevEPressedState;
 	bool enterPressed;
