@@ -215,6 +215,16 @@ void EnemyModel::MoveForwardDelta(float delta)
 	m_RightLeg->worldTranslate(deltaX, deltaY, deltaZ);
 }
 
+void EnemyModel::Transform(float dx, float dy, float dz)
+{
+	m_Head->worldTranslate(dx, dy, dz);
+	m_Torso->worldTranslate(dx, dy, dz);
+	m_LeftArm->worldTranslate(dx, dy, dz);
+	m_RightArm->worldTranslate(dx, dy, dz);
+	m_LeftLeg->worldTranslate(dx, dy, dz);
+	m_RightLeg->worldTranslate(dx, dy, dz);
+}
+
 void EnemyModel::TurnLeft()
 {
 	Turn(-XM_PIDIV4/20);

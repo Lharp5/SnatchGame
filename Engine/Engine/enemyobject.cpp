@@ -93,10 +93,10 @@ void EnemyObject::Frame()
 	{
 		if (xLocation != (float)destination.x || zLocation != (float)destination.y)
 		{
-			m_model->MoveForwardDelta(xLocation - (float)destination.x);
-			m_model->MoveForwardDelta(zLocation - (float)destination.y);
-			xLocation -= xLocation - (float)destination.x;
-			zLocation -= zLocation - (float)destination.y;
+			m_model->Transform(-xLocation, 0.0f, -zLocation);
+			xLocation = (float)destination.x;
+			zLocation = (float)destination.y;
+			m_model->Transform(xLocation, 0.0f, zLocation);
 		}
 		if (time(0) < timeN)
 		{
