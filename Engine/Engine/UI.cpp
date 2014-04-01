@@ -30,23 +30,26 @@ QuadTexturedModel* UI::getUI()
 	return starUi;
 }
 
-void UI::setStar(float x, float y, float z)
+void UI::setStar(XMFLOAT3 camPos, XMFLOAT2 camRot)
 {
+	firstTimeP = true;
+	firstTimeR = true;
 	delete starUi;
-	/*switch(goldStar){
+	switch(goldStar){
 	case EXCELL:	starUi = new QuadTexturedModel(width, height, star4);	break;
 	case GREAT:		starUi = new QuadTexturedModel(width, height, star3);	break;
 	case GOOD:		starUi = new QuadTexturedModel(width, height, star2);	break;
 	case OK:		starUi = new QuadTexturedModel(width, height, star1);	break;
 	default:		starUi = new QuadTexturedModel(width, height, star0);	break;
-	}*/
-	starUi = new QuadTexturedModel(width, height, star3);
-	setPosition(XMFLOAT3(x,y,z));
+	}
+	setPosition(camPos);
+	setRotation(camRot);
 	wchar_t* outstring = L"Created New Texture \n";
 		WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 }
 bool UI::changeNeeded()
 {
+	
 	switch(goldStar){
 	case EXCELL:	goldStar = GREAT; 	break;
 	case GREAT:		goldStar = GOOD; 	break;	

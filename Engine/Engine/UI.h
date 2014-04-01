@@ -19,7 +19,7 @@ public:
 	void setRotation(XMFLOAT2);
 	QuadTexturedModel* getUI();
 	bool changeNeeded();
-	void setStar(float, float, float);
+	void setStar(XMFLOAT3, XMFLOAT2);
 
 	Score getStars();
 

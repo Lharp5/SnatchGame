@@ -288,9 +288,9 @@ bool SystemClass::Frame()
 			for(int i=0; i<m_GameModels->size(); i++)
 				if(m_GameModels->elementAt(i) == m_Ui->getUI()){
 					m_GameModels->remove(m_Ui->getUI());
-					m_Ui->setStar(m_Camera->GetPosition().x, m_Camera->GetPosition().y, m_Camera->GetPosition().z);
+					m_Ui->setStar(m_Camera->GetPosition(), m_Camera->GetRotation());
 					/*QuadTexturedModel* newModel = new QuadTexturedModel(4.0f, 1.0f, L"../Engine/textures/Score/Score4.dds");
-					newModel->worldTranslate(m_Camera->GetPosition().x, m_Camera->GetPosition().y, m_Camera->GetPosition().z);
+					newModel->worldTranslate(m_Camera->GetPosition().x, m_Camera->GetPosition().y, m_Camera->GetPosition().z+5.0f);
 					m_Graphics->createModel(newModel);
 					m_GameModels->add(newModel);*/
 					m_Graphics->createModel(m_Ui->getUI());
