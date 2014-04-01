@@ -22,6 +22,7 @@ public:
 	void setStar(XMFLOAT3, XMFLOAT2);
 
 	Score getStars();
+	void resetStars();
 
 private:
 	XMFLOAT3 cameraPosition;

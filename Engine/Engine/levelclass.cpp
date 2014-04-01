@@ -13,6 +13,8 @@ using namespace std;
 //creating a base level THE TEMP LEVEL
 LevelClass::LevelClass(SoundClass* s) : sound(s)
 {
+	gamePieces = new ArrayList<GameObject>();
+	enemyList = new ArrayList<EnemyObject>();
 	initialize();
 	wchar_t* outstring = L"...Levels Loaded\n";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
@@ -22,6 +24,17 @@ LevelClass::LevelClass(SoundClass* s) : sound(s)
 LevelClass::~LevelClass()
 {
 	Shutdown();
+	if(gamePieces)
+	{
+		delete gamePieces;
+		gamePieces = 0;
+	}
+
+	if(enemyList)
+	{
+		delete enemyList;
+		enemyList = 0;
+	}
 	wchar_t* outstring = L"Levels Closed";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 }
@@ -41,7 +54,12 @@ void LevelClass::initialize()
 	}
 }
 
-
+void LevelClass::resetLevel(int level)
+{
+	Shutdown();
+	initialize();
+	loadLevel(level);
+}
 /* Function:	loadLevel 
  * Purpose:		to change the level
  * in:			the level wishing to be assigned as an int.
@@ -108,8 +126,8 @@ void LevelClass::level0()
 	{
 		p.push_back(path[i]);
 	}
-	enemyList.add(new EnemyObject(p, sound, 10.0f, -1.85f, 10.0f, 5.0f));
-	enemyList.elementAt(0)->setPatrolLight(dynamic_cast<LightObject*>(getLocation(sizeX - 1, sizeY / 2 - 1)));
+	enemyList->add(new EnemyObject(p, sound, 10.0f, -1.85f, 10.0f, 5.0f));
+	enemyList->elementAt(0)->setPatrolLight(dynamic_cast<LightObject*>(getLocation(sizeX - 1, sizeY / 2 - 1)));
 	
 	wchar_t* outstring = L"Level 0: Loaded\n";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
@@ -252,20 +270,20 @@ void LevelClass::level1()
 			p4.push_back(path4[i]);
 		}
 	}
-	enemyList.add(new EnemyObject(p1, sound, 10.0f, -1.85f, 80.0f, 5.0f));
+	enemyList->add(new EnemyObject(p1, sound, 10.0f, -1.85f, 80.0f, 5.0f));
 
-	enemyList.add(new EnemyObject(p2, sound, 40.0f, -1.85f, 20.0f, 5.0f));
-	enemyList.elementAt(1)->setPatrolLight(dynamic_cast<LightObject*>(getLocation(2, 6)));
-	enemyList.elementAt(1)->TurnRight90();
+	enemyList->add(new EnemyObject(p2, sound, 40.0f, -1.85f, 20.0f, 5.0f));
+	enemyList->elementAt(1)->setPatrolLight(dynamic_cast<LightObject*>(getLocation(2, 6)));
+	enemyList->elementAt(1)->TurnRight90();
 
-	enemyList.add(new EnemyObject(p3, sound, 80.0f, -1.85f, 20.0f, 5.0f));
-	enemyList.elementAt(2)->setPatrolLight(dynamic_cast<LightObject*>(getLocation(11, 4)));
-	enemyList.elementAt(2)->TurnRight90();
+	enemyList->add(new EnemyObject(p3, sound, 80.0f, -1.85f, 20.0f, 5.0f));
+	enemyList->elementAt(2)->setPatrolLight(dynamic_cast<LightObject*>(getLocation(11, 4)));
+	enemyList->elementAt(2)->TurnRight90();
 
-	enemyList.add(new EnemyObject(p4, sound, 60.0f, -1.85f, 90.0f, 5.0f));
-	enemyList.elementAt(3)->setPatrolLight(dynamic_cast<LightObject*>(getLocation(11, 8)));
-	enemyList.elementAt(3)->TurnRight90();
-	enemyList.elementAt(3)->TurnRight90();
+	enemyList->add(new EnemyObject(p4, sound, 60.0f, -1.85f, 90.0f, 5.0f));
+	enemyList->elementAt(3)->setPatrolLight(dynamic_cast<LightObject*>(getLocation(11, 8)));
+	enemyList->elementAt(3)->TurnRight90();
+	enemyList->elementAt(3)->TurnRight90();
 
 	wchar_t* outstring = L"Level 1: Loaded\n";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
@@ -299,7 +317,7 @@ void LevelClass::buildWall(int x, int y)
 							};
 
 	WallObject* newWall = new WallObject(x+0.0f,y+0.0f, wallTextures);
-	gamePieces.add(newWall);
+	gamePieces->add(newWall);
 }
 
 void LevelClass::buildDoor(int x, int y)
@@ -315,7 +333,7 @@ void LevelClass::buildDoor(int x, int y)
 	DoorObject* newDoor = new DoorObject(-1,-1,x+0.0f,y+0.0f,doorTextures);
 	newDoor->giveSoundObject(sound);
 	if (map[x][y] == C_DOOR_2) newDoor->getModel()->worldRotateY(XM_PIDIV2);
-	gamePieces.add(newDoor);
+	gamePieces->add(newDoor);
 }
 
 void LevelClass::buildFloor(int x, int y)
@@ -323,7 +341,7 @@ void LevelClass::buildFloor(int x, int y)
 	WCHAR * floorTexture = L"../Engine/textures/tilefloortexture.dds";
 
 	FloorObject * newFloor = new FloorObject(x+0.0f,y+0.0f,floorTexture);
-	gamePieces.add(newFloor);
+	gamePieces->add(newFloor);
 }
 
 void LevelClass::buildCeiling(int x, int y)
@@ -333,7 +351,7 @@ void LevelClass::buildCeiling(int x, int y)
 	FloorObject * newCeiling = new FloorObject(x+0.0f, y+0.0f, ceilingTexture);
 	newCeiling->getModel()->worldRotateX(XM_PI);
 	newCeiling->getModel()->worldTranslate(0.0f, 14.5f, 0.0f);
-	gamePieces.add(newCeiling);
+	gamePieces->add(newCeiling);
 }
 
 void LevelClass::buildLight(int x, int y)
@@ -351,7 +369,7 @@ void LevelClass::buildLight(int x, int y)
 	if (map[x][y] == C_LIGHT_2) newLight->rotate(XM_PIDIV2);
 	if (map[x][y] == C_LIGHT_3) newLight->rotate(XM_PI);
 	if (map[x][y] == C_LIGHT_4) newLight->rotate(XM_PI + XM_PIDIV2);
-	gamePieces.add(newLight);
+	gamePieces->add(newLight);
 }
 
 void LevelClass::buildLock(int x, int y)
@@ -369,7 +387,7 @@ void LevelClass::buildLock(int x, int y)
 	if (map[x][y] == C_LOCK_2) newLock->rotate(XM_PIDIV2);
 	if (map[x][y] == C_LOCK_3) newLock->rotate(XM_PI);
 	if (map[x][y] == C_LOCK_4) newLock->rotate(XM_PI + XM_PIDIV2);
-	gamePieces.add(newLock);
+	gamePieces->add(newLock);
 }
 
 /* Function:	Shutdown
@@ -377,9 +395,18 @@ void LevelClass::buildLock(int x, int y)
 */
 void LevelClass::Shutdown()
 {
-	for(int i=0; i<gamePieces.size(); i++){
-		delete gamePieces.elementAt(i);
+	int pieceSize = gamePieces->size();
+	for(int i=0; i<pieceSize; i++){
+		delete gamePieces->removeLast();
 	}
+
+	int enemySize = enemyList->size();
+	for(int j=0; j<enemySize; j++){
+		enemyList->removeLast();
+	}
+
+	
+
 	wchar_t* outstring = L"Levels Shutdown..";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 }
@@ -399,15 +426,15 @@ ArrayList<GameModel> LevelClass::getGameModels()
 {
 	ArrayList<GameModel> gameModels;
 	
-	for(int i=0; i<gamePieces.size(); i++)
-		gameModels.addAll(gamePieces.elementAt(i)->GetGameModels());
+	for(int i=0; i<gamePieces->size(); i++)
+		gameModels.addAll(gamePieces->elementAt(i)->GetGameModels());
 
 	return gameModels;
 }
 
 ArrayList<EnemyObject> LevelClass::getEnemies()
 {
-	return enemyList;
+	return *enemyList;
 }
 
 int LevelClass::getPlayerStartX()
@@ -423,10 +450,10 @@ int LevelClass::getPlayerStartZ()
 GameObject* LevelClass::getLocation(int x, int z)
 {
 	if(x<sizeX && z<sizeY && x>=0 && z>=0){
-	for(int i=0; i<gamePieces.size(); i++)
-		if(gamePieces.elementAt(i)->getLocation(x,z)== true)
+	for(int i=0; i<gamePieces->size(); i++)
+		if(gamePieces->elementAt(i)->getLocation(x,z)== true)
 		{
-			return gamePieces.elementAt(i);
+			return gamePieces->elementAt(i);
 		}
 	}
 	return NULL;
