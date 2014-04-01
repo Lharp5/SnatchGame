@@ -61,7 +61,58 @@ void LevelClass::loadLevel(int level)
 
 void LevelClass::level0()
 {
+	sizeX = 10;
+	sizeY = 10;
+	for (int i = 0; i < sizeX; i++)
+	{
+		for (int j = 0; j < sizeY; j++)
+		{
+			map[i][j] = C_FLOOR;
+		}
+	}
+	for (int i = 0; i < sizeX; i++)
+	{
+		map[i][0] = C_WALL;
+		map[i][sizeY - 1] = C_WALL;
+	}
+	for (int i = 0; i < sizeY; i++)
+	{
+		map[0][i] = C_WALL;
+		map[sizeX - 1][i] = C_WALL;
+	}
+	map[sizeX / 2 - 1][sizeY - 1] = C_DOOR_1;
+	map[sizeX - 1][sizeY / 2 - 1] = C_LIGHT_4;
+	map[0][sizeY / 2 - 1] = C_LOCK_2;
 
+	playerStartX = sizeX / 2 - 1;
+	playerStartZ = sizeY / 2 - 1;
+
+	loadObjects();
+	
+	for (int i = 0; i < sizeX; i++)
+	{
+		for (int j = 0; j < sizeY; j++)
+		{
+			if (map[i][j] == C_FLOOR)
+			{
+				dynamic_cast<FloorObject*>(getLocation(i, j))->createSource(sizeX - 1, sizeY / 2 - 1);
+			}
+		}
+	}
+
+	dynamic_cast<DoorObject*>(getLocation(sizeX / 2 - 1, sizeY - 1))->createLock(dynamic_cast<LockObject*>(getLocation(0, sizeY / 2 - 1)));
+	
+	int path[] = {7, 1, 1, 7, 1, 1};
+	vector<int> p;
+	for (int i = 0; i < 6; i++)
+	{
+		p.push_back(path[i]);
+	}
+	enemyList.add(new EnemyObject(p, sound, 10.0f, -1.85f, 10.0f, 5.0f));
+	enemyList.elementAt(0)->setPatrolLight(dynamic_cast<LightObject*>(getLocation(sizeX - 1, sizeY / 2 - 1)));
+	
+	wchar_t* outstring = L"Level 0: Loaded\n";
+	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 }
 /* Function:	loadLevel 
  * Purpose:		To assign level 1 to the map
@@ -216,7 +267,7 @@ void LevelClass::level1()
 	enemyList.elementAt(3)->TurnRight90();
 	enemyList.elementAt(3)->TurnRight90();
 
-	wchar_t* outstring = L"Level 0: Loaded\n";
+	wchar_t* outstring = L"Level 1: Loaded\n";
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 }
 

@@ -52,7 +52,7 @@ void WorldClass::initalizeWorld()
 {
 	level = new LevelClass(sound);
 
-	level->loadLevel(1);
+	level->loadLevel(0);
 
 	enemies.addAll(level->getEnemies());
 
