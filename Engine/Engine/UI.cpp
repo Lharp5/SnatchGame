@@ -80,6 +80,8 @@ void UI::setRotation(XMFLOAT2 camRot)
 {
 	if(firstTimeR){
 		rotation = XMFLOAT2(camRot.x, camRot.y);
+		starUi->worldRotateX(cameraRotation.y);
+		starUi->worldRotateY(cameraRotation.x);
 		firstTimeR = false;
 		cameraRotation = camRot;
 	}
