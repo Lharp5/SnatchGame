@@ -15,6 +15,7 @@ SystemClass::SystemClass()
 	prevEPressedState = false;
 	enterPressed = false;
 	velocityVector = XMFLOAT3(0.0f, 0.0f, 0.0f);
+	scoreChanged = false;
 }
 
 
@@ -274,6 +275,25 @@ bool SystemClass::Frame()
 	velocityVector = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	
 	m_World->runGame();
+	
+	time_t elapsedTime = m_World->getElapsedTime();
+	if(elapsedTime % 10 == 0  && elapsedTime!=0 && !scoreChanged){
+		wchar_t* outstring = L"Change it!\n";
+		WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
+		scoreChanged = true;
+		if(m_Ui->changeNeeded()){
+			for(int i=0; i<m_GameModels->size(); i++)
+				if(m_GameModels->elementAt(i) == m_Ui->getUI()){
+					m_GameModels->remove(m_Ui->getUI());
+					m_Ui->setStar();
+					m_Graphics->createModel(m_Ui->getUI());
+					m_GameModels->add(m_Ui->getUI());
+				}
+		}
+	}
+
+	if(elapsedTime % 10 == 1 && scoreChanged)
+		scoreChanged = false;
 	//m_Menu->worldRotateX(XM_PIDIV2);
 
 	if(m_World->checkLight())
@@ -398,6 +418,7 @@ bool SystemClass::checkControls()
 	//opening menu
 	if(m_Input->keyPressed(DIK_RETURN)){
 		if(!enterPressed){
+			m_World->setStartTime();
 			m_GameModels->remove(m_Menu);
 			delete m_Menu;
 			m_Menu = 0;

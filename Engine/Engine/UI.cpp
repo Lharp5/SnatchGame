@@ -8,6 +8,9 @@ UI::UI(): star4(L"../Engine/textures/Score/Score4.dds"), star3(L"../Engine/textu
 UI::UI(XMFLOAT3 camPos, XMFLOAT2 camRot): star4(L"../Engine/textures/Score/Score4.dds"), star3(L"../Engine/textures/Score/Score3.dds"), star2(L"../Engine/textures/Score/Score2.dds"), 
 			star1(L"../Engine/textures/Score/Score1.dds"), star0 (L"../Engine/textures/Score/Score0.dds"), starUi(new QuadTexturedModel(0.5f, 0.125f,star4))
 {
+	width = 0.5f;
+	height = 0.125f;
+	goldStar = EXCELL;
 	cameraPosition = camPos;
 	firstTimeP = true;
 	cameraRotation = camRot;
@@ -27,6 +30,34 @@ QuadTexturedModel* UI::getUI()
 	return starUi;
 }
 
+void UI::setStar()
+{
+	delete starUi;
+	switch(goldStar){
+	case EXCELL:	starUi = new QuadTexturedModel(width, height, star0);	break;
+	case GREAT:		starUi = new QuadTexturedModel(width, height, star0);	break;
+	case GOOD:		starUi = new QuadTexturedModel(width, height, star0);	break;
+	case OK:		starUi = new QuadTexturedModel(width, height, star0);	break;
+	default:		starUi = new QuadTexturedModel(width, height, star0);	break;
+	}
+}
+bool UI::changeNeeded()
+{
+	switch(goldStar){
+	case EXCELL:	goldStar = GREAT; 	break;
+	case GREAT:		goldStar = GOOD; 	break;	
+	case GOOD:		goldStar = OK;		break;
+	case OK:		goldStar = FAIL; 	break; 
+	default:		return false;
+	}
+	wchar_t* outstring = L"Changed the Star \n";
+		WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
+	return true;
+}
+Score UI::getStars()
+{
+	return goldStar;
+}
 void UI::setPosition(XMFLOAT3 camPos)
 {
 	if(firstTimeP){

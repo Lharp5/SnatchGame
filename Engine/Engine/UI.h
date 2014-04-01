@@ -18,7 +18,11 @@ public:
 	void setPosition(XMFLOAT3);
 	void setRotation(XMFLOAT2);
 	QuadTexturedModel* getUI();
-	void changeScore();
+	bool changeNeeded();
+	void setStar();
+
+	Score getStars();
+
 private:
 	XMFLOAT3 cameraPosition;
 	XMFLOAT2 cameraRotation;
@@ -34,12 +38,10 @@ private:
 	XMFLOAT2 rotation;
 	bool firstTimeP;
 	bool firstTimeR;
-	void setStar4();
-	void setStar3();
-	void setStar2();
-	void setStar1();
-	void setStar0();
-	
+
+	float width;
+	float height;
+		
 };
 
 #endif

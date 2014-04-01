@@ -40,7 +40,10 @@ GraphicsClass::~GraphicsClass()
 }
 
 
-
+void GraphicsClass::createModel(GameModel* m)
+{
+	m->InitializeVertexModels(m_D3D->GetDevice());
+}
 bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd, CineCameraClass* camera, ArrayList<GameModel>* gameModels)
 {
 	bool result;

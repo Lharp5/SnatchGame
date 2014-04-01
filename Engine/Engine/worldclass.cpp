@@ -62,6 +62,7 @@ void WorldClass::initalizeWorld()
 	playerSeen = false;
 
 	startTime = time(nullptr);
+	currTime = time(nullptr);
 	suspicionTime = time(nullptr);
 
 	//NEEDS TO FINISH THIS CLASS
@@ -163,6 +164,7 @@ void WorldClass::runGame()
 	}
 	else if (gameState == PLAYING)
 	{
+		currTime = time(nullptr);
 		for(int i=0; i<level->getSizeX(); i++){
 			for(int j=0; j<level->getSizeY(); j++){
 				if(level->checkMap(i,j) == C_DOOR_1 || level->checkMap(i,j) == C_DOOR_2){
@@ -940,4 +942,15 @@ void WorldClass::UpdatePlayerWalk(bool walking)
 	{
 		return;
 	}
+}
+
+void WorldClass::setStartTime()
+{
+	startTime = time(nullptr);
+}
+
+time_t WorldClass::getElapsedTime()
+{
+	time_t t = currTime - startTime;
+	return t;
 }

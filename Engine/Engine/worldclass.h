@@ -61,6 +61,10 @@ public:
 
 	void UpdatePlayerWalk(bool);
 
+	//Function to start the time of the game, once enter is pressed.
+	void setStartTime();
+	time_t getElapsedTime();
+
 	bool GameMenu();
 	bool GamePlaying();
 	bool GameOver();
@@ -113,7 +117,10 @@ private:
 	bool playerWalking;
 	bool playerSeen;
 
+	//variable for score (time)
+
 	time_t startTime;
+	time_t currTime;
 	time_t suspicionTime;
 	GameState gameState;
 };
