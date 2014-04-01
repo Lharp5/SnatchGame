@@ -8,6 +8,7 @@ CineCameraClass::CineCameraClass(int screenWidth, int screenHeight)
 {
 	position = XMFLOAT3(0.0f, 0.0f, -10.0f); //location of camera in 3D space
 	direction = XMFLOAT3(0.0f, 0.0f, 1.0f); //direction camera is facing
+	rotation = XMFLOAT2(0.0f, 0.0f);
 	upDirection = XMFLOAT3(0.0f, 1.0f, 0.0f); //up direction of vector
 	trueUpDirection = XMFLOAT3(0.0f, 1.0f, 0.0f);
 	screenAspectRatio = ((float) screenWidth) / ((float) screenHeight);
@@ -144,11 +145,11 @@ void CineCameraClass::TiltUp()
 } 
 void CineCameraClass::PanLeft()
 {
-	Pan(-1.0f);
+	Pan(-2.0f);
 } 
 void CineCameraClass::PanRight()
 {
-	Pan(1.0f);
+	Pan(2.0f);
 }
 void CineCameraClass::RollLeft()
 {
@@ -224,11 +225,13 @@ void CineCameraClass::ZoomOut()
 
 void CineCameraClass::Tilt(float degree)
 {
+
 	float horizontalMagnitude = sqrt(direction.x * direction.x + direction.z * direction.z);
 	float angle = atan(direction.y / horizontalMagnitude);
 	if ((angle - degree*(XM_PIDIV2/100*CAMERA_TILT_SPEED) < XM_PIDIV2) &&
 		(angle - degree*(XM_PIDIV2/100*CAMERA_TILT_SPEED) > -XM_PIDIV2))
 	{
+		rotation.y += degree*(XM_PIDIV2/100*CAMERA_TILT_SPEED);
 		//NOTE: currently the argument delta is not used
 		wchar_t* outstring = L"CineCameraClass::Tilt\n";
 		WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
@@ -260,6 +263,7 @@ void CineCameraClass::Pan(float degree)
 	See how this is done for the tilt operation
 	*/
 
+	rotation.x += degree*(XM_PIDIV2/100*CAMERA_PAN_SPEED);
 	//Pan the camera right rotating CW about the up vector direction vector
 	float horizontalMagnitude = sqrt(direction.x * direction.x + direction.z * direction.z);
 	float angle = atan(direction.y / horizontalMagnitude);
@@ -294,6 +298,10 @@ XMFLOAT3 CineCameraClass::GetPosition()
 	return position;
 }
 
+XMFLOAT2 CineCameraClass::GetRotation()
+{
+	return rotation;
+}
 
 void CineCameraClass::Render()
 {

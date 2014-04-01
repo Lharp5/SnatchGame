@@ -86,7 +86,7 @@ bool SystemClass::Initialize()
 
 	m_GameModels->add(m_Menu);
 
-	m_Ui = new UI(m_Camera->GetPosition());
+	m_Ui = new UI(m_Camera->GetPosition(), m_Camera->GetRotation());
 	m_GameModels->add(m_Ui->getUI());
 
 	m_lightMask = new LightMask(m_Camera->GetPosition());
@@ -122,6 +122,7 @@ bool SystemClass::Initialize()
 	m_Camera->SetPosition(m_World->getPlayerStartX(), m_World->getPlayerStartY(), m_World->getPlayerStartZ());
 	m_Menu->worldTranslate(m_Camera->GetPosition().x, m_Camera->GetPosition().y-0.20f ,m_Camera->GetPosition().z+7.0f);
 	m_Ui->setPosition(m_Camera->GetPosition());
+	m_Ui->setRotation(m_Camera->GetRotation());
 	m_Ui->getUI()->setRenderVal(false);
 	prevCamPos = m_Camera->GetPosition();
 
@@ -372,7 +373,7 @@ bool SystemClass::Frame()
 	m_World->updatePlayer(m_Camera->GetPosition().x, m_Camera->GetPosition().z);
 	
 	if(enterPressed)
-		m_Ui->frame(m_Camera->GetPosition());
+		m_Ui->frame(m_Camera->GetPosition(), m_Camera->GetRotation());
 	m_lightMask->frame(m_Camera->GetPosition());
 	
 

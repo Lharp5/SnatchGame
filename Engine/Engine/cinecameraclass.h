@@ -75,6 +75,7 @@ public:
 	void CameraAim(int&, int&);
 
 	XMFLOAT3 GetPosition();
+	XMFLOAT2 GetRotation();
 
 	void Render();
 	void GetViewMatrix(XMFLOAT4X4&);
@@ -85,6 +86,8 @@ private:
 	XMFLOAT3 position; //position in 3-space of the camera
 	XMFLOAT3 direction; //direction the camera is pointing
 	XMFLOAT3 upDirection; //up direction of the camera
+
+	XMFLOAT2 rotation;
 
 	XMFLOAT3 trueUpDirection; //keep track of true up
 

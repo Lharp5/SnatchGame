@@ -9,17 +9,19 @@ class UI
 {
 public:
 	UI();
-	UI(XMFLOAT3);
+	UI(XMFLOAT3, XMFLOAT2);
 	~UI();
-	void frame(XMFLOAT3);
+	void frame(XMFLOAT3, XMFLOAT2);
 	void rotateX(float);
 	void rotateY(float);
 	void rotateZ(float);
 	void setPosition(XMFLOAT3);
+	void setRotation(XMFLOAT2);
 	QuadTexturedModel* getUI();
 	void changeScore();
 private:
 	XMFLOAT3 cameraPosition;
+	XMFLOAT2 cameraRotation;
 	Score goldStar;
 	WCHAR * star4;
 	WCHAR * star3;
@@ -29,7 +31,9 @@ private:
 	QuadTexturedModel* starUi;
 
 	XMFLOAT3 position;
-	bool firstTime;
+	XMFLOAT2 rotation;
+	bool firstTimeP;
+	bool firstTimeR;
 	void setStar4();
 	void setStar3();
 	void setStar2();
