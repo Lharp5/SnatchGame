@@ -425,6 +425,7 @@ void WorldClass::runGame()
 					int diffY = abs((int)e->getLocationZ() / 10 - (int)e->getPatrolLight()->getLocationZ());
 					if ((diffX == 1 && diffY == 0) || (diffX == 0 && diffY == 1))
 					{
+						e->fixPosition();
 						e->getPatrolLight()->doAction();
 						e->resetPath(e->getCurrentPath());
 					}
@@ -459,6 +460,7 @@ void WorldClass::runGame()
 							for (int j = 0; j < d; ++j)
 								e->TurnRight90();
 						}
+						e->fixPosition();
 						e->enemyState = PATROLLING;
 					}
 				}
@@ -501,13 +503,13 @@ void WorldClass::runGame()
 
 void WorldClass::FollowPath(EnemyObject* e, vector<int> path)
 {
+	unsigned int cpa = e->currentPathAction;
+	if (cpa > path.size() - 1)
+	{
+		e->currentPathAction = 0;
+	}
 	if (e->currentPathAction % 3 == 0)
 	{
-		unsigned int cpa = e->currentPathAction;
-		if (cpa > path.size() - 1)
-		{
-			e->currentPathAction = 0;
-		}
 		if (e->actionComplete)
 		{
 			e->actionComplete = false;
