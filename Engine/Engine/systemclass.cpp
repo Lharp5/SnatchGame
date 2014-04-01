@@ -403,6 +403,7 @@ bool SystemClass::checkControls()
 			m_Ui->getUI()->setRenderVal(true);
 		}
 		enterPressed = true;
+		m_World->StartGame();
 	}
 
 	//regular controls
@@ -493,16 +494,13 @@ bool SystemClass::checkControls()
 				if ( m_Input->keyPressed(DIK_DOWN) ) //Tilt Camera Upward
 					m_Camera->TiltDown();	
 	   
+				int x, y;
+				m_Input->GetMouseDisplacement(x, y);
+				if (abs(x) > 0 || abs(y) > 0)
+				{
+					m_Camera->CameraAim(x, y);
+				}
 			}
-		}
-		int x, y;
-		m_Input->GetMouseDisplacement(x, y);
-		if (abs(x) > 0 || abs(y) > 0)
-		{
-			wchar_t s[32];
-			wsprintf(s, L"Mouse Displacement: %d, %d\n", x, y);
-			WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), s, wcslen(s), NULL, NULL);
-			m_Camera->CameraAim(x, y);
 		}
 	}
 	//user is still playing

@@ -56,6 +56,8 @@ public:
 
 	void Frame();
 
+	bool playerSpotted;
+
 	EnemyState enemyState;
 
 private:

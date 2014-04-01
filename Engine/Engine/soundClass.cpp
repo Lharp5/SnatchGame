@@ -23,6 +23,7 @@ SoundClass::SoundClass()
 	menuSong = 0;
 	gameOverSong = 0;
 	creditsSong = 0;
+	lockedDoor = 0;
 }
 
 
@@ -103,6 +104,11 @@ bool SoundClass::Initialize(HWND hwnd)
 	{
 		return false;
 	}
+	result = LoadWaveFile ("../Engine/audio/Door/Door_Locked.wav", &lockedDoor);
+	if(!result)
+	{
+		return false;
+	}
 
 
 	return true;
@@ -123,6 +129,7 @@ void SoundClass::Shutdown()
 	ShutdownWaveFile(&menuSong);
 	ShutdownWaveFile(&gameOverSong);
 	ShutdownWaveFile(&creditsSong);
+	ShutdownWaveFile(&lockedDoor);
 
 	// Shutdown the Direct Sound API.
 	ShutdownDirectSound();
@@ -422,7 +429,7 @@ void SoundClass::PlayDesiredFile(int choice, bool loop)
 	int l = loop ? 1 : 0;
 	if (choice == 1)
 	{
-		stealthSong->SetCurrentPosition(175000 * 0);
+		//stealthSong->SetCurrentPosition(175000 * 0);
 		stealthSong->SetVolume(-1500);
 		stealthSong->Play(0, 0, l);
 		currentSong = choice;
@@ -490,6 +497,12 @@ void SoundClass::PlayDesiredFile(int choice, bool loop)
 		creditsSong->Play(0, 0, l);
 		currentSong = choice;
 	}
+	else if (choice == 12)
+	{
+		lockedDoor->SetCurrentPosition(175000 * 0);
+		lockedDoor->SetVolume(-1500);
+		lockedDoor->Play(0, 0, l);
+	}
 	else
 	{
 		return;
@@ -541,6 +554,10 @@ void SoundClass::StopDesiredFile(int choice)
 	else if (choice == 11)
 	{
 		creditsSong->Stop();
+	}
+	else if (choice == 11)
+	{
+		lockedDoor->Stop();
 	}
 	else
 	{

@@ -10,7 +10,7 @@
 WorldClass::WorldClass(HWND hwnd)
 {
 	//renderModels =0;
-	gameState = PLAYING;
+	gameState = MENU;
 	winGame = false;
 	
 	// Initialize the sound object.
@@ -39,8 +39,6 @@ bool WorldClass::initializeSound(HWND hwnd)
 	{
 		return false;
 	}
-
-	sound->PlayDesiredFile(1, true);
 
 	return true;
 }
@@ -150,7 +148,15 @@ float WorldClass::getPlayerStartZ()
 
 void WorldClass::runGame()
 {
-	if (gameState == PLAYING)
+	if (gameState == MENU)
+	{
+		if (sound->GetCurrentSong() != 9)
+		{
+			sound->StopDesiredFile(sound->GetCurrentSong());
+			sound->PlayDesiredFile(9, false);
+		}
+	}
+	else if (gameState == PLAYING)
 	{
 		for(int i=0; i<level->getSizeX(); i++){
 			for(int j=0; j<level->getSizeY(); j++){
@@ -172,12 +178,20 @@ void WorldClass::runGame()
 							}
 						}
 					}
+					else
+					{
+						sound->PlayDesiredFile(12, false);
+					}
 				}
 			}
 		}
 		for (int i = 0; i < enemies.size(); i++)
 		{
 			EnemyObject* e = enemies.elementAt(i);
+			if (playerSeen && !e->playerSpotted)
+			{
+				continue;
+			}
 			int enemyX = (int)e->getLocationX() / 10;
 			int enemyY = (int)e->getLocationZ() / 10;
 			int sight;
@@ -194,13 +208,20 @@ void WorldClass::runGame()
 						}
 						sight += 1;
 					}
-					if (player->getXLocation() == enemyX && (player->getYLocation() >= enemyY && player->getYLocation() <= enemyY + sight))
+					if (player->getXLocation() == enemyX && (player->getYLocation() > enemyY && player->getYLocation() <= enemyY + sight))
 					{
 						if (!playerSeen)
 						{
 							suspicionTime = time(nullptr);
 						}
 						playerSeen = true;
+						e->playerSpotted = true;
+						continue;
+					}
+					else
+					{
+						playerSeen = false;
+						e->playerSpotted = false;
 					}
 				}
 				else if (e->getDirection() == EAST)
@@ -214,13 +235,20 @@ void WorldClass::runGame()
 						}
 						sight += 1;
 					}
-					if (player->getYLocation() == enemyY && (player->getXLocation() >= enemyX && player->getXLocation() <= enemyX + sight))
+					if (player->getYLocation() == enemyY && (player->getXLocation() > enemyX && player->getXLocation() <= enemyX + sight))
 					{
 						if (!playerSeen)
 						{
 							suspicionTime = time(nullptr);
 						}
 						playerSeen = true;
+						e->playerSpotted = true;
+						continue;
+					}
+					else
+					{
+						playerSeen = false;
+						e->playerSpotted = false;
 					}
 				}
 				else if (e->getDirection() == SOUTH)
@@ -234,13 +262,20 @@ void WorldClass::runGame()
 						}
 						sight += 1;
 					}
-					if (player->getXLocation() == enemyX && (player->getYLocation() <= enemyY && player->getYLocation() >= enemyY - sight))
+					if (player->getXLocation() == enemyX && (player->getYLocation() < enemyY && player->getYLocation() >= enemyY - sight))
 					{
 						if (!playerSeen)
 						{
 							suspicionTime = time(nullptr);
 						}
 						playerSeen = true;
+						e->playerSpotted = true;
+						continue;
+					}
+					else
+					{
+						playerSeen = false;
+						e->playerSpotted = false;
 					}
 				}
 				else if (e->getDirection() == WEST)
@@ -254,13 +289,20 @@ void WorldClass::runGame()
 						}
 						sight += 1;
 					}
-					if (player->getYLocation() == enemyY && (player->getXLocation() <= enemyX && player->getXLocation() >= enemyX - sight))
+					if (player->getYLocation() == enemyY && (player->getXLocation() < enemyX && player->getXLocation() >= enemyX - sight))
 					{
 						if (!playerSeen)
 						{
 							suspicionTime = time(nullptr);
 						}
 						playerSeen = true;
+						e->playerSpotted = true;
+						continue;
+					}
+					else
+					{
+						playerSeen = false;
+						e->playerSpotted = false;
 					}
 				}
 			}
@@ -268,46 +310,74 @@ void WorldClass::runGame()
 			{
 				if (e->getDirection() == NORTH)
 				{
-					if (player->getXLocation() == enemyX && (player->getYLocation() == enemyY || player->getYLocation() == enemyY + 1))
+					if (player->getXLocation() == enemyX && player->getYLocation() == enemyY + 1)
 					{
 						if (!playerSeen)
 						{
 							suspicionTime = time(nullptr);
 						}
 						playerSeen = true;
+						e->playerSpotted = true;
+						continue;
+					}
+					else
+					{
+						playerSeen = false;
+						e->playerSpotted = false;
 					}
 				}
 				else if (e->getDirection() == EAST)
 				{
-					if (player->getYLocation() == enemyY && (player->getXLocation() == enemyX || player->getXLocation() == enemyX + 1))
+					if (player->getYLocation() == enemyY && player->getXLocation() == enemyX + 1)
 					{
 						if (!playerSeen)
 						{
 							suspicionTime = time(nullptr);
 						}
 						playerSeen = true;
+						e->playerSpotted = true;
+						continue;
+					}
+					else
+					{
+						playerSeen = false;
+						e->playerSpotted = false;
 					}
 				}
 				else if (e->getDirection() == SOUTH)
 				{
-					if (player->getXLocation() == enemyX && (player->getYLocation() == enemyY || player->getYLocation() == enemyY - 1))
+					if (player->getXLocation() == enemyX && player->getYLocation() == enemyY - 1)
 					{
 						if (!playerSeen)
 						{
 							suspicionTime = time(nullptr);
 						}
 						playerSeen = true;
+						e->playerSpotted = true;
+						continue;
+					}
+					else
+					{
+						playerSeen = false;
+						e->playerSpotted = false;
 					}
 				}
 				else if (e->getDirection() == WEST)
 				{
-					if (player->getYLocation() == enemyY && (player->getXLocation() == enemyX || player->getXLocation() == enemyX - 1))
+					if (player->getYLocation() == enemyY && player->getXLocation() == enemyX - 1)
 					{
 						if (!playerSeen)
 						{
 							suspicionTime = time(nullptr);
 						}
 						playerSeen = true;
+						e->playerSpotted = true;
+						continue;
+					}
+					else
+					{
+						playerSeen = false;
+						e->playerSpotted = false;
 					}
 				}
 				e->enemyState = FIXING;
@@ -380,28 +450,33 @@ void WorldClass::runGame()
 					FollowPath(e, e->getCurrentPath());
 				}
 			}
-			if (playerSeen)
+			if (player->getXLocation() == enemyX && player->getYLocation() == enemyY)
 			{
-				if (sound->GetCurrentSong() != 2)
-				{
-					sound->StopDesiredFile(sound->GetCurrentSong());
-					sound->PlayDesiredFile(2, true);
-				}
-			}
-			else
-			{
-				if (sound->GetCurrentSong() != 1)
-				{
-					sound->StopDesiredFile(sound->GetCurrentSong());
-					sound->PlayDesiredFile(1, true);
-				}
-				suspicionTime = time(nullptr);
-			}
-			enemies.elementAt(i)->Frame();
-			if (playerSeen && time(nullptr) - suspicionTime >= 3)
-			{
+				playerSeen = true;
 				gameState = GAMEOVER;
 			}
+			enemies.elementAt(i)->Frame();
+		}
+		if (playerSeen)
+		{
+			if (sound->GetCurrentSong() != 2)
+			{
+				sound->StopDesiredFile(sound->GetCurrentSong());
+				sound->PlayDesiredFile(2, true);
+			}
+		}
+		else
+		{
+			if (sound->GetCurrentSong() != 1)
+			{
+				sound->StopDesiredFile(sound->GetCurrentSong());
+				sound->PlayDesiredFile(1, true);
+			}
+			suspicionTime = time(nullptr);
+		}
+		if (playerSeen && time(nullptr) - suspicionTime >= 3)
+		{
+			gameState = GAMEOVER;
 		}
 	}
 }
@@ -671,9 +746,19 @@ vector<int> WorldClass::convertPath(int x, int y, vector<XMINT2>& path, EnemyObj
 	return p;
 }
 
+bool WorldClass::GameMenu()
+{
+	return gameState == MENU;
+}
+
 bool WorldClass::GamePlaying()
 {
 	return gameState == PLAYING;
+}
+
+void WorldClass::StartGame()
+{
+	gameState = PLAYING;
 }
 
 void WorldClass::doAction()

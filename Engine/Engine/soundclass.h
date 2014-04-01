@@ -81,6 +81,7 @@ private:
 	IDirectSoundBuffer8* menuSong;
 	IDirectSoundBuffer8* gameOverSong;
 	IDirectSoundBuffer8* creditsSong;
+	IDirectSoundBuffer8* lockedDoor;
 	int currentSong;
 };
  

@@ -17,6 +17,7 @@ EnemyObject::EnemyObject(vector<int> p, SoundClass* snd, float x, float y, float
 	giveSoundObject(snd);
 	enemyState = PATROLLING;
 	patrolLight = 0;
+	playerSpotted = false;
 }
 
 EnemyObject::~EnemyObject(void)

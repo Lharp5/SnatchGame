@@ -27,3 +27,4 @@ Music
 SFX
 
 	All taken from here: http://noproblo.dayjo.org/ZeldaSounds/
+	Locked Door: http://www.soundjay.com/handbag-sounds-1.html

@@ -59,7 +59,9 @@ public:
 
 	void UpdatePlayerWalk(bool);
 
+	bool GameMenu();
 	bool GamePlaying();
+	void StartGame();
 
 private:
 	//objects
