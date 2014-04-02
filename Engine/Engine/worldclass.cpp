@@ -51,7 +51,7 @@ WorldClass::~WorldClass()
 void WorldClass::initalizeWorld()
 {
 	level = new LevelClass(sound);
-	currLevel = 1;
+	currLevel = 0;
 	level->loadLevel(currLevel);
 	
 

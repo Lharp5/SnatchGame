@@ -569,6 +569,8 @@ void SystemClass::changeLevel(int level)
 	for(int i=0; i<m_GameModels->size(); i++)
 		m_Graphics->createModel(m_GameModels->elementAt(i));
 
+	m_Camera->SetPosition(m_World->getPlayerStartX(), m_Camera->GetPosition().y, m_World->getPlayerStartZ());
+
 	
 }
 LRESULT CALLBACK SystemClass::MessageHandler(HWND hwnd, UINT umsg, WPARAM wparam, LPARAM lparam)
