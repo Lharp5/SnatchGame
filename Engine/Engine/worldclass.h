@@ -78,8 +78,6 @@ private:
 	GameModel* floor[100][100];
 	GameModel* roof[100][100];
 
-	ArrayList<EnemyObject> enemies;
-
 	PlayerClass* player;
 
 	//sound

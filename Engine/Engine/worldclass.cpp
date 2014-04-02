@@ -55,7 +55,7 @@ void WorldClass::initalizeWorld()
 	level->loadLevel(currLevel);
 	
 
-	enemies.addAll(level->getEnemies());
+	level->getEnemies().addAll(level->getEnemies());
 
 	player = new PlayerClass();
 	player->setPosition((int)getPlayerStartX(), (int)getPlayerStartZ());
@@ -111,8 +111,8 @@ void WorldClass::resetLevel(int levelNum)
 	gameState = PLAYING;
 	/*suspicionTime = time(nullptr);
 	playerSeen = false;
-	for(int i=0; i<enemies.size(); i++)
-		enemies.elementAt(i)->playerSpotted = false;*/
+	for(int i=0; i<level->getEnemies().size(); i++)
+		level->getEnemies().elementAt(i)->playerSpotted = false;*/
 	
 	
 
@@ -138,9 +138,9 @@ ArrayList<GameModel> WorldClass::getModels()
 	
 	ArrayList<GameModel> list;
 	list.addAll(level->getGameModels());
-	for (int i = 0; i < enemies.size(); i++)
+	for (int i = 0; i < level->getEnemies().size(); i++)
 	{
-		list.addAll(enemies.elementAt(i)->GetGameModels());
+		list.addAll(level->getEnemies().elementAt(i)->GetGameModels());
 	}
 
 	return list;
@@ -204,9 +204,9 @@ void WorldClass::runGame()
 				}
 			}
 		}
-		for (int i = 0; i < enemies.size(); i++)
+		for (int i = 0; i < level->getEnemies().size(); i++)
 		{
-			EnemyObject* e = enemies.elementAt(i);
+			EnemyObject* e = level->getEnemies().elementAt(i);
 			if (playerSeen && !e->playerSpotted)
 			{
 				continue;
@@ -476,7 +476,7 @@ void WorldClass::runGame()
 				playerSeen = true;
 				gameState = GAMEOVER;
 			}
-			enemies.elementAt(i)->Frame();
+			level->getEnemies().elementAt(i)->Frame();
 		}
 		if (playerSeen)
 		{
