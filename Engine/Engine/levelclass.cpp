@@ -109,7 +109,7 @@ void LevelClass::loadLevel(int level)
 void LevelClass::level0()
 {
 	sizeX = 10;
-	sizeY = 10;
+	sizeY = 12;
 	for (int i = 0; i < sizeX; i++)
 	{
 		for (int j = 0; j < sizeY; j++)
@@ -120,14 +120,19 @@ void LevelClass::level0()
 	for (int i = 0; i < sizeX; i++)
 	{
 		map[i][0] = C_WALL;
-		map[i][sizeY - 1] = C_WALL;
+		map[i][9] = C_WALL;
 	}
 	for (int i = 0; i < sizeY; i++)
 	{
 		map[0][i] = C_WALL;
 		map[sizeX - 1][i] = C_WALL;
 	}
-	map[sizeX / 2 - 1][sizeY - 1] = C_DOOR_1;
+	map[sizeX / 2 - 2][10] = C_WALL;
+	map[sizeX / 2 - 2][11] = C_WALL;
+	map[sizeX / 2][10] = C_WALL;
+	map[sizeX / 2][11] = C_WALL;
+	map[sizeX / 2 - 1][11] = C_WALL;
+	map[sizeX / 2 - 1][9] = C_DOOR_1;
 	map[sizeX - 1][sizeY / 2 - 1] = C_LIGHT_4;
 	map[0][sizeY / 2 - 1] = C_LOCK_2;
 
@@ -147,7 +152,9 @@ void LevelClass::level0()
 		}
 	}
 
-	dynamic_cast<DoorObject*>(getLocation(sizeX / 2 - 1, sizeY - 1))->createLock(dynamic_cast<LockObject*>(getLocation(0, sizeY / 2 - 1)));
+	getLocation(sizeX / 2 - 1, 10)->setWinTile();
+
+	dynamic_cast<DoorObject*>(getLocation(sizeX / 2 - 1, 9))->createLock(dynamic_cast<LockObject*>(getLocation(0, sizeY / 2 - 1)));
 	
 	int path[] = {7, 1, 1, 7, 1, 1};
 	vector<int> p;
