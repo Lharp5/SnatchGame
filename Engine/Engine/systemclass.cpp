@@ -428,6 +428,14 @@ bool SystemClass::checkControls()
 	}
 	else
 		nPressed = false;
+
+	if (m_Input->keyPressed(DIK_R) && !rPressed)
+		{
+			rPressed = true;
+			changeLevel(m_World->getCurrLevel());
+		}
+	else
+		rPressed = false;
 	if(m_Input->keyPressed(DIK_RETURN)){
 		if(!enterPressed){
 			m_World->setStartTime();
@@ -535,19 +543,6 @@ bool SystemClass::checkControls()
 					m_Camera->CameraAim(x, y);
 				}
 			}
-		}
-	}
-
-	if (m_World->GameOver())
-	{
-		if (m_Input->keyPressed(DIK_R) && !rPressed)
-		{
-			rPressed = true;
-			changeLevel(m_World->getCurrLevel());
-		}
-		if (m_Input->keyPressed(DIK_Q))
-		{
-			//quit
 		}
 	}
 	//user is still playing
