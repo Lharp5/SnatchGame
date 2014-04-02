@@ -86,9 +86,9 @@ void LevelClass::loadLevel(int level)
 {	
 	switch(level){
 	case 1:		level1(); break;
-	case 2:		break;
-	case 3:		break;
-	case 4:		break;
+	case 2:		
+	case 3:		
+	case 4:		
 	default:	level0(); break;
 	}
 	
