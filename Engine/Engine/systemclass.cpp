@@ -406,7 +406,7 @@ bool SystemClass::Frame()
 	
 	SetCursorPos(GetSystemMetrics(SM_CXSCREEN)  / 2, GetSystemMetrics(SM_CYSCREEN)  / 2);
 
-	if(m_World->gameWin()){
+	if(m_World->GameWin()){
 		int level = m_World->getCurrLevel();
 		changeLevel(++level);
 	}
