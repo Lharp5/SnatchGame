@@ -430,7 +430,7 @@ bool SystemClass::checkControls()
 
 	if(m_Input->keyPressed(DIK_N) && !nPressed){
 		int level = m_World->getCurrLevel();
-		changeLevel(level++);
+		changeLevel(++level);
 		nPressed = true;
 	}
 	else
