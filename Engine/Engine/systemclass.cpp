@@ -129,9 +129,6 @@ bool SystemClass::Initialize()
 	m_Ui->getUI()->setRenderVal(false);
 	prevCamPos = m_Camera->GetPosition();
 
-	
-
-	
 	return true;
 }
 
@@ -409,6 +406,10 @@ bool SystemClass::Frame()
 	
 	SetCursorPos(GetSystemMetrics(SM_CXSCREEN)  / 2, GetSystemMetrics(SM_CYSCREEN)  / 2);
 
+	if(m_World->gameWin()){
+		int level = m_World->getCurrLevel();
+		changeLevel(++level);
+	}
 	return true;
 }
 
