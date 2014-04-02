@@ -105,10 +105,10 @@ int WorldClass::getCurrLevel()
 }
 void WorldClass::resetLevel(int levelNum)
 {
-	currLevel = levelNum;
-	gameState = PLAYING;
+	currLevel = levelNum;	
 	level->resetLevel(levelNum);
 	player->setPosition(level->getPlayerStartX(), level->getPlayerStartZ());
+	gameState = PLAYING;
 	/*suspicionTime = time(nullptr);
 	playerSeen = false;
 	for(int i=0; i<enemies.size(); i++)
