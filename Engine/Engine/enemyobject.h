@@ -22,20 +22,14 @@ public:
 	virtual ArrayList<GameModel> GetGameModels();
 	virtual void setPatrolLight(LightObject*);
 	virtual LightObject* getPatrolLight();
-	
 	virtual bool getRenderValue();
 	virtual void setRenderValue(bool);
-
 	vector<int>& getPath();
 	vector<int>& getFixPath();
 	void setFixPath(vector<int>&);
 	vector<int>& getCurrentPath();
 	void setCurrentPath(vector<int>& p);
 	void resetPath(vector<int>&);
-	int currentPathAction;
-	int prevPathAction;
-	bool actionComplete;
-	
 	void fixPosition();
 	void TurnLeft();
 	void TurnRight();
@@ -44,21 +38,20 @@ public:
 	void Turn(float rotationRadianAngle);
 	void MoveForward(int);
 	void Rest(int);
-
 	Direction getDirection();
 	Direction getPrevDirection();
 	void setPrevDirection(Direction);
-
 	XMINT2 getDestination();
 	XMINT2 getPrevDestination();
 	void setPrevDestination(int, int);
 	bool isOnPath();
 	void toggleOnPath();
-
 	void Frame();
 
+	int currentPathAction;
+	int prevPathAction;
+	bool actionComplete;
 	bool playerSpotted;
-
 	EnemyState enemyState;
 
 private:

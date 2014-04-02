@@ -6,7 +6,9 @@ EnemyObject::EnemyObject(vector<int> p, SoundClass* snd, float x, float y, float
 	m_model = new EnemyModel(x, y, z, s);
 	renderVal = true;
 	destination = XMINT2((int)x, (int)z);
+	prevDestination = XMINT2(0, 0);
 	direction = NORTH;
+	prevDirection = NORTH;
 	actionComplete = true;
 	currentPathAction = 12;
 	for (unsigned int i = 0; i < p.size(); i++)
