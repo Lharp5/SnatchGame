@@ -90,8 +90,8 @@ void WorldClass::Shutdown()
 bool WorldClass::isWall(int x, int y)
 {
 	switch(level->checkMap(x, y)){
-		case C_WALL:
 		case C_DOOR_1: case C_DOOR_2: return !(level->getLocation(x,y)->getStatus()); break;
+		case C_WALL:
 		case C_LIGHT_1: case C_LIGHT_2: case C_LIGHT_3: case C_LIGHT_4: 
 		case C_LOCK_1: case C_LOCK_2: case C_LOCK_3: case C_LOCK_4:
 			return true;
