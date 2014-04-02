@@ -276,7 +276,7 @@ bool SystemClass::Frame()
 	m_World->runGame();
 	
 	time_t elapsedTime = m_World->getElapsedTime();
-	if(elapsedTime % 10 == 0  && elapsedTime!=0 && !scoreChanged){
+	if(elapsedTime % m_World->getLevelDiff() == 0  && elapsedTime!=0 && !scoreChanged){
 		wchar_t* outstring = L"Change it!\n";
 		WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), outstring, wcslen(outstring), NULL, NULL);
 		scoreChanged = true;
@@ -292,7 +292,7 @@ bool SystemClass::Frame()
 		}
 	}
 
-	if(elapsedTime % 10 == 1 && scoreChanged)
+	if(elapsedTime % m_World->getLevelDiff() == 1 && scoreChanged)
 		scoreChanged = false;
 	//m_Menu->worldRotateX(XM_PIDIV2);
 

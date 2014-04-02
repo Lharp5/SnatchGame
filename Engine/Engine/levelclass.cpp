@@ -105,9 +105,13 @@ void LevelClass::loadLevel(int level)
 	}
 }
 
-
+int LevelClass::getLevelDiff()
+{
+	return levelDiff;
+}
 void LevelClass::level0()
 {
+	levelDiff = 10;
 	sizeX = 10;
 	sizeY = 12;
 	for (int i = 0; i < sizeX; i++)
@@ -173,6 +177,7 @@ void LevelClass::level0()
 */
 void LevelClass::level1()
 {
+	levelDiff = 30;
 	sizeX = 12;
 	sizeY = 12;
 

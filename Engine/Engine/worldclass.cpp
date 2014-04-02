@@ -953,6 +953,11 @@ void WorldClass::updateLight(int x, int z)
 	level->getLocation(x, z)->toggleLight(level->getLocation(sourceX, sourceY)->getStatus());
 }
 
+int WorldClass::getLevelDiff()
+{
+	return level->getLevelDiff();
+}
+
 void WorldClass::UpdatePlayerWalk(bool walking)
 {
 	if (walking && !playerWalking)

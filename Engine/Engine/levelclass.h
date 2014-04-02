@@ -49,6 +49,7 @@ class LevelClass
 		void resetLevel(int);
 
 		void toggleFloor();
+		int getLevelDiff();
 
 		XMINT2 getWinLocation();
 
@@ -65,6 +66,8 @@ class LevelClass
 
 		int sizeX;
 		int sizeY;
+
+		int levelDiff;
 
 		//player starting positions as set in levelLoader.
 		int playerStartX;

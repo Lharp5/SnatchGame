@@ -71,6 +71,8 @@ public:
 	bool GameOver();
 	void StartGame();
 
+	int getLevelDiff();
+
 	int getCurrLevel();
 
 private:
