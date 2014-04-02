@@ -61,10 +61,10 @@ void LevelClass::Shutdown()
 		delete gamePieces->removeLast();
 	}
 
-	/*int enemySize = enemyList->size();
+	int enemySize = enemyList->size();
 	for(int j=0; j<enemySize; j++){
 		delete enemyList->removeLast();
-	}*/
+	}
 
 	
 
