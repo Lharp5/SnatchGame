@@ -556,8 +556,6 @@ bool SystemClass::checkControls()
 		{
 			//quit
 		}
-		else
-			rPressed = false;
 	}
 	//user is still playing
 	return true;
