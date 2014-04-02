@@ -109,10 +109,11 @@ void WorldClass::resetLevel(int levelNum)
 	level->resetLevel(levelNum);
 	player->setPosition(level->getPlayerStartX(), level->getPlayerStartZ());
 	gameState = PLAYING;
-	/*suspicionTime = time(nullptr);
+	suspicionTime = time(nullptr);
 	playerSeen = false;
+	startTime = time(nullptr);
 	for(int i=0; i<level->getEnemies().size(); i++)
-		level->getEnemies().elementAt(i)->playerSpotted = false;*/
+		level->getEnemies().elementAt(i)->playerSpotted = false;
 	
 	
 
