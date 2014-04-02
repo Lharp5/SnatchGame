@@ -92,6 +92,17 @@ void LevelClass::loadLevel(int level)
 	default:	level0(); break;
 	}
 	
+	for (int i = 0; i < sizeX; ++i)
+	{
+		for (int j = 0; j < sizeY; ++j)
+		{
+			if (getLocation(i,j)->isWinTile())
+			{
+				winLocation.x = i;
+				winLocation.y = j;
+			}
+		}
+	}
 }
 
 
@@ -215,12 +226,14 @@ void LevelClass::level1()
 	map[0][10] = C_LOCK_2;
 	map[5][10] = C_WALL;
 	map[9][10] = C_DOOR_2;
-	map[11][10] = C_FLOOR;
 	
 	playerStartX = 1;
 	playerStartZ = 1;
 
 	loadObjects();
+	
+	dynamic_cast<FloorObject*>(getLocation(10, 10))->createSource(11, 8);
+	getLocation(10, 10)->setWinTile();
 
 	for (int i = 1; i < 7; i++)
 	{
@@ -480,3 +493,7 @@ WALL_TYPE LevelClass::checkMap(int x, int z)
 	}
 }*/
 
+XMINT2 LevelClass::getWinLocation()
+{
+	return winLocation;
+}

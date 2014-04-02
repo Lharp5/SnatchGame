@@ -67,6 +67,7 @@ public:
 
 	bool GameMenu();
 	bool GamePlaying();
+	bool GameWin();
 	bool GameOver();
 	void StartGame();
 
@@ -82,9 +83,6 @@ private:
 
 	//sound
 	SoundClass* sound;
-
-	//world variables
-	bool winGame;
 
 	//functions
 

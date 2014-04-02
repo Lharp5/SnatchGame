@@ -11,7 +11,6 @@ WorldClass::WorldClass(HWND hwnd)
 {
 	//renderModels =0;
 	gameState = MENU;
-	winGame = false;
 	
 	// Initialize the sound object.
 	bool result = initializeSound(hwnd);
@@ -500,6 +499,10 @@ void WorldClass::runGame()
 		{
 			gameState = GAMEOVER;
 		}
+		if (player->getXLocation() == level->getWinLocation().x && player->getYLocation() == level->getWinLocation().y)
+		{
+			gameState = WIN;
+		}
 	}
 }
 
@@ -776,6 +779,11 @@ bool WorldClass::GameMenu()
 bool WorldClass::GamePlaying()
 {
 	return gameState == PLAYING;
+}
+
+bool WorldClass::GameWin()
+{
+	return gameState == WIN;
 }
 
 bool WorldClass::GameOver()

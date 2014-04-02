@@ -50,6 +50,8 @@ class LevelClass
 
 		void toggleFloor();
 
+		XMINT2 getWinLocation();
+
 	private:
 		//level sound
 		SoundClass* sound;
@@ -58,6 +60,8 @@ class LevelClass
 		ArrayList <GameObject>* gamePieces; 
 		//GameObject* player;
 		ArrayList<EnemyObject>* enemyList;
+
+		XMINT2 winLocation;
 
 		int sizeX;
 		int sizeY;
