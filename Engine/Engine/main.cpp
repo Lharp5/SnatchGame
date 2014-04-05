@@ -30,7 +30,7 @@ The sources of the comments are:
 /*WinMain is the entry point. Like main() on a simple C++ or java console application
 */
 
-static bool use_debug_console = true; //set to true to get the "side car" console window for writing debug info to
+static bool use_debug_console = false; //set to true to get the "side car" console window for writing debug info to
 
 static void writeToDebugConsole(const wchar_t* theString){
 	if(use_debug_console)
