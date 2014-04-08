@@ -177,7 +177,7 @@ void LevelClass::level0()
 */
 void LevelClass::level1()
 {
-	levelDiff = 30;
+	levelDiff = 60;
 	sizeX = 12;
 	sizeY = 12;
 
