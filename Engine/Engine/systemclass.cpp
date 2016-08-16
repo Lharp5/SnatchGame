@@ -149,6 +149,7 @@ void SystemClass::Shutdown()
 
 	if(m_Menu)
 	{
+        m_Menu->Shutdown();
 		delete m_Menu;
 		m_Menu =0;
 	}
@@ -440,6 +441,7 @@ bool SystemClass::checkControls()
 		if(!enterPressed){
 			m_World->setStartTime();
 			m_GameModels->remove(m_Menu);
+            m_Menu->Shutdown();
 			delete m_Menu;
 			m_Menu = 0;
 			m_Ui->getUI()->setRenderVal(true);

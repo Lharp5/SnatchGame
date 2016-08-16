@@ -226,8 +226,8 @@ void CineCameraClass::ZoomOut()
 void CineCameraClass::Tilt(float degree)
 {
 
-	float horizontalMagnitude = sqrt(direction.x * direction.x + direction.z * direction.z);
-	float angle = atan(direction.y / horizontalMagnitude);
+	double horizontalMagnitude = sqrt(direction.x * direction.x + direction.z * direction.z);
+	float angle = (float)atan(direction.y / horizontalMagnitude);
 	if ((angle - degree*(XM_PIDIV2/100*CAMERA_TILT_SPEED) < XM_PIDIV2) &&
 		(angle - degree*(XM_PIDIV2/100*CAMERA_TILT_SPEED) > -XM_PIDIV2))
 	{
@@ -265,8 +265,8 @@ void CineCameraClass::Pan(float degree)
 
 	rotation.x += degree*(XM_PIDIV2/100*CAMERA_PAN_SPEED);
 	//Pan the camera right rotating CW about the up vector direction vector
-	float horizontalMagnitude = sqrt(direction.x * direction.x + direction.z * direction.z);
-	float angle = atan(direction.y / horizontalMagnitude);
+	double horizontalMagnitude = sqrt(direction.x * direction.x + direction.z * direction.z);
+	float angle = (float)atan(direction.y / horizontalMagnitude);
 
 	XMVECTOR sideWaysVector = XMVector3Normalize(XMVector3Cross(XMLoadFloat3(&upDirection), XMLoadFloat3(&direction) ));
 	XMVECTOR tiltRotationQuaternion = XMQuaternionRotationAxis(sideWaysVector, angle);
