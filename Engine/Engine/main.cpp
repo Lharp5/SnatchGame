@@ -6,7 +6,8 @@
 
 #include "systemclass.h"
 
-
+/* Uncomment this for leak checking */
+//#include <vld.h>
 
 /*
 The following demonstration code contains a lot of comments on what the various parts do
@@ -41,7 +42,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR pScmdline,
 {
 	/*
      HINSTANCE hInstance  : handle of the applications current instance
-	 HINSTANCE hPrevInstance : handle of the applications previous instance (should be NULL according to MSDN) 
+	 HINSTANCE hPrevInstance : handle of the applications previous instance (should be NULL according to MSDN)
 	 PSTR pScmdline : commandline arguments invoked with main (we won't use this)
 	 int iCmdshow : An ID that specifies how the window should be shown
 
@@ -57,7 +58,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR pScmdline,
 	*/
 	if(use_debug_console) AllocConsole();
 	writeToDebugConsole(L"Hello World\n");
-	
+
 	// Create the system object.
 	System = new SystemClass;
 	if(!System)
@@ -66,9 +67,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR pScmdline,
 	}
 
 
-	// Initialize our system object and run the application by asking 
+	// Initialize our system object and run the application by asking
 	// the system object to run.
-	result = System->Initialize(); 
+	result = System->Initialize();
 	if(result)
 	{
 		System->Run();

@@ -290,8 +290,11 @@ bool CubeTexturedModel::initializeTextures(ID3D11Device* d3dDevice){
 }
 
 ID3D11ShaderResourceView* CubeTexturedModel::GetTexture(int i){
-
-	return m_quadTextures[i]->GetTexture();
+    ID3D11ShaderResourceView* tex = 0;
+    if (m_quadTextures != 0 && m_quadTextures[i] != 0 && i < NUMBER_OF_CUBE_FACES) {
+        tex = m_quadTextures[i]->GetTexture();
+    }
+	return tex;
 }
 
 
@@ -400,8 +403,13 @@ void CubeTexturedModel::Shutdown()
 
 	if(m_VertexModelArray)
 	{
-		for(int i=0; i<NUMBER_OF_CUBE_FACES; i++) 
-			delete m_VertexModelArray[i];
+        for (int i = 0; i < NUMBER_OF_CUBE_FACES; i++) {
+            if (m_VertexModelArray[i]) {
+                m_VertexModelArray[i]->Shutdown();
+                delete m_VertexModelArray[i];
+                m_VertexModelArray[i] = 0;
+            }
+        }
 		delete [] m_VertexModelArray;
 		m_VertexModelArray = 0;
 	}
@@ -414,8 +422,13 @@ void CubeTexturedModel::Shutdown()
 
 	if(m_quadTextures)
 	{
-		for(int i=0; i<NUMBER_OF_CUBE_FACES; i++)
-			delete m_quadTextures[i]; //delete individual face textures
+        for (int i = 0; i < NUMBER_OF_CUBE_FACES; i++) {
+            if (m_quadTextures[i]) {
+                m_quadTextures[i]->Shutdown();
+                delete m_quadTextures[i]; //delete individual face textures
+                m_quadTextures[i] = 0;
+            }
+        }
 
 		delete [] m_quadTextures; //delete the texture array
 		m_quadTextures = 0;

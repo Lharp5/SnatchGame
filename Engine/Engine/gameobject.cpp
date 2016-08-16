@@ -55,6 +55,7 @@ bool GameObject::isLit()
 void GameObject::shutdown()
 {
 	if(myModel){
+        myModel->Shutdown();
 		delete myModel;
 		myModel = 0;
 	}

@@ -63,7 +63,9 @@ void LevelClass::Shutdown()
 
 	int enemySize = enemyList->size();
 	for(int j=0; j<enemySize; j++){
-		delete enemyList->removeLast();
+        EnemyObject *enemy = enemyList->removeLast();
+        enemy->shutdown();
+		delete enemy;
 	}
 
 	
